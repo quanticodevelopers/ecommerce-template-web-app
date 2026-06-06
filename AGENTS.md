@@ -13,9 +13,11 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - inertiajs/inertia-laravel (INERTIA_LARAVEL) - v3
 - laravel/fortify (FORTIFY) - v1
 - laravel/framework (LARAVEL) - v13
+- laravel/chisel - v0
 - laravel/prompts (PROMPTS) - v0
 - laravel/wayfinder (WAYFINDER) - v0
 - laravel/boost (BOOST) - v2
+- laravel/pao - v1
 - laravel/mcp (MCP) - v0
 - laravel/pail (PAIL) - v1
 - laravel/pint (PINT) - v1
@@ -42,6 +44,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 ## Verification Scripts
 
 - Do not create verification scripts or tinker when tests cover that functionality and prove they work. Unit and feature tests are more important.
+- Frontend quality checks use `pnpm run lint:check`, `pnpm run format:check`, and `pnpm run types:check`; combined CI checks are available via `composer run ci:check`.
 
 ## Application Structure & Architecture
 
@@ -128,6 +131,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
 - Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
+- Feature tests already apply `RefreshDatabase` globally via `tests/Pest.php`; prefer feature tests unless a true unit test is needed.
 
 === inertia-laravel/core rules ===
 
@@ -135,6 +139,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Inertia creates fully client-side rendered SPAs without modern SPA complexity, leveraging existing server-side patterns.
 - Components live in `resources/js/pages` (unless specified in `vite.config.js`). Use `Inertia::render()` for server-side routing instead of Blade views.
+- Keep page naming aligned with layout resolution in `resources/js/app.tsx`: `welcome` has no layout, `auth/*` uses `AuthLayout`, `settings/*` uses `[AppLayout, SettingsLayout]`, all others use `AppLayout`.
 - ALWAYS use `search-docs` tool for version-specific Inertia documentation and updated code examples.
 - IMPORTANT: Activate `inertia-react-development` when working with Inertia client-side patterns.
 
@@ -187,6 +192,9 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 # Laravel Wayfinder
 
 Use Wayfinder to generate TypeScript functions for Laravel routes. Import from `@/actions/` (controllers) or `@/routes/` (named routes).
+- Generated Wayfinder outputs live in `resources/js/actions/**`, `resources/js/routes/**`, and shared helpers in `resources/js/wayfinder/index.ts`; treat these as generated artifacts and regenerate when backend routes/actions change.
+- This project enables `wayfinder({ formVariants: true })` in `vite.config.ts`; prefer `*.form()` variants for Inertia `<Form>` usage (example: `resources/js/pages/auth/login.tsx`).
+- If generated route/action types are stale, run `php artisan wayfinder:generate --with-form --no-interaction`.
 
 === pint/core rules ===
 
