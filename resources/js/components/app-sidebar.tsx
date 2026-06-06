@@ -6,7 +6,7 @@ import { NavFooter } from '@/components/nav-footer'
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
-import { dashboard } from '@/routes'
+import { dashboard } from '@/routes/admin'
 import type { NavGroup, NavItem } from '@/types'
 
 const mainNavItems: NavGroup[] = [

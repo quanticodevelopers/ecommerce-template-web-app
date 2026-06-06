@@ -13,9 +13,7 @@ export type FlashToast = {
   message: string
 }
 
-export type AuthLayoutProps = {
-  children?: ReactNode
-  name?: string
-  title?: string
-  description?: string
+export interface SelectOption {
+  value: string
+  label: string
 }

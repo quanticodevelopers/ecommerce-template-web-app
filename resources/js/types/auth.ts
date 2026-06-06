@@ -1,6 +1,10 @@
 export type User = {
   id: number
+  document_type: 'dni' | 'ce' | 'pasaporte'
+  document_number: string
   name: string
+  last_name: string
+  phone: string
   email: string
   avatar?: string
   email_verified_at: string | null
@@ -12,13 +16,3 @@ export type User = {
 export type Auth = {
   user: User
 }
-
-/* @chisel-passkeys */
-export type Passkey = {
-  id: number
-  name: string
-  authenticator: string | null
-  created_at_diff: string
-  last_used_at_diff: string | null
-}
-/* @end-chisel-passkeys */
