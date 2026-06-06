@@ -6,6 +6,11 @@ export type BreadcrumbItem = {
   href: NonNullable<InertiaLinkProps['href']>
 }
 
+export type NavGroup = {
+  title: string
+  items: NavItem[]
+}
+
 export type NavItem = {
   title: string
   href: NonNullable<InertiaLinkProps['href']>
