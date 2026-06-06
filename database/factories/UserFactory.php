@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserDocumentType;
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -24,11 +26,25 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $documentTypes = array_column(UserDocumentType::cases(), 'value');
+        $documentType = fake()->randomElement($documentTypes);
+        $documentNumber = match ($documentType) {
+            UserDocumentType::DNI->value => fake()->numerify('########'),
+            UserDocumentType::CE->value => fake()->numerify('############'),
+            UserDocumentType::PASAPORTE->value => fake()->bothify('??##########'),
+            default => null,
+        };
+
         return [
+            'document_type' => $documentType,
+            'document_number' => $documentNumber,
             'name' => fake()->name(),
+            'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'phone' => fake()->numerify('9########'),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => UserRole::ADMIN,
             'remember_token' => Str::random(10),
         ];
     }
