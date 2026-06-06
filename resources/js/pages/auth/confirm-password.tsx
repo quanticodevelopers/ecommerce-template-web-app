@@ -9,7 +9,7 @@ import { store } from '@/routes/password/confirm'
 export default function ConfirmPassword() {
   return (
     <>
-      <Head title="Confirm password" />
+      <Head title="Confirmar contraseña" />
 
       <Form
         {...store.form()}
@@ -18,11 +18,11 @@ export default function ConfirmPassword() {
         {({ processing, errors }) => (
           <div className="space-y-6">
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Contraseña</Label>
               <PasswordInput
                 id="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Contraseña"
                 autoComplete="current-password"
                 autoFocus
               />
@@ -37,7 +37,7 @@ export default function ConfirmPassword() {
                 data-test="confirm-password-button"
               >
                 {processing && <Spinner />}
-                Confirm password
+                Confirmar contraseña
               </Button>
             </div>
           </div>
@@ -48,6 +48,6 @@ export default function ConfirmPassword() {
 }
 
 ConfirmPassword.layout = {
-  title: 'Confirm password',
-  description: 'This is a secure area of the application. Please confirm your password before continuing.',
+  title: 'Confirmar contraseña',
+  description: 'Esta es un área segura de la aplicación. Por favor confirma tu contraseña antes de continuar.',
 }
