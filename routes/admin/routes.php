@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Middleware\EnsureActiveAdminUser;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
@@ -21,7 +22,7 @@ Route::prefix('admin')
                     ->name('auth.password.reset');
             });
 
-        Route::middleware(['auth', 'can:access-admin'])
+        Route::middleware(['auth', EnsureActiveAdminUser::class, 'can:access-admin'])
             ->group(function () {
                 Route::redirect('/', 'admin/dashboard');
                 Route::get('/dashboard', DashboardController::class)
