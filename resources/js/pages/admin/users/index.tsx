@@ -1,13 +1,17 @@
 import { Head } from '@inertiajs/react'
-import { Users } from 'lucide-react'
+import { UsersIcon } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { dateFormatter } from '@/lib/utils'
+import CreateAdminUserModal from '@/pages/admin/users/components/create-admin-user-modal'
+import CreatedUserCredentialsModal from '@/pages/admin/users/components/created-user-credentials-modal'
 import { index as usersIndex } from '@/routes/admin/users'
-import type { User } from '@/types'
+import type { CreatedUserCredentials, SelectOption, UserListItem } from '@/types'
 
 type UsersIndexProps = {
-  users: User[]
+  users: UserListItem[]
+  document_type_options: SelectOption[]
+  created_user_credentials: CreatedUserCredentials | null
 }
 
 function formatDate(value: string | null): string {
@@ -18,19 +22,21 @@ function formatDate(value: string | null): string {
   return dateFormatter.format(new Date(value))
 }
 
-function formatFullName(user: User): string {
+function formatFullName(user: UserListItem): string {
   return `${user.name} ${user.last_name}`.trim()
 }
 
-function formatDocument(user: User): string {
+function formatDocument(user: UserListItem): string {
   return `${user.document_type.label} ${user.document_number}`
 }
 
-function formatPhone(phone: string | null): string {
-  return phone ?? '—'
+function formatPhone(phone: string): string {
+  return phone
 }
 
-export default function UsersIndex({ users }: UsersIndexProps) {
+export default function UsersIndex({ users, document_type_options, created_user_credentials }: UsersIndexProps) {
+  const createdCredentialsModalKey = created_user_credentials === null ? 'created-user-credentials-empty' : `${created_user_credentials.email}-${created_user_credentials.password}`
+
   return (
     <>
       <Head title="Usuarios administradores" />
@@ -43,7 +49,7 @@ export default function UsersIndex({ users }: UsersIndexProps) {
                 variant="secondary"
                 className="w-fit gap-1.5"
               >
-                <Users className="size-3.5" />
+                <UsersIcon className="size-3.5" />
                 Administración
               </Badge>
 
@@ -55,8 +61,12 @@ export default function UsersIndex({ users }: UsersIndexProps) {
               </div>
             </div>
 
-            <div className="rounded-xl border border-border/60 bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
-              {users.length} usuario{users.length === 1 ? '' : 's'} administrador{users.length === 1 ? '' : 'es'}
+            <div className="flex flex-col items-stretch gap-3 sm:items-end">
+              <div className="rounded-xl border border-border/60 bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+                {users.length} usuario{users.length === 1 ? '' : 's'} administrador{users.length === 1 ? '' : 'es'}
+              </div>
+
+              <CreateAdminUserModal documentTypeOptions={document_type_options} />
             </div>
           </div>
         </div>
@@ -118,6 +128,10 @@ export default function UsersIndex({ users }: UsersIndexProps) {
           </CardContent>
         </Card>
       </div>
+      <CreatedUserCredentialsModal
+        key={createdCredentialsModalKey}
+        createdUserCredentials={created_user_credentials}
+      />
     </>
   )
 }

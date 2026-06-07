@@ -31,6 +31,8 @@ Route::prefix('admin')
                     ->group(function () {
                         Route::get('/users', 'index')
                             ->name('users.index');
+                        Route::post('/users', 'store')
+                            ->name('users.store');
                     });
 
                 Route::get('/confirm-password', AdminConfirmPasswordController::class)

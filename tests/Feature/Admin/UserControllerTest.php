@@ -2,6 +2,7 @@
 
 use App\Enums\UserRole;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the admin login page', function () {
@@ -33,4 +34,36 @@ test('admins can see only administrator users', function () {
         );
 
     expect($customer->refresh()->role)->toBe(UserRole::CUSTOMER);
+});
+
+test('admins can create administrator users with generated credentials', function () {
+    $admin = User::factory()->create();
+
+    $payload = [
+        'document_type' => 'dni',
+        'document_number' => '12345678',
+        'name' => 'Daniel',
+        'last_name' => 'Perez',
+        'email' => 'daniel.admin@example.com',
+        'phone' => '987654321',
+    ];
+
+    $response = $this->actingAs($admin)
+        ->post(route('admin.users.store'), $payload);
+
+    $response->assertRedirect(route('admin.users.index'));
+
+    $createdUser = User::query()->where('email', $payload['email'])->first();
+
+    expect($createdUser)->not->toBeNull();
+    expect($createdUser->role)->toBe(UserRole::ADMIN);
+    expect($createdUser->email_verified_at)->not->toBeNull();
+
+    $credentials = $response->baseResponse->getSession()->get('created_user_credentials');
+
+    expect($credentials)->toBeArray();
+    expect($credentials['email'])->toBe($payload['email']);
+    expect($credentials['password'])->toHaveLength(18);
+    expect($credentials['password'])->toMatch('/^[a-zA-Z0-9]+$/');
+    expect(Hash::check($credentials['password'], $createdUser->password))->toBeTrue();
 });
