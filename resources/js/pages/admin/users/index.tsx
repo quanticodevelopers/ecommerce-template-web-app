@@ -44,7 +44,7 @@ export default function UsersIndex({ users, current_user_id, document_type_optio
       <Head title="Usuarios administradores" />
 
       <div className="flex flex-col gap-6 p-4">
-        <div className="flex flex-col gap-4 rounded-xl border border-sidebar-border/70 bg-card p-6 shadow-sm dark:border-sidebar-border">
+        <div className="flex flex-col gap-4 rounded-xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="space-y-2">
               <Badge
@@ -73,7 +73,7 @@ export default function UsersIndex({ users, current_user_id, document_type_optio
           </div>
         </div>
 
-        <Card className="gap-0 border-sidebar-border/70 dark:border-sidebar-border">
+        <Card className="gap-0 border-sidebar-border/70 dark:border-sidebar-border shadow-none">
           <CardHeader className="border-b border-border/60 pb-6">
             <CardTitle>Listado de usuarios</CardTitle>
             <CardDescription>Se muestran únicamente los usuarios con rol administrador.</CardDescription>
@@ -88,9 +88,9 @@ export default function UsersIndex({ users, current_user_id, document_type_optio
                     <th className="px-6 py-3.5 text-left font-medium">Documento</th>
                     <th className="px-6 py-3.5 text-left font-medium">Contacto</th>
                     <th className="px-6 py-3.5 text-left font-medium">Rol</th>
-                    <th className="px-6 py-3.5 text-left font-medium">Estado</th>
-                    <th className="px-6 py-3.5 text-left font-medium">Registro</th>
-                    <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
+                    <th className="px-6 py-3.5 text-left font-medium w-25">Estado</th>
+                    <th className="px-6 py-3.5 text-left font-medium w-35">Registro</th>
+                    <th className="px-6 py-3.5 text-right font-medium w-15">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border bg-background">

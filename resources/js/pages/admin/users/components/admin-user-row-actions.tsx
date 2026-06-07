@@ -81,7 +81,7 @@ export default function AdminUserRowActions({ user, currentUserId }: AdminUserRo
           <DialogHeader>
             <DialogTitle>{isDeactivateAction ? 'Desactivar usuario administrador' : 'Reactivar usuario administrador'}</DialogTitle>
             <DialogDescription>
-              Por seguridad, confirma tu contrasena para {isDeactivateAction ? 'desactivar' : 'activar'} a {user.name} {user.last_name}.
+              Por seguridad, confirma tu contraseña para {isDeactivateAction ? 'desactivar' : 'activar'} a {user.name} {user.last_name}.
             </DialogDescription>
           </DialogHeader>
 
@@ -97,12 +97,12 @@ export default function AdminUserRowActions({ user, currentUserId }: AdminUserRo
             {({ errors, processing, resetAndClearErrors }) => (
               <>
                 <div className="grid gap-2">
-                  <Label htmlFor={`deactivate-password-${user.id}`}>Contrasena actual</Label>
+                  <Label htmlFor={`deactivate-password-${user.id}`}>Contraseña actual</Label>
                   <PasswordInput
                     id={`deactivate-password-${user.id}`}
                     name="password"
                     autoComplete="current-password"
-                    placeholder="Contrasena"
+                    placeholder="Contraseña"
                     required
                   />
                   <InputError message={errors.password} />

@@ -32,7 +32,7 @@ export default function CreateAdminUserModal({ documentTypeOptions }: CreateAdmi
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Crear usuario administrador</DialogTitle>
-          <DialogDescription>Completa los datos obligatorios. La contrasena se generara automaticamente.</DialogDescription>
+          <DialogDescription>Completa los datos obligatorios. La contraseña se generara automáticamente.</DialogDescription>
         </DialogHeader>
 
         <Form

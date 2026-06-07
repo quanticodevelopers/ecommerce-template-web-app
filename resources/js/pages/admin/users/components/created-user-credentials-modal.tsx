@@ -17,7 +17,7 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
       return ''
     }
 
-    return `Usuario: ${createdUserCredentials.email}\nContrasena: ${createdUserCredentials.password}`
+    return `Usuario: ${createdUserCredentials.email}\nContraseña: ${createdUserCredentials.password}`
   }, [createdUserCredentials])
 
   async function copyCredentials(): Promise<void> {
@@ -44,7 +44,7 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
             <KeyRoundIcon className="size-4" />
             Credenciales generadas
           </DialogTitle>
-          <DialogDescription>Guarda estas credenciales y compartelas con el administrador creado.</DialogDescription>
+          <DialogDescription>Guarda estas credenciales y compártelas con el administrador creado.</DialogDescription>
         </DialogHeader>
 
         {createdUserCredentials !== null && (
@@ -56,7 +56,7 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
               <span className="font-medium text-foreground">Usuario:</span> {createdUserCredentials.email}
             </p>
             <p>
-              <span className="font-medium text-foreground">Contrasena:</span> {createdUserCredentials.password}
+              <span className="font-medium text-foreground">Contraseña:</span> {createdUserCredentials.password}
             </p>
           </div>
         )}
