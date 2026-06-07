@@ -127,3 +127,42 @@ test('admins must confirm password to reactivate an administrator', function () 
 
     expect($targetAdmin->refresh()->is_active)->toBeFalse();
 });
+
+test('admins can reset another administrator password with generated credentials', function () {
+    $admin = User::factory()->create();
+    $targetAdmin = User::factory()->create();
+    $previousPasswordHash = $targetAdmin->password;
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.users.reset-password', $targetAdmin), [
+            'password' => 'password',
+        ]);
+
+    $response->assertRedirect(route('admin.users.index'));
+
+    $credentials = $response->baseResponse->getSession()->get('created_user_credentials');
+    $updatedAdmin = $targetAdmin->refresh();
+
+    expect($credentials)->toBeArray();
+    expect($credentials['name'])->toBe(trim($updatedAdmin->name.' '.$updatedAdmin->last_name));
+    expect($credentials['email'])->toBe($updatedAdmin->email);
+    expect($credentials['password'])->toHaveLength(18);
+    expect($credentials['password'])->toMatch('/^[a-zA-Z0-9]+$/');
+    expect(Hash::check($credentials['password'], $updatedAdmin->password))->toBeTrue();
+    expect($updatedAdmin->password)->not->toBe($previousPasswordHash);
+});
+
+test('admins must confirm password to reset an administrator password', function () {
+    $admin = User::factory()->create();
+    $targetAdmin = User::factory()->create();
+    $previousPasswordHash = $targetAdmin->password;
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.users.reset-password', $targetAdmin), [
+            'password' => 'incorrect-password',
+        ]);
+
+    $response->assertSessionHasErrors('password');
+
+    expect($targetAdmin->refresh()->password)->toBe($previousPasswordHash);
+});

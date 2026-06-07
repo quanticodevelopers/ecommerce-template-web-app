@@ -119,4 +119,31 @@ class UserController extends Controller
 
         return to_route('admin.users.index');
     }
+
+    /**
+     * Reset an administrator user's password.
+     */
+    public function resetPassword(DeactivateAdminUserRequest $request, User $user): RedirectResponse
+    {
+        if ($user->role !== UserRole::ADMIN) {
+            abort(404);
+        }
+
+        $generatedPassword = Str::random(18);
+
+        $user->forceFill([
+            'password' => $generatedPassword,
+        ])->save();
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Contrasena de usuario administrador restablecida correctamente.',
+        ]);
+
+        return to_route('admin.users.index')->with('created_user_credentials', [
+            'name' => trim($user->name.' '.$user->last_name),
+            'email' => $user->email,
+            'password' => $generatedPassword,
+        ]);
+    }
 }

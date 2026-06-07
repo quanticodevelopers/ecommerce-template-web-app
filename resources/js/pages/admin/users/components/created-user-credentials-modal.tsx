@@ -44,7 +44,7 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
             <KeyRoundIcon className="size-4" />
             Credenciales generadas
           </DialogTitle>
-          <DialogDescription>Guarda estas credenciales y compártelas con el administrador creado.</DialogDescription>
+          <DialogDescription>Guarda estas credenciales y compartelas con el usuario administrador correspondiente.</DialogDescription>
         </DialogHeader>
 
         {createdUserCredentials !== null && (

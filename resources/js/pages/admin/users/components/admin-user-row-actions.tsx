@@ -1,7 +1,7 @@
 import { Form } from '@inertiajs/react'
-import { EllipsisVerticalIcon, UserCheckIcon, UserXIcon } from 'lucide-react'
+import { EllipsisVerticalIcon, KeyRoundIcon, UserCheckIcon, UserXIcon } from 'lucide-react'
 import { useState } from 'react'
-import { deactivate as usersDeactivate, reactivate as usersReactivate } from '@/actions/App/Http/Controllers/Admin/UserController'
+import { deactivate as usersDeactivate, reactivate as usersReactivate, resetPassword as usersResetPassword } from '@/actions/App/Http/Controllers/Admin/UserController'
 import InputError from '@/components/input-error'
 import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
@@ -16,12 +16,13 @@ type AdminUserRowActionsProps = {
 }
 
 export default function AdminUserRowActions({ user, currentUserId }: AdminUserRowActionsProps) {
-  const [actionType, setActionType] = useState<'deactivate' | 'reactivate' | null>(null)
+  const [actionType, setActionType] = useState<'deactivate' | 'reactivate' | 'reset_password' | null>(null)
   const isCurrentSessionUser = currentUserId === user.id
   const canDeactivate = user.is_active && !isCurrentSessionUser
   const canReactivate = !user.is_active
   const isConfirmationDialogOpen = actionType !== null
   const isDeactivateAction = actionType === 'deactivate'
+  const isResetPasswordAction = actionType === 'reset_password'
 
   return (
     <>
@@ -70,6 +71,16 @@ export default function AdminUserRowActions({ user, currentUserId }: AdminUserRo
               Activar usuario
             </DropdownMenuItem>
           )}
+
+          <DropdownMenuItem
+            onSelect={(event) => {
+              event.preventDefault()
+              setActionType('reset_password')
+            }}
+          >
+            <KeyRoundIcon className="size-4" />
+            Restablecer contrasena
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -79,14 +90,21 @@ export default function AdminUserRowActions({ user, currentUserId }: AdminUserRo
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{isDeactivateAction ? 'Desactivar usuario administrador' : 'Reactivar usuario administrador'}</DialogTitle>
+            <DialogTitle>
+              {isDeactivateAction
+                ? 'Desactivar usuario administrador'
+                : isResetPasswordAction
+                  ? 'Restablecer contrasena de usuario administrador'
+                  : 'Reactivar usuario administrador'}
+            </DialogTitle>
             <DialogDescription>
-              Por seguridad, confirma tu contraseña para {isDeactivateAction ? 'desactivar' : 'activar'} a {user.name} {user.last_name}.
+              Por seguridad, confirma tu contraseña para {isDeactivateAction ? 'desactivar' : isResetPasswordAction ? 'restablecer la contrasena de' : 'activar'} {user.name}{' '}
+              {user.last_name}.
             </DialogDescription>
           </DialogHeader>
 
           <Form
-            {...(isDeactivateAction ? usersDeactivate.form(user.id) : usersReactivate.form(user.id))}
+            {...(isDeactivateAction ? usersDeactivate.form(user.id) : isResetPasswordAction ? usersResetPassword.form(user.id) : usersReactivate.form(user.id))}
             options={{
               preserveScroll: true,
             }}
@@ -97,12 +115,12 @@ export default function AdminUserRowActions({ user, currentUserId }: AdminUserRo
             {({ errors, processing, resetAndClearErrors }) => (
               <>
                 <div className="grid gap-2">
-                  <Label htmlFor={`deactivate-password-${user.id}`}>Contraseña actual</Label>
+                  <Label htmlFor={`action-password-${user.id}`}>Contrasena actual</Label>
                   <PasswordInput
-                    id={`deactivate-password-${user.id}`}
+                    id={`action-password-${user.id}`}
                     name="password"
                     autoComplete="current-password"
-                    placeholder="Contraseña"
+                    placeholder="Contrasena"
                     required
                   />
                   <InputError message={errors.password} />
@@ -128,7 +146,7 @@ export default function AdminUserRowActions({ user, currentUserId }: AdminUserRo
                     variant={isDeactivateAction ? 'destructive' : 'default'}
                     disabled={processing}
                   >
-                    {isDeactivateAction ? 'Desactivar' : 'Activar'}
+                    {isDeactivateAction ? 'Desactivar' : isResetPasswordAction ? 'Restablecer contrasena' : 'Activar'}
                   </Button>
                 </DialogFooter>
               </>

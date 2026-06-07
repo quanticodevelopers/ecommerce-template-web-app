@@ -38,6 +38,8 @@ Route::prefix('admin')
                             ->name('users.deactivate');
                         Route::patch('/users/{user}/reactivate', 'reactivate')
                             ->name('users.reactivate');
+                        Route::patch('/users/{user}/reset-password', 'resetPassword')
+                            ->name('users.reset-password');
                     });
 
                 Route::get('/confirm-password', AdminConfirmPasswordController::class)
