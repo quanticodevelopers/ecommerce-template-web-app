@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\ForgotPasswordController as AdminForgotPassw
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
@@ -25,6 +26,13 @@ Route::prefix('admin')
                 Route::redirect('/', 'admin/dashboard');
                 Route::get('/dashboard', DashboardController::class)
                     ->name('dashboard');
+
+                Route::controller(AdminUserController::class)
+                    ->group(function () {
+                        Route::get('/users', 'index')
+                            ->name('users.index');
+                    });
+
                 Route::get('/confirm-password', AdminConfirmPasswordController::class)
                     ->name('auth.password.confirm');
             });

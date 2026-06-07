@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react'
-import { LayoutGrid, SquareArrowOutUpRightIcon } from 'lucide-react'
+import { LayoutGrid, SquareArrowOutUpRightIcon, UsersIcon } from 'lucide-react'
 import { useMemo } from 'react'
 import AppLogo from '@/components/app-logo'
 import { NavFooter } from '@/components/nav-footer'
@@ -7,6 +7,7 @@ import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { dashboard } from '@/routes/admin'
+import { index as adminUsers } from '@/routes/admin/users'
 import type { NavGroup, NavItem } from '@/types'
 
 const mainNavItems: NavGroup[] = [
@@ -17,6 +18,16 @@ const mainNavItems: NavGroup[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+      },
+    ],
+  },
+  {
+    title: 'Administración',
+    items: [
+      {
+        title: 'Usuarios',
+        href: adminUsers(),
+        icon: UsersIcon,
       },
     ],
   },
