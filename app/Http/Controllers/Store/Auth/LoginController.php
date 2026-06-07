@@ -12,6 +12,8 @@ class LoginController extends Controller
 {
     public function __invoke(Request $request): Response
     {
+        $request->session()->put('auth.area', 'store');
+
         return Inertia::render('store/auth/login', [
             'canResetPassword' => Features::enabled(Features::resetPasswords()),
             'status' => $request->session()->get('status'),

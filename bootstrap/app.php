@@ -16,6 +16,26 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
+        $middleware->redirectGuestsTo(function (Request $request): ?string {
+            if ($request->expectsJson()) {
+                return null;
+            }
+
+            return $request->is('admin') || $request->is('admin/*')
+                ? route('admin.auth.login')
+                : route('store.auth.login');
+        });
+
+        $middleware->redirectUsersTo(function (Request $request): string {
+            if ($request->is('admin') || $request->is('admin/*')) {
+                return $request->user()?->can('access-admin')
+                    ? route('admin.dashboard')
+                    : route('store.home');
+            }
+
+            return route('store.home');
+        });
+
         $middleware->web(append: [
             HandleAppearance::class,
             HandleInertiaRequests::class,
