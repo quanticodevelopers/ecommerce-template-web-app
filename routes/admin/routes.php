@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Auth\ConfirmPasswordController as AdminConfirmPas
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController as AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPasswordController;
+use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Middleware\EnsureActiveAdminUser;
@@ -40,6 +41,12 @@ Route::prefix('admin')
                             ->name('users.reactivate');
                         Route::patch('/users/{user}/reset-password', 'resetPassword')
                             ->name('users.reset-password');
+                    });
+
+                Route::controller(AdminCustomerController::class)
+                    ->group(function () {
+                        Route::get('/customers', 'index')
+                            ->name('customers.index');
                     });
 
                 Route::get('/confirm-password', AdminConfirmPasswordController::class)
