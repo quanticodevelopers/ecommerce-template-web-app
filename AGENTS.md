@@ -40,6 +40,8 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
 - Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
 - Check for existing components to reuse before writing a new one.
+ - For React components, name the props type as `<ComponentName>Props` so `UsersIndex` uses `UsersIndexProps`.
+ - When using Lucide icons, use the exported icon components that end with the suffix "Icon". For example: `UsersIcon` (not `Users`).
 
 ## Verification Scripts
 
@@ -123,6 +125,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 # Laravel Herd
 
 - The application is served by Laravel Herd at `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs. Never run commands to serve the site. It is always available.
+- The terminal in the developer environment always opens in the project root. Do not prefix commands with `cd` or `Set-Location` — run commands directly from the project root.
 - Use the `herd` CLI to manage services, PHP versions, and sites (e.g. `herd sites`, `herd services:start <service>`, `herd php:list`). Run `herd list` to discover all available commands.
 
 === tests rules ===
