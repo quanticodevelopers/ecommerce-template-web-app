@@ -33,6 +33,10 @@ Route::prefix('admin')
                             ->name('users.index');
                         Route::post('/users', 'store')
                             ->name('users.store');
+                        Route::patch('/users/{user}/deactivate', 'deactivate')
+                            ->name('users.deactivate');
+                        Route::patch('/users/{user}/reactivate', 'reactivate')
+                            ->name('users.reactivate');
                     });
 
                 Route::get('/confirm-password', AdminConfirmPasswordController::class)

@@ -77,7 +77,10 @@ export default function CreateAdminUserModal({ documentTypeOptions }: CreateAdmi
                     name="document_type"
                     defaultValue={documentTypeOptions[0]?.value}
                   >
-                    <SelectTrigger id="document_type" className="w-full">
+                    <SelectTrigger
+                      id="document_type"
+                      className="w-full"
+                    >
                       <SelectValue placeholder="Selecciona un tipo" />
                     </SelectTrigger>
                     <SelectContent>

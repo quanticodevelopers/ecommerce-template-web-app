@@ -3,6 +3,7 @@ import { UsersIcon } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { dateFormatter } from '@/lib/utils'
+import AdminUserRowActions from '@/pages/admin/users/components/admin-user-row-actions'
 import CreateAdminUserModal from '@/pages/admin/users/components/create-admin-user-modal'
 import CreatedUserCredentialsModal from '@/pages/admin/users/components/created-user-credentials-modal'
 import { index as usersIndex } from '@/routes/admin/users'
@@ -10,6 +11,7 @@ import type { CreatedUserCredentials, SelectOption, UserListItem } from '@/types
 
 type UsersIndexProps = {
   users: UserListItem[]
+  current_user_id: string | null
   document_type_options: SelectOption[]
   created_user_credentials: CreatedUserCredentials | null
 }
@@ -34,7 +36,7 @@ function formatPhone(phone: string): string {
   return phone
 }
 
-export default function UsersIndex({ users, document_type_options, created_user_credentials }: UsersIndexProps) {
+export default function UsersIndex({ users, current_user_id, document_type_options, created_user_credentials }: UsersIndexProps) {
   const createdCredentialsModalKey = created_user_credentials === null ? 'created-user-credentials-empty' : `${created_user_credentials.email}-${created_user_credentials.password}`
 
   return (
@@ -86,7 +88,9 @@ export default function UsersIndex({ users, document_type_options, created_user_
                     <th className="px-6 py-3.5 text-left font-medium">Documento</th>
                     <th className="px-6 py-3.5 text-left font-medium">Contacto</th>
                     <th className="px-6 py-3.5 text-left font-medium">Rol</th>
+                    <th className="px-6 py-3.5 text-left font-medium">Estado</th>
                     <th className="px-6 py-3.5 text-left font-medium">Registro</th>
+                    <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border bg-background">
@@ -94,7 +98,7 @@ export default function UsersIndex({ users, document_type_options, created_user_
                     <tr>
                       <td
                         className="px-6 py-10 text-center text-muted-foreground"
-                        colSpan={5}
+                        colSpan={7}
                       >
                         No hay usuarios administradores registrados.
                       </td>
@@ -118,7 +122,16 @@ export default function UsersIndex({ users, document_type_options, created_user_
                         <td className="px-6 py-4">
                           <Badge variant="outline">{user.role.label}</Badge>
                         </td>
+                        <td className="px-6 py-4">
+                          <Badge variant={user.is_active ? 'default' : 'secondary'}>{user.is_active ? 'Activo' : 'Inactivo'}</Badge>
+                        </td>
                         <td className="px-6 py-4 text-muted-foreground">{formatDate(user.created_at)}</td>
+                        <td className="px-6 py-4 text-right">
+                          <AdminUserRowActions
+                            user={user}
+                            currentUserId={current_user_id}
+                          />
+                        </td>
                       </tr>
                     ))
                   )}

@@ -26,6 +26,7 @@ test('admins can see only administrator users', function () {
             ->where('users.0.email', $admin->email)
             ->where('users.0.role.value', UserRole::ADMIN->value)
             ->where('users.0.role.label', UserRole::ADMIN->label())
+            ->where('users.0.is_active', true)
             ->where('users.0.name', $admin->name)
             ->where('users.0.last_name', $admin->last_name)
             ->missing('users.0.email_verified')
@@ -66,4 +67,63 @@ test('admins can create administrator users with generated credentials', functio
     expect($credentials['password'])->toHaveLength(18);
     expect($credentials['password'])->toMatch('/^[a-zA-Z0-9]+$/');
     expect(Hash::check($credentials['password'], $createdUser->password))->toBeTrue();
+});
+
+test('admins can deactivate another administrator by confirming password', function () {
+    $admin = User::factory()->create();
+    $targetAdmin = User::factory()->create();
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.users.deactivate', $targetAdmin), [
+            'password' => 'password',
+        ]);
+
+    $response->assertRedirect(route('admin.users.index'));
+
+    expect($targetAdmin->refresh()->is_active)->toBeFalse();
+});
+
+test('admins cannot deactivate their current session user', function () {
+    $admin = User::factory()->create();
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.users.deactivate', $admin), [
+            'password' => 'password',
+        ]);
+
+    $response->assertSessionHasErrors('deactivate_user');
+
+    expect($admin->refresh()->is_active)->toBeTrue();
+});
+
+test('admins can reactivate another administrator by confirming password', function () {
+    $admin = User::factory()->create();
+    $targetAdmin = User::factory()->state([
+        'is_active' => false,
+    ])->create();
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.users.reactivate', $targetAdmin), [
+            'password' => 'password',
+        ]);
+
+    $response->assertRedirect(route('admin.users.index'));
+
+    expect($targetAdmin->refresh()->is_active)->toBeTrue();
+});
+
+test('admins must confirm password to reactivate an administrator', function () {
+    $admin = User::factory()->create();
+    $targetAdmin = User::factory()->state([
+        'is_active' => false,
+    ])->create();
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.users.reactivate', $targetAdmin), [
+            'password' => 'incorrect-password',
+        ]);
+
+    $response->assertSessionHasErrors('password');
+
+    expect($targetAdmin->refresh()->is_active)->toBeFalse();
 });

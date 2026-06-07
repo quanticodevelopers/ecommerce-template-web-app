@@ -9,6 +9,7 @@ export type UserListItem = {
   email: string
   phone: string
   role: UserRoleOption
+  is_active: boolean
   created_at: string | null
 }
 

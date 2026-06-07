@@ -45,6 +45,7 @@ class UserFactory extends Factory
             'phone' => fake()->numerify('9########'),
             'password' => static::$password ??= Hash::make('password'),
             'role' => UserRole::ADMIN,
+            'is_active' => true,
             'remember_token' => Str::random(10),
         ];
     }
