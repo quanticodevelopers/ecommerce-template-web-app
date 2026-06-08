@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Label } from '@/components/ui/label'
+import { Spinner } from '@/components/ui/spinner'
 import type { UserListItem } from '@/types'
 
 type AdminUserRowActionsProps = {
@@ -146,6 +147,7 @@ export default function AdminUserRowActions({ user, currentUserId }: AdminUserRo
                     variant={isDeactivateAction ? 'destructive' : 'default'}
                     disabled={processing}
                   >
+                    {processing && <Spinner />}
                     {isDeactivateAction ? 'Desactivar' : isResetPasswordAction ? 'Restablecer contrasena' : 'Activar'}
                   </Button>
                 </DialogFooter>

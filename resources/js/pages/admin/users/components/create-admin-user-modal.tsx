@@ -8,13 +8,16 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Spinner } from '@/components/ui/spinner'
+import { cn } from '@/lib/utils'
 import type { SelectOption } from '@/types'
 
 type CreateAdminUserModalProps = {
   documentTypeOptions: SelectOption[]
+  triggerClassName?: string
 }
 
-export default function CreateAdminUserModal({ documentTypeOptions }: CreateAdminUserModalProps) {
+export default function CreateAdminUserModal({ documentTypeOptions, triggerClassName }: CreateAdminUserModalProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -23,15 +26,15 @@ export default function CreateAdminUserModal({ documentTypeOptions }: CreateAdmi
       onOpenChange={setIsOpen}
     >
       <DialogTrigger asChild>
-        <Button>
+        <Button className={cn(triggerClassName)}>
           <UserPlusIcon className="size-4" />
-          Nuevo usuario administrador
+          Nuevo usuario
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Crear usuario administrador</DialogTitle>
+          <DialogTitle>Crear usuario</DialogTitle>
           <DialogDescription>Completa los datos obligatorios. La contraseña se generara automáticamente.</DialogDescription>
         </DialogHeader>
 
@@ -151,6 +154,7 @@ export default function CreateAdminUserModal({ documentTypeOptions }: CreateAdmi
                   type="submit"
                   disabled={processing}
                 >
+                  {processing && <Spinner />}
                   Crear usuario
                 </Button>
               </DialogFooter>
