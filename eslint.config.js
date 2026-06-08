@@ -4,6 +4,7 @@ import prettier from 'eslint-config-prettier/flat'
 import importPlugin from 'eslint-plugin-import'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
+import unusedImports from 'eslint-plugin-unused-imports'
 import globals from 'globals'
 import typescript from 'typescript-eslint'
 
@@ -42,6 +43,7 @@ export default [
   {
     plugins: {
       import: importPlugin,
+      'unused-imports': unusedImports,
     },
     settings: {
       'import/resolver': {
@@ -54,6 +56,22 @@ export default [
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-unused-vars': 'off',
+
+      'unused-imports/no-unused-imports': 'error',
+
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+
       '@typescript-eslint/consistent-type-imports': [
         'error',
         {
