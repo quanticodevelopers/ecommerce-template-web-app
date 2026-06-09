@@ -49,27 +49,27 @@ export default function CreateAdminUserModal({ documentTypeOptions, triggerClass
         >
           {({ errors, processing, resetAndClearErrors }) => (
             <>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                 <div className="grid gap-2">
-                  <Label htmlFor="name">Nombre</Label>
+                  <Label htmlFor="name">Nombres</Label>
                   <Input
                     id="name"
                     name="name"
                     maxLength={64}
                     required
-                    placeholder="Nombre"
+                    placeholder="Nombres"
                   />
                   <InputError message={errors.name} />
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="last_name">Apellido</Label>
+                  <Label htmlFor="last_name">Apellidos</Label>
                   <Input
                     id="last_name"
                     name="last_name"
                     maxLength={64}
                     required
-                    placeholder="Apellido"
+                    placeholder="Apellidos"
                   />
                   <InputError message={errors.last_name} />
                 </div>
@@ -101,7 +101,7 @@ export default function CreateAdminUserModal({ documentTypeOptions, triggerClass
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="document_number">Numero de documento</Label>
+                  <Label htmlFor="document_number">Número de documento</Label>
                   <Input
                     id="document_number"
                     name="document_number"
@@ -113,7 +113,7 @@ export default function CreateAdminUserModal({ documentTypeOptions, triggerClass
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="phone">Telefono</Label>
+                  <Label htmlFor="phone">Celular</Label>
                   <Input
                     id="phone"
                     name="phone"
@@ -126,14 +126,14 @@ export default function CreateAdminUserModal({ documentTypeOptions, triggerClass
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Correo electronico</Label>
+                  <Label htmlFor="email">Correo electrónico</Label>
                   <Input
                     id="email"
                     type="email"
                     name="email"
                     maxLength={128}
                     required
-                    placeholder="correo@ejemplo.com"
+                    placeholder="Ej: correo@ejemplo.com"
                   />
                   <InputError message={errors.email} />
                 </div>

@@ -18,7 +18,7 @@ class CustomerController extends Controller
     {
         $customers = User::query()
             ->select(['id', 'name', 'last_name', 'email', 'phone', 'document_type', 'document_number', 'created_at', 'role'])
-            ->where('role', UserRole::CUSTOMER->value)
+            ->whereIn('role', [UserRole::CUSTOMER->value, UserRole::ADMIN->value])
             ->latest('created_at')
             ->get();
 

@@ -52,7 +52,9 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Restablecer contrasena de usuario administrador</DialogTitle>
-            <DialogDescription>Por seguridad, confirma tu contrasena para restablecer la contrasena de {user.name} {user.last_name}.</DialogDescription>
+            <DialogDescription>
+              Por seguridad, confirma tu contrasena para restablecer la contrasena de {user.name} {user.last_name}.
+            </DialogDescription>
           </DialogHeader>
 
           <Form

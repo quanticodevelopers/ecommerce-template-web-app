@@ -27,4 +27,21 @@ class StoreAdminUserRequest extends FormRequest
     {
         return $this->profileRules(input: $this->all());
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'document_type' => 'Tipo de documento',
+            'document_number' => 'Número de documento',
+            'name' => 'Nombres',
+            'last_name' => 'Apellidos',
+            'email' => 'Correo electrónico',
+            'phone' => 'Celular',
+        ];
+    }
 }
