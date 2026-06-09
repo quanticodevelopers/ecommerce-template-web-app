@@ -13,7 +13,6 @@ import type { CreatedUserCredentials, SelectOption, UserListItem } from '@/types
 
 type UsersIndexProps = {
   users: UserListItem[]
-  current_user_id: string | null
   document_type_options: SelectOption[]
   created_user_credentials: CreatedUserCredentials | null
 }
@@ -38,7 +37,7 @@ function formatPhone(phone: string): string {
   return phone
 }
 
-export default function UsersIndex({ users, current_user_id, document_type_options, created_user_credentials }: UsersIndexProps) {
+export default function UsersIndex({ users, document_type_options, created_user_credentials }: UsersIndexProps) {
   const createdCredentialsModalKey = created_user_credentials === null ? 'created-user-credentials-empty' : `${created_user_credentials.email}-${created_user_credentials.password}`
   const getInitials = useInitials()
 
@@ -93,7 +92,6 @@ export default function UsersIndex({ users, current_user_id, document_type_optio
                     <th className="px-6 py-3.5 text-center font-medium">Doc. de Id.</th>
                     <th className="w-35 px-6 py-3.5 text-center font-medium">Celular</th>
                     <th className="w-40 px-6 py-3.5 text-center font-medium">Rol</th>
-                    <th className="w-25 px-6 py-3.5 text-center font-medium">Estado</th>
                     <th className="w-35 px-6 py-3.5 text-center font-medium">Registro</th>
                     <th className="w-15 px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
@@ -103,7 +101,7 @@ export default function UsersIndex({ users, current_user_id, document_type_optio
                     <tr>
                       <td
                         className="px-6 py-10 text-center text-muted-foreground"
-                        colSpan={8}
+                        colSpan={7}
                       >
                         No hay usuarios administradores registrados.
                       </td>
@@ -128,15 +126,9 @@ export default function UsersIndex({ users, current_user_id, document_type_optio
                         <td className="px-6 py-4 text-center">
                           <Badge variant="outline">{user.role.label}</Badge>
                         </td>
-                        <td className="px-6 py-4 text-center">
-                          <Badge variant={user.is_active ? 'default' : 'secondary'}>{user.is_active ? 'Activo' : 'Inactivo'}</Badge>
-                        </td>
                         <td className="px-6 py-4 text-center text-muted-foreground">{formatDate(user.created_at)}</td>
                         <td className="px-6 py-4 text-right">
-                          <AdminUserRowActions
-                            user={user}
-                            currentUserId={current_user_id}
-                          />
+                          <AdminUserRowActions user={user} />
                         </td>
                       </tr>
                     ))

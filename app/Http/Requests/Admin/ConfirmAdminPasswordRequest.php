@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeactivateAdminUserRequest extends FormRequest
+class ConfirmAdminPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

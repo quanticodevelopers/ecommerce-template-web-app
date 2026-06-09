@@ -25,9 +25,9 @@ test('admins can see only customer users', function () {
             ->where('customers.0.email', $customer->email)
             ->where('customers.0.role.value', UserRole::CUSTOMER->value)
             ->where('customers.0.role.label', UserRole::CUSTOMER->label())
-            ->where('customers.0.is_active', true)
             ->where('customers.0.name', $customer->name)
             ->where('customers.0.last_name', $customer->last_name)
+            ->missing('customers.0.is_active')
             ->missing('customers.0.email_verified')
             ->missing('customers.0.email_verified_at')
             ->missing('customers.1'),
@@ -36,7 +36,7 @@ test('admins can see only customer users', function () {
 
 test('admin users are not shown in the customers list', function () {
     $admin = User::factory()->create();
-    User::factory()->count(2)->create(); // more admins
+    User::factory()->count(2)->create();
 
     $this->actingAs($admin)
         ->get(route('admin.customers.index'))

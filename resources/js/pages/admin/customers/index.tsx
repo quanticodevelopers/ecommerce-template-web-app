@@ -78,7 +78,6 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
                   <tr>
                     <th className="px-6 py-3.5 text-left font-medium">Usuario</th>
                     <th className="px-6 py-3.5 text-left font-medium">Doc. de Id.</th>
-                    <th className="w-25 px-6 py-3.5 text-center font-medium">Estado</th>
                     <th className="w-35 px-6 py-3.5 text-center font-medium">F. de registro</th>
                     <th className="w-20 px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
@@ -88,7 +87,7 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
                     <tr>
                       <td
                         className="px-6 py-10 text-center text-muted-foreground"
-                        colSpan={5}
+                        colSpan={4}
                       >
                         No hay clientes registrados.
                       </td>
@@ -111,9 +110,6 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
                           </div>
                         </td>
                         <td className="px-6 py-4 text-muted-foreground">{formatDocument(customer)}</td>
-                        <td className="px-6 py-4 text-center">
-                          <Badge variant={customer.is_active ? 'default' : 'secondary'}>{customer.is_active ? 'Activo' : 'Inactivo'}</Badge>
-                        </td>
                         <td className="px-6 py-4 text-center text-muted-foreground">{formatDate(customer.created_at)}</td>
                         <td className="px-6 py-4 text-right">
                           <CustomerRowActions customer={customer} />

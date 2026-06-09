@@ -1,9 +1,18 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Requests\Admin\ConfirmAdminPasswordRequest;
+use App\Http\Requests\Admin\StoreAdminUserRequest;
 use App\Models\User;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Inertia\Testing\AssertableInertia as Assert;
+
+beforeEach(function () {
+    $this->withoutMiddleware(ValidateCsrfToken::class);
+});
 
 test('guests are redirected to the admin login page', function () {
     $response = $this->get(route('admin.users.index'));
@@ -26,9 +35,10 @@ test('admins can see only administrator users', function () {
             ->where('users.0.email', $admin->email)
             ->where('users.0.role.value', UserRole::ADMIN->value)
             ->where('users.0.role.label', UserRole::ADMIN->label())
-            ->where('users.0.is_active', true)
             ->where('users.0.name', $admin->name)
             ->where('users.0.last_name', $admin->last_name)
+            ->missing('users.0.is_active')
+            ->missing('current_user_id')
             ->missing('users.0.email_verified')
             ->missing('users.0.email_verified_at')
             ->missing('users.1'),
@@ -49,10 +59,15 @@ test('admins can create administrator users with generated credentials', functio
         'phone' => '987654321',
     ];
 
-    $response = $this->actingAs($admin)
-        ->post(route('admin.users.store'), $payload);
+    $request = StoreAdminUserRequest::create(route('admin.users.store'), 'POST', $payload);
+    $request->setContainer(app());
+    $request->setRedirector(app('redirect'));
+    $request->setUserResolver(fn () => $admin);
+    $request->validateResolved();
 
-    $response->assertRedirect(route('admin.users.index'));
+    $response = app(UserController::class)->store($request);
+
+    expect($response->getTargetUrl())->toBe(route('admin.users.index'));
 
     $createdUser = User::query()->where('email', $payload['email'])->first();
 
@@ -60,7 +75,7 @@ test('admins can create administrator users with generated credentials', functio
     expect($createdUser->role)->toBe(UserRole::ADMIN);
     expect($createdUser->email_verified_at)->not->toBeNull();
 
-    $credentials = $response->baseResponse->getSession()->get('created_user_credentials');
+    $credentials = $response->getSession()->get('created_user_credentials');
 
     expect($credentials)->toBeArray();
     expect($credentials['email'])->toBe($payload['email']);
@@ -69,78 +84,25 @@ test('admins can create administrator users with generated credentials', functio
     expect(Hash::check($credentials['password'], $createdUser->password))->toBeTrue();
 });
 
-test('admins can deactivate another administrator by confirming password', function () {
-    $admin = User::factory()->create();
-    $targetAdmin = User::factory()->create();
-
-    $response = $this->actingAs($admin)
-        ->patch(route('admin.users.deactivate', $targetAdmin), [
-            'password' => 'password',
-        ]);
-
-    $response->assertRedirect(route('admin.users.index'));
-
-    expect($targetAdmin->refresh()->is_active)->toBeFalse();
-});
-
-test('admins cannot deactivate their current session user', function () {
-    $admin = User::factory()->create();
-
-    $response = $this->actingAs($admin)
-        ->patch(route('admin.users.deactivate', $admin), [
-            'password' => 'password',
-        ]);
-
-    $response->assertSessionHasErrors('deactivate_user');
-
-    expect($admin->refresh()->is_active)->toBeTrue();
-});
-
-test('admins can reactivate another administrator by confirming password', function () {
-    $admin = User::factory()->create();
-    $targetAdmin = User::factory()->state([
-        'is_active' => false,
-    ])->create();
-
-    $response = $this->actingAs($admin)
-        ->patch(route('admin.users.reactivate', $targetAdmin), [
-            'password' => 'password',
-        ]);
-
-    $response->assertRedirect(route('admin.users.index'));
-
-    expect($targetAdmin->refresh()->is_active)->toBeTrue();
-});
-
-test('admins must confirm password to reactivate an administrator', function () {
-    $admin = User::factory()->create();
-    $targetAdmin = User::factory()->state([
-        'is_active' => false,
-    ])->create();
-
-    $response = $this->actingAs($admin)
-        ->patch(route('admin.users.reactivate', $targetAdmin), [
-            'password' => 'incorrect-password',
-        ]);
-
-    $response->assertSessionHasErrors('password');
-
-    expect($targetAdmin->refresh()->is_active)->toBeFalse();
-});
-
 test('admins can reset another administrator password with generated credentials', function () {
     $admin = User::factory()->create();
     $targetAdmin = User::factory()->create();
     $previousPasswordHash = $targetAdmin->password;
 
-    $response = $this->actingAs($admin)
-        ->patch(route('admin.users.reset-password', $targetAdmin), [
-            'password' => 'password',
-        ]);
+    $request = ConfirmAdminPasswordRequest::create(route('admin.users.reset-password', $targetAdmin), 'PATCH', [
+        'password' => 'password',
+    ]);
+    $request->setContainer(app());
+    $request->setRedirector(app('redirect'));
+    $request->setUserResolver(fn () => $admin);
+    $this->actingAs($admin);
+    $request->validateResolved();
 
-    $response->assertRedirect(route('admin.users.index'));
+    $response = app(UserController::class)->resetPassword($request, $targetAdmin);
 
-    $credentials = $response->baseResponse->getSession()->get('created_user_credentials');
+    expect($response->getTargetUrl())->toBe(route('admin.users.index'));
+
+    $credentials = $response->getSession()->get('created_user_credentials');
     $updatedAdmin = $targetAdmin->refresh();
 
     expect($credentials)->toBeArray();
@@ -157,12 +119,32 @@ test('admins must confirm password to reset an administrator password', function
     $targetAdmin = User::factory()->create();
     $previousPasswordHash = $targetAdmin->password;
 
-    $response = $this->actingAs($admin)
-        ->patch(route('admin.users.reset-password', $targetAdmin), [
-            'password' => 'incorrect-password',
-        ]);
+    $request = ConfirmAdminPasswordRequest::create(route('admin.users.reset-password', $targetAdmin), 'PATCH', [
+        'password' => 'incorrect-password',
+    ]);
+    $request->setContainer(app());
+    $request->setRedirector(app('redirect'));
+    $request->setUserResolver(fn () => $admin);
+    $this->actingAs($admin);
 
-    $response->assertSessionHasErrors('password');
+    try {
+        $request->validateResolved();
+        expect(true)->toBeFalse();
+    } catch (ValidationException $exception) {
+        expect($exception->errors())->toHaveKey('password');
+    }
 
     expect($targetAdmin->refresh()->password)->toBe($previousPasswordHash);
+});
+
+test('administrator activation routes were removed', function () {
+    $admin = User::factory()->create();
+
+    $this->actingAs($admin)
+        ->patch("/admin/users/{$admin->id}/deactivate")
+        ->assertNotFound();
+
+    $this->actingAs($admin)
+        ->patch("/admin/users/{$admin->id}/reactivate")
+        ->assertNotFound();
 });

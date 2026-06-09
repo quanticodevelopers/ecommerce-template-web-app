@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -59,12 +58,6 @@ class FortifyServiceProvider extends ServiceProvider
 
             if (! Hash::check($request->string('password')->toString(), $user->password)) {
                 return null;
-            }
-
-            if ($request->session()->get('auth.area') === 'admin' && $user->isAdmin() && ! $user->is_active) {
-                throw ValidationException::withMessages([
-                    Fortify::username() => __('auth.inactive_admin'),
-                ]);
             }
 
             return $user;

@@ -21,7 +21,6 @@ class UserResource extends JsonResource
      *     email: string,
      *     phone: string,
      *     role: array{label: string, value: string},
-     *     is_active: bool,
      *     created_at: string|null
      * }
      */
@@ -42,7 +41,6 @@ class UserResource extends JsonResource
                 'label' => $this->role->label(),
                 'value' => $this->role->value,
             ],
-            'is_active' => $this->is_active,
             'created_at' => $this->created_at?->toIso8601String(),
         ];
     }

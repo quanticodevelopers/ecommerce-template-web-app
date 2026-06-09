@@ -1,5 +1,4 @@
 import { MailIcon, PhoneIcon, UserIcon } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
@@ -71,17 +70,7 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-lg border bg-muted/30 p-3">
-                <p className="text-xs text-muted-foreground">Estado</p>
-                <Badge
-                  variant={customer.is_active ? 'default' : 'secondary'}
-                  className="mt-1"
-                >
-                  {customer.is_active ? 'Activo' : 'Inactivo'}
-                </Badge>
-              </div>
-
+            <div className="grid grid-cols-1 gap-3 text-sm">
               <div className="rounded-lg border bg-muted/30 p-3">
                 <p className="text-xs text-muted-foreground">F. de registro</p>
                 <p className="mt-1 font-medium text-foreground">{formatDate(customer.created_at)}</p>
