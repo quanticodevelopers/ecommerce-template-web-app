@@ -86,7 +86,7 @@ class UserController extends Controller
 
         Inertia::flash('toast', [
             'type' => 'success',
-            'message' => 'Contrasena de usuario administrador restablecida correctamente.',
+            'message' => 'Contraseña de usuario administrador restablecida correctamente.',
         ]);
 
         return to_route('admin.users.index')->with('created_user_credentials', [

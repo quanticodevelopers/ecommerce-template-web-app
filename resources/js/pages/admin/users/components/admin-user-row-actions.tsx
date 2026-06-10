@@ -40,7 +40,7 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
             }}
           >
             <KeyRoundIcon className="size-4" />
-            Restablecer contrasena
+            Restablecer contraseña
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -51,9 +51,9 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Restablecer contrasena de usuario administrador</DialogTitle>
+            <DialogTitle>Restablecer contraseña de usuario administrador</DialogTitle>
             <DialogDescription>
-              Por seguridad, confirma tu contrasena para restablecer la contrasena de {user.name} {user.last_name}.
+              Por seguridad, confirma tu contraseña para restablecer la contraseña de {user.name} {user.last_name}.
             </DialogDescription>
           </DialogHeader>
 
@@ -69,12 +69,12 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
             {({ errors, processing, resetAndClearErrors }) => (
               <>
                 <div className="grid gap-2">
-                  <Label htmlFor={`action-password-${user.id}`}>Contrasena actual</Label>
+                  <Label htmlFor={`action-password-${user.id}`}>Contraseña actual</Label>
                   <PasswordInput
                     id={`action-password-${user.id}`}
                     name="password"
                     autoComplete="current-password"
-                    placeholder="Contrasena"
+                    placeholder="Contraseña"
                     required
                   />
                   <InputError message={errors.password} />
@@ -100,7 +100,7 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
                     disabled={processing}
                   >
                     {processing && <Spinner />}
-                    Restablecer contrasena
+                    Restablecer contraseña
                   </Button>
                 </DialogFooter>
               </>
