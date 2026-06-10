@@ -15,7 +15,6 @@ class LoginController extends Controller
         $request->session()->put('auth.area', 'admin');
 
         return Inertia::render('admin/auth/login', [
-            'canResetPassword' => Features::enabled(Features::resetPasswords()),
             'status' => $request->session()->get('status'),
         ]);
     }

@@ -1,21 +1,19 @@
 import { Form, Head } from '@inertiajs/react'
-import ForgotPasswordController from '@/actions/App/Http/Controllers/Admin/Auth/ForgotPasswordController'
 import InputError from '@/components/input-error'
 import PasswordInput from '@/components/password-input'
-import TextLink from '@/components/text-link'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
+import ForgotPasswordDialog from '@/pages/admin/auth/components/forgot-password-dialog'
 import { store } from '@/routes/login'
 
 type Props = {
   status?: string
-  canResetPassword: boolean
 }
 
-export default function Login({ status, canResetPassword }: Props) {
+export default function Login({ status }: Props) {
   return (
     <>
       <Head title="Iniciar sesión" />
@@ -46,15 +44,7 @@ export default function Login({ status, canResetPassword }: Props) {
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Contraseña</Label>
-                  {canResetPassword && (
-                    <TextLink
-                      href={ForgotPasswordController.url()}
-                      className="ml-auto text-sm"
-                      tabIndex={5}
-                    >
-                      ¿Olvidaste tu contraseña?
-                    </TextLink>
-                  )}
+                  <ForgotPasswordDialog triggerClassName="ml-auto text-sm" />
                 </div>
                 <PasswordInput
                   id="password"

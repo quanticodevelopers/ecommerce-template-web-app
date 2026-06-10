@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\ConfirmPasswordController as AdminConfirmPasswordController;
-use App\Http\Controllers\Admin\Auth\ForgotPasswordController as AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
-use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPasswordController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -16,10 +14,6 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/login', AdminLoginController::class)
                     ->name('auth.login');
-                Route::get('/forgot-password', AdminForgotPasswordController::class)
-                    ->name('auth.password.request');
-                Route::get('/reset-password/{token}', AdminResetPasswordController::class)
-                    ->name('auth.password.reset');
             });
 
         Route::middleware(['auth', 'can:access-admin'])
