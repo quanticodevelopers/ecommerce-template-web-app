@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\RegisterResponse;
+use App\Http\Responses\VerifyEmailResponse;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
@@ -13,6 +14,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
+use Laravel\Fortify\Contracts\VerifyEmailResponse as VerifyEmailResponseContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
         $this->app->singleton(RegisterResponseContract::class, RegisterResponse::class);
+        $this->app->singleton(VerifyEmailResponseContract::class, VerifyEmailResponse::class);
     }
 
     /**

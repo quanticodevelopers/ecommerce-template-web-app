@@ -44,7 +44,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'phone' => fake()->numerify('9########'),
             'password' => static::$password ??= Hash::make('password'),
-            'role' => UserRole::ADMIN,
+            'role' => UserRole::CUSTOMER,
             'remember_token' => Str::random(10),
         ];
     }
@@ -56,6 +56,16 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the model's role should be Administrator
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::ADMIN,
         ]);
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\CustomerResource;
 use App\Models\User;
@@ -18,7 +17,7 @@ class CustomerController extends Controller
     {
         $customers = User::query()
             ->select(['id', 'name', 'last_name', 'email', 'phone', 'document_type', 'document_number', 'created_at', 'role'])
-            ->whereIn('role', [UserRole::CUSTOMER->value, UserRole::ADMIN->value])
+            ->customers()
             ->latest('created_at')
             ->get();
 

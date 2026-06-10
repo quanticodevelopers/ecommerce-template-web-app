@@ -8,6 +8,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,5 +40,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin(): bool
     {
         return in_array($this->role, [UserRole::ADMIN, UserRole::SUPER_ADMIN]);
+    }
+
+    /** Scopes */
+    #[Scope]
+    public function customers(Builder $query): void
+    {
+        $query->whereIn('role', [UserRole::CUSTOMER->value, UserRole::ADMIN->value]);
     }
 }
