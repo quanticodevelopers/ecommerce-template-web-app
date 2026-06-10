@@ -1,9 +1,11 @@
 import { Form, Head } from '@inertiajs/react'
+import { CheckCircle2Icon } from 'lucide-react'
 import TextLink from '@/components/text-link'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { logout } from '@/routes'
-import { send } from '@/routes/verification'
+import { send } from '@/routes/store/verification'
 
 export default function VerifyEmail({ status }: { status?: string }) {
   return (
@@ -11,9 +13,12 @@ export default function VerifyEmail({ status }: { status?: string }) {
       <Head title="Verificación de correo" />
 
       {status === 'verification-link-sent' && (
-        <div className="mb-4 text-center text-sm font-medium text-green-600">
-          Se ha enviado un nuevo enlace de verificación al correo electrónico que proporcionaste durante el registro.
-        </div>
+        <Alert className="w-full text-green-700 dark:text-green-400">
+          <CheckCircle2Icon />
+          <AlertDescription className="text-green-700/80 dark:text-green-400/80">
+            Se ha enviado un nuevo enlace de verificación al correo electrónico que proporcionaste durante el registro.
+          </AlertDescription>
+        </Alert>
       )}
 
       <Form

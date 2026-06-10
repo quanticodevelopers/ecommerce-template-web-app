@@ -1,7 +1,9 @@
 import { Form, Head } from '@inertiajs/react'
+import { CheckCircle2Icon } from 'lucide-react'
 import InputError from '@/components/input-error'
 import PasswordInput from '@/components/password-input'
 import TextLink from '@/components/text-link'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -102,7 +104,12 @@ export default function Login({ status, canResetPassword }: Props) {
         )}
       </Form>
 
-      {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
+      {status && (
+        <Alert className="w-full text-green-700 dark:text-green-400">
+          <CheckCircle2Icon />
+          <AlertDescription className="text-green-700/80 dark:text-green-400/80">{status}</AlertDescription>
+        </Alert>
+      )}
     </>
   )
 }
