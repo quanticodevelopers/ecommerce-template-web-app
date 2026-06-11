@@ -1,0 +1,332 @@
+import { Form, Head } from '@inertiajs/react'
+import { ImageIcon, RotateCcwIcon, SaveIcon, Trash2Icon, UploadIcon } from 'lucide-react'
+import type { ChangeEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import InformationController from '@/actions/App/Http/Controllers/Admin/Settings/InformationController'
+import Heading from '@/components/heading'
+import InputError from '@/components/input-error'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group'
+import { Label } from '@/components/ui/label'
+import { Spinner } from '@/components/ui/spinner'
+import { Textarea } from '@/components/ui/textarea'
+import { edit as editInformation } from '@/routes/admin/information'
+import type { SiteSettings } from '@/types'
+
+interface InformationProps {
+  settings: SiteSettings
+}
+
+const Information = ({ settings }: InformationProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const previewUrlRef = useRef<string | null>(null)
+  const [logoPreview, setLogoPreview] = useState<string | null>(settings.logo_url)
+  const [removeLogo, setRemoveLogo] = useState(false)
+
+  useEffect(() => {
+    return () => {
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current)
+      }
+    }
+  }, [])
+
+  function clearTemporaryPreview(): void {
+    if (previewUrlRef.current) {
+      URL.revokeObjectURL(previewUrlRef.current)
+      previewUrlRef.current = null
+    }
+  }
+
+  function handleLogoChange(event: ChangeEvent<HTMLInputElement>): void {
+    const file = event.target.files?.[0]
+
+    if (!file) {
+      return
+    }
+
+    clearTemporaryPreview()
+
+    const objectUrl = URL.createObjectURL(file)
+    previewUrlRef.current = objectUrl
+
+    setRemoveLogo(false)
+    setLogoPreview(objectUrl)
+  }
+
+  function handleRemoveLogo(): void {
+    clearTemporaryPreview()
+    setLogoPreview(null)
+    setRemoveLogo(true)
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }
+
+  function handleFormReset(): void {
+    clearTemporaryPreview()
+    setLogoPreview(settings.logo_url)
+    setRemoveLogo(false)
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }
+
+  return (
+    <>
+      <Head title="Informacion del sitio" />
+
+      <h1 className="sr-only">Informacion del sitio</h1>
+
+      <div className="space-y-6">
+        <Heading
+          variant="small"
+          title="Informacion"
+          description="Administra los datos publicos del sitio y lo que vera el frontend."
+        />
+
+        <Form
+          {...InformationController.update.form()}
+          options={{
+            preserveScroll: true,
+          }}
+          className="space-y-6"
+          onReset={handleFormReset}
+        >
+          {({ errors, processing, progress }) => (
+            <>
+              <section className="flex items-start gap-4 bg-background/60">
+                <div className="flex h-22 w-22 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-muted/40">
+                  {logoPreview ? (
+                    <img
+                      alt="Logo del sitio"
+                      className="h-full w-full object-contain p-2"
+                      src={logoPreview}
+                    />
+                  ) : (
+                    <ImageIcon className="size-8 text-muted-foreground" />
+                  )}
+                </div>
+
+                <div className="min-w-0 flex-1 space-y-3">
+                  <div className="grid gap-1">
+                    <Label className="text-sm font-medium">Logo del sitio</Label>
+                    <p className="text-sm text-muted-foreground">PNG o SVG, minimo 512 x 512 px.</p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <UploadIcon className="size-4" />
+                      Subir nuevo
+                    </Button>
+
+                    <Button
+                      type="button"
+                      variant={removeLogo ? 'secondary' : 'outline'}
+                      size="sm"
+                      disabled={!settings.logo_url && !logoPreview}
+                      onClick={handleRemoveLogo}
+                    >
+                      <Trash2Icon className="size-4" />
+                      Quitar
+                    </Button>
+
+                    <input
+                      ref={fileInputRef}
+                      accept=".png,.svg,image/png,image/svg+xml"
+                      className="sr-only"
+                      name="logo"
+                      type="file"
+                      onChange={handleLogoChange}
+                    />
+
+                    <input
+                      name="remove_logo"
+                      type="hidden"
+                      value={removeLogo ? '1' : '0'}
+                    />
+                  </div>
+
+                  <InputError message={errors.logo} />
+                </div>
+              </section>
+
+              {progress && (
+                <div className="grid gap-2">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>Subiendo logo</span>
+                    <span>{Math.round(progress.percentage ?? 0)}%</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-primary transition-all"
+                      style={{ width: `${progress.percentage ?? 0}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="grid items-start gap-4 xl:grid-cols-2">
+                <div className="grid gap-2">
+                  <Label htmlFor="site_name">Nombre del sitio</Label>
+
+                  <Input
+                    id="site_name"
+                    defaultValue={settings.site_name}
+                    maxLength={128}
+                    name="site_name"
+                    placeholder="Nombre del sitio"
+                    required
+                  />
+
+                  <InputError message={errors.site_name} />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="footer_credit_name">Nombre en créditos del footer</Label>
+
+                  <Input
+                    id="footer_credit_name"
+                    defaultValue={settings.footer_credit_name}
+                    maxLength={128}
+                    name="footer_credit_name"
+                    placeholder="Nombre para créditos"
+                    required
+                  />
+
+                  <InputError message={errors.footer_credit_name} />
+                </div>
+              </div>
+
+              <div className="grid items-start gap-4 xl:grid-cols-2">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Correo electrónico</Label>
+
+                  <Input
+                    id="email"
+                    type="email"
+                    defaultValue={settings.email}
+                    maxLength={128}
+                    name="email"
+                    placeholder="correo@ejemplo.com"
+                    required
+                  />
+
+                  <InputError message={errors.email} />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="phone">Celular</Label>
+
+                  <InputGroup>
+                    <InputGroupAddon align="inline-start">
+                      <InputGroupText>+51</InputGroupText>
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      id="phone"
+                      className="rounded-none border-0 shadow-none focus-visible:ring-0"
+                      defaultValue={settings.phone}
+                      inputMode="numeric"
+                      maxLength={9}
+                      minLength={9}
+                      name="phone"
+                      pattern="[0-9]{9}"
+                      placeholder="987654321"
+                      required
+                    />
+                  </InputGroup>
+
+                  <InputError message={errors.phone} />
+                </div>
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="address">Dirección</Label>
+
+                <Input
+                  id="address"
+                  defaultValue={settings.address}
+                  maxLength={128}
+                  name="address"
+                  placeholder="Av. Principal 123"
+                  required
+                />
+
+                <InputError message={errors.address} />
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="site_description">Descripción del sitio</Label>
+
+                <Textarea
+                  id="site_description"
+                  defaultValue={settings.site_description}
+                  maxLength={255}
+                  name="site_description"
+                  placeholder="Describe brevemente el sitio"
+                  required
+                />
+
+                <InputError message={errors.site_description} />
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="site_keywords">Palabras clave</Label>
+
+                <Input
+                  id="site_keywords"
+                  defaultValue={settings.site_keywords}
+                  maxLength={255}
+                  name="site_keywords"
+                  placeholder="ecommerce, tienda, online"
+                  required
+                />
+
+                <p className="text-xs text-muted-foreground">Se guardan separadas por comas.</p>
+                <InputError message={errors.site_keywords} />
+              </div>
+
+              <div className="flex flex-col-reverse gap-3 border-t pt-6 sm:flex-row sm:justify-end">
+                <Button
+                  type="reset"
+                  variant="outline"
+                  disabled={processing}
+                >
+                  <RotateCcwIcon className="size-4" />
+                  Cancelar
+                </Button>
+
+                <Button
+                  disabled={processing}
+                  type="submit"
+                >
+                  {processing ? <Spinner /> : <SaveIcon className="size-4" />}
+                  Guardar cambios
+                </Button>
+              </div>
+            </>
+          )}
+        </Form>
+      </div>
+    </>
+  )
+}
+
+Information.layout = {
+  breadcrumbs: [
+    {
+      title: 'Informacion del sitio',
+      href: editInformation(),
+    },
+  ],
+}
+
+export default Information

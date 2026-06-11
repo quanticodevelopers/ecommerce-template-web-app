@@ -1,5 +1,6 @@
 export type * from './auth'
 export type * from './enums'
 export type * from './navigation'
+export type * from './site-settings'
 export type * from './ui'
 export type * from './user-list-item'

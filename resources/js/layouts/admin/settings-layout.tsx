@@ -1,30 +1,36 @@
 import { Link } from '@inertiajs/react'
+import { BookIcon, LockKeyholeIcon, SunIcon, UserPenIcon } from 'lucide-react'
 import type { PropsWithChildren } from 'react'
 import Heading from '@/components/heading'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { useCurrentUrl } from '@/hooks/use-current-url'
 import { cn, toUrl } from '@/lib/utils'
 import { edit as editAppearance } from '@/routes/admin/appearance'
+import { edit as editInformation } from '@/routes/admin/information'
 import { edit as editProfile } from '@/routes/admin/profile'
 import { edit as editSecurity } from '@/routes/admin/security'
 import type { NavItem } from '@/types'
 
 const sidebarNavItems: NavItem[] = [
   {
+    title: 'Información',
+    href: editInformation(),
+    icon: BookIcon,
+  },
+  {
     title: 'Perfil',
     href: editProfile(),
-    icon: null,
+    icon: UserPenIcon,
   },
   {
     title: 'Seguridad',
     href: editSecurity(),
-    icon: null,
+    icon: LockKeyholeIcon,
   },
   {
     title: 'Apariencia',
     href: editAppearance(),
-    icon: null,
+    icon: SunIcon,
   },
 ]
 
@@ -34,20 +40,20 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
   return (
     <div className="grid gap-6 p-8">
       <Heading
-        title="Ajustes"
+        title="Configuración"
         description="Administra tu perfil y la configuracion de tu cuenta"
       />
 
-      <div className="flex flex-col lg:flex-row lg:space-x-12">
-        <aside className="w-full max-w-xl lg:w-48">
+      <div className="flex flex-col items-start space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
+        <aside className="w-full max-w-xl rounded-xl border p-2 lg:w-80">
           <nav
             className="flex flex-col space-y-1 space-x-0"
-            aria-label="Ajustes"
+            aria-label="Configuración"
           >
             {sidebarNavItems.map((item, index) => (
               <Button
                 key={`${toUrl(item.href)}-${index}`}
-                size="sm"
+                size="lg"
                 variant="ghost"
                 asChild
                 className={cn('w-full justify-start', {
@@ -63,11 +69,7 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
           </nav>
         </aside>
 
-        <Separator className="my-6 lg:hidden" />
-
-        <div className="flex-1 md:max-w-2xl">
-          <section className="max-w-xl space-y-12">{children}</section>
-        </div>
+        <section className="flex-1 space-y-12 rounded-xl border p-6 md:max-w-2xl">{children}</section>
       </div>
     </div>
   )

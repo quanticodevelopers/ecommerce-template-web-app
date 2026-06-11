@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Settings\InformationController;
 use App\Http\Controllers\Admin\Settings\ProfileController;
 use App\Http\Controllers\Admin\Settings\SecurityController;
 use App\Http\Middleware\RequirePassword;
@@ -10,6 +11,12 @@ Route::middleware(['auth', 'can:access-admin'])
     ->name('admin.')
     ->group(function () {
         Route::redirect('settings', '/admin/settings/profile');
+
+        Route::get('settings/information', [InformationController::class, 'edit'])
+            ->name('information.edit');
+
+        Route::put('settings/information', [InformationController::class, 'update'])
+            ->name('information.update');
 
         Route::get('settings/profile', [ProfileController::class, 'edit'])
             ->name('profile.edit');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\Admin\SiteSettingsResource;
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -42,6 +44,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'site' => SiteSettingsResource::make(SiteSetting::cachedRows())->resolve($request),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

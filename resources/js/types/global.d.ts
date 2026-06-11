@@ -1,4 +1,5 @@
 import type { Auth } from '@/types/auth'
+import type { SiteSettings } from '@/types/site-settings'
 
 declare module 'react' {
   // eslint-disable-next-line unused-imports/no-unused-vars
@@ -13,6 +14,7 @@ declare module '@inertiajs/core' {
       name: string
       url: string
       auth: Auth
+      site: SiteSettings
       sidebarOpen: boolean
       [key: string]: unknown
     }
