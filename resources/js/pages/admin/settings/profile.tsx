@@ -16,15 +16,13 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
 
   return (
     <>
-      <Head title="Ajustes de perfil" />
-
-      <h1 className="sr-only">Ajustes de perfil</h1>
+      <Head title="Configuración de tu perfil" />
 
       <div className="space-y-6">
         <Heading
           variant="small"
-          title="Perfil"
-          description="Actualiza tu nombre y correo electrónico"
+          title="Configuración de tu perfil"
+          description="Actualiza tu documento, nombre completo, celular y correo electrónico."
         />
 
         <Form

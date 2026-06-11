@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react'
 import { ShoppingBagIcon } from 'lucide-react'
+import Heading from '@/components/heading'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useInitials } from '@/hooks/use-initials'
 import { dateFormatter } from '@/lib/utils'
@@ -38,20 +38,12 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
 
       <div className="flex flex-col gap-8 p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-          <div className="space-y-3">
-            <Badge
-              variant="secondary"
-              className="w-fit gap-1.5"
-            >
-              <ShoppingBagIcon className="size-3.5" />
-              Tienda
-            </Badge>
-
-            <div className="space-y-2">
-              <h1 className="text-3xl font-semibold tracking-tight">Clientes</h1>
-              <p className="max-w-2xl text-sm text-muted-foreground">Gestiona los usuarios clientes registrados en la tienda y revisa su información en un solo lugar.</p>
-            </div>
-          </div>
+          <Heading
+            title="Clientes"
+            description="Gestiona los usuarios clientes registrados en la tienda y revisa su información en un solo lugar."
+            badgeIcon={ShoppingBagIcon}
+            badgeLabel="Tienda"
+          />
 
           <div className="flex w-full flex-wrap items-center justify-start gap-3 md:w-auto md:justify-end">
             <div

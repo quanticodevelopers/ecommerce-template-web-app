@@ -77,15 +77,13 @@ const Information = ({ settings }: InformationProps) => {
 
   return (
     <>
-      <Head title="Informacion del sitio" />
-
-      <h1 className="sr-only">Informacion del sitio</h1>
+      <Head title="Configuración de información del sitio" />
 
       <div className="space-y-6">
         <Heading
           variant="small"
-          title="Informacion"
-          description="Administra los datos publicos del sitio y lo que vera el frontend."
+          title="Configuración de información del sitio"
+          description="Administra la información pública del sitio. Está información se muestra al público y es importante para el SEO."
         />
 
         <Form

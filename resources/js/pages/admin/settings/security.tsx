@@ -19,15 +19,13 @@ export default function Security(props: Props) {
 
   return (
     <>
-      <Head title="Ajustes de seguridad" />
-
-      <h1 className="sr-only">Ajustes de seguridad</h1>
+      <Head title="Configuración de seguridad" />
 
       <div className="space-y-6">
         <Heading
           variant="small"
           title="Actualizar contraseña"
-          description="Asegúrate de que tu cuenta use una contraseña larga y aleatoria para mantenerse segura"
+          description="Asegúrate de que tu cuenta use una contraseña larga y aleatoria para mantenerse segura."
         />
 
         <Form

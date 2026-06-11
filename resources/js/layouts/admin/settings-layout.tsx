@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react'
-import { BookIcon, LockKeyholeIcon, SunIcon, UserPenIcon } from 'lucide-react'
+import { BookIcon, LockKeyholeIcon, SettingsIcon, SunIcon, UserPenIcon } from 'lucide-react'
 import type { PropsWithChildren } from 'react'
 import Heading from '@/components/heading'
 import { Button } from '@/components/ui/button'
@@ -13,7 +13,7 @@ import type { NavItem } from '@/types'
 
 const sidebarNavItems: NavItem[] = [
   {
-    title: 'Información',
+    title: 'Información del sitio',
     href: editInformation(),
     icon: BookIcon,
   },
@@ -42,6 +42,8 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
       <Heading
         title="Configuración"
         description="Administra tu perfil y la configuracion de tu cuenta"
+        badgeIcon={SettingsIcon}
+        badgeLabel="Administración"
       />
 
       <div className="flex flex-col items-start space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">

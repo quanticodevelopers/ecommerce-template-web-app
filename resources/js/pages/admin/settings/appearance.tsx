@@ -6,15 +6,13 @@ import { edit as editAppearance } from '@/routes/admin/appearance'
 export default function Appearance() {
   return (
     <>
-      <Head title="Ajustes de apariencia" />
-
-      <h1 className="sr-only">Ajustes de apariencia</h1>
+      <Head title="Configuración de apariencia" />
 
       <div className="space-y-6">
         <Heading
           variant="small"
-          title="Ajustes de apariencia"
-          description="Actualiza los ajustes de apariencia de tu cuenta"
+          title="Configuración de apariencia"
+          description="Actualiza los ajustes de apariencia de tu cuenta."
         />
         <AppearanceTabs />
       </div>

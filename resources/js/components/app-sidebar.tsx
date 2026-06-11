@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react'
-import { LayoutGrid, SettingsIcon, ShoppingBagIcon, SquareArrowOutUpRightIcon, UsersIcon } from 'lucide-react'
+import { LayoutDashboardIcon, SettingsIcon, ShoppingBagIcon, SquareArrowOutUpRightIcon, UsersIcon } from 'lucide-react'
 import { useMemo } from 'react'
 import AppLogo from '@/components/app-logo'
 import { NavFooter } from '@/components/nav-footer'
@@ -19,7 +19,7 @@ const mainNavItems: NavGroup[] = [
       {
         title: 'Dashboard',
         href: dashboard(),
-        icon: LayoutGrid,
+        icon: LayoutDashboardIcon,
       },
     ],
   },
