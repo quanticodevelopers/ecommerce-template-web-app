@@ -46,7 +46,7 @@ export default function UsersIndex({ users, document_type_options, created_user_
     <>
       <Head title="Usuarios" />
 
-      <div className="flex flex-col gap-8 p-8">
+      <div className="flex flex-col gap-8 p-4 lg:p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <Heading
             title="Usuarios"

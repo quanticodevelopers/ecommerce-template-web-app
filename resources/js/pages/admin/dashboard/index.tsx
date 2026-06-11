@@ -1,13 +1,60 @@
-import { Head } from '@inertiajs/react'
+import { Head, usePage } from '@inertiajs/react'
+import { ListFilterIcon } from 'lucide-react'
+import AstroidIcon from '@/components/astroid-icon'
+import { Button } from '@/components/ui/button'
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
+import { formatPeruDashboardDate, getPeruDashboardGreeting } from '@/lib/utils'
 import { dashboard } from '@/routes/admin'
 
 export default function DashboardIndex() {
+  const { auth } = usePage().props
+  const currentDate = new Date()
+  const greeting = getPeruDashboardGreeting(currentDate)
+  const formattedDate = formatPeruDashboardDate(currentDate)
+  const fullName = `${auth.user.name} ${auth.user.last_name}`.trim()
+
   return (
     <>
       <Head title="Dashboard" />
-      <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+      <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4 md:p-8">
+        <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+          <div className="space-y-3">
+            <time
+              className="inline-block w-fit text-sm font-medium text-muted-foreground"
+              dateTime={currentDate.toISOString()}
+            >
+              {formattedDate}
+            </time>
+
+            <div className="space-y-2">
+              <h1 className="flex items-center gap-2 text-3xl font-semibold tracking-tight">
+                <span>
+                  {greeting}, <span className="text-primary">{fullName}</span>
+                </span>{' '}
+                <AstroidIcon />
+              </h1>
+              <p className="max-w-2xl text-sm text-muted-foreground">Resumen de la información de tu tienda.</p>
+            </div>
+          </div>
+
+          <div className="flex w-full flex-wrap items-center justify-start gap-3 md:w-auto md:justify-end">
+            <div
+              className="h-10 w-full"
+              aria-hidden="true"
+            >
+              <Button
+                variant="outline"
+                size="lg"
+              >
+                <ListFilterIcon /> Este mes
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="grid auto-rows-min gap-4 xs:grid-cols-2 md:grid-cols-4">
+          <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+          </div>
           <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
             <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
           </div>

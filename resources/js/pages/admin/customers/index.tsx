@@ -36,7 +36,7 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
     <>
       <Head title="Clientes" />
 
-      <div className="flex flex-col gap-8 p-8">
+      <div className="p4 flex flex-col gap-8 lg:p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <Heading
             title="Clientes"
