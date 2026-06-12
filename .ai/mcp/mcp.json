@@ -1,9 +1,9 @@
 {
   "mcpServers": {
     "laravel-boost": {
-      "command": "php",
+      "command": "C:\\Users\\abern\\.config\\herd\\bin\\php.bat",
       "args": [
-        "artisan",
+        "D:\\Programas\\Herd\\ecommerce-template-web-app\\artisan",
         "boost:mcp"
       ]
     }
