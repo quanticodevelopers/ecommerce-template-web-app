@@ -117,6 +117,9 @@ return [
         'created' => 'Category created successfully.',
         'updated' => 'Category updated successfully.',
     ],
+    'brands' => [
+        'created' => 'Brand created successfully.',
+    ],
     'user' => 'User',
     'view' => 'View',
     'yes' => 'Yes',

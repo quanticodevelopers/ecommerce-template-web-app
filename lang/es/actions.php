@@ -117,6 +117,9 @@ return [
         'created' => 'Categoría creada correctamente.',
         'updated' => 'Categoría actualizada correctamente.',
     ],
+    'brands' => [
+        'created' => 'Marca creada correctamente.',
+    ],
     'user' => 'Usuario',
     'view' => 'Ver',
     'yes' => 'Sí',

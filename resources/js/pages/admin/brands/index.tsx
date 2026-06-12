@@ -4,6 +4,7 @@ import Heading from '@/components/heading'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import BrandRowActions from '@/pages/admin/brands/components/brand-row-actions'
+import CreateBrandModal from '@/pages/admin/brands/components/create-brand-modal'
 import { index as brandsIndex } from '@/routes/admin/brands'
 import type { BrandListItem } from '@/types'
 
@@ -28,6 +29,10 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
             badgeIcon={TagIcon}
             badgeLabel="Catálogo"
           />
+
+          <div className="flex w-full items-start justify-start md:w-auto md:justify-end">
+            <CreateBrandModal />
+          </div>
         </div>
 
         <Card className="gap-0 border-sidebar-border/70 pt-4 shadow-none dark:border-sidebar-border">

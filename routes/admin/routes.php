@@ -40,6 +40,8 @@ Route::prefix('admin')
                     ->group(function () {
                         Route::get('/brands', 'index')
                             ->name('brands.index');
+                        Route::post('/brands', 'store')
+                            ->name('brands.store');
                     });
 
                 Route::controller(AdminUserController::class)
