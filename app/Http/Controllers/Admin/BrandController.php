@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBrandRequest;
+use App\Http\Requests\Admin\UpdateBrandRequest;
 use App\Http\Resources\Admin\BrandResource;
 use App\Models\Brand;
 use Illuminate\Http\RedirectResponse;
@@ -64,6 +65,42 @@ class BrandController extends Controller
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => __('actions.brands.created'),
+        ]);
+
+        return to_route('admin.brands.index');
+    }
+
+    /**
+     * Update the specified brand.
+     */
+    public function update(UpdateBrandRequest $request, Brand $brand): RedirectResponse
+    {
+        $validated = $request->validated();
+        $updateData = [
+            'name' => $validated['name'],
+            'short_description' => $validated['short_description'] ?? null,
+            'is_active' => $validated['is_active'],
+        ];
+
+        if ($request->hasFile('logo')) {
+            $logoPath = $this->brandLogoPath($brand);
+
+            try {
+                $this->storeLogoAsWebp($request->file('logo'), $logoPath);
+            } catch (\Throwable) {
+                throw ValidationException::withMessages([
+                    'logo' => 'No se pudo procesar el logo de la marca.',
+                ]);
+            }
+
+            $updateData['logo_path'] = $logoPath;
+        }
+
+        $brand->update($updateData);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => __('actions.brands.updated'),
         ]);
 
         return to_route('admin.brands.index');

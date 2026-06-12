@@ -119,6 +119,7 @@ return [
     ],
     'brands' => [
         'created' => 'Marca creada correctamente.',
+        'updated' => 'Marca actualizada correctamente.',
     ],
     'user' => 'Usuario',
     'view' => 'Ver',

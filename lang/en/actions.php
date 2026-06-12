@@ -119,6 +119,7 @@ return [
     ],
     'brands' => [
         'created' => 'Brand created successfully.',
+        'updated' => 'Brand updated successfully.',
     ],
     'user' => 'User',
     'view' => 'View',

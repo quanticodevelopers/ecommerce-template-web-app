@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
+import EditBrandModal from '@/pages/admin/brands/components/edit-brand-modal'
 import type { BrandListItem } from '@/types'
 
 type BrandRowActionsProps = {
@@ -31,7 +32,9 @@ export default function BrandRowActions({ brand }: BrandRowActionsProps) {
   const status = formatStatus(brand.is_active)
 
   return (
-    <>
+    <div className="inline-flex items-center gap-1">
+      <EditBrandModal brand={brand} />
+
       <Button
         type="button"
         variant="ghost"
@@ -119,6 +122,6 @@ export default function BrandRowActions({ brand }: BrandRowActionsProps) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   )
 }

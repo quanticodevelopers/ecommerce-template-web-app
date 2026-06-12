@@ -42,6 +42,8 @@ Route::prefix('admin')
                             ->name('brands.index');
                         Route::post('/brands', 'store')
                             ->name('brands.store');
+                        Route::patch('/brands/{brand}', 'update')
+                            ->name('brands.update');
                     });
 
                 Route::controller(AdminUserController::class)
