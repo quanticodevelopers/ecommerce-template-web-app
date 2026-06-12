@@ -1,4 +1,5 @@
 export type * from './auth'
+export type * from './category-list-item'
 export type * from './enums'
 export type * from './navigation'
 export type * from './site-settings'

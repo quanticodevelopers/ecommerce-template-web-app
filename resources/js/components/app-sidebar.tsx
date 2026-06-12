@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react'
-import { LayoutDashboardIcon, SettingsIcon, ShoppingBagIcon, SquareArrowOutUpRightIcon, UsersIcon } from 'lucide-react'
+import { FolderTreeIcon, LayoutDashboardIcon, SettingsIcon, ShoppingBagIcon, SquareArrowOutUpRightIcon, UsersIcon } from 'lucide-react'
 import { useMemo } from 'react'
 import AppLogo from '@/components/app-logo'
 import { NavFooter } from '@/components/nav-footer'
@@ -7,6 +7,7 @@ import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { dashboard } from '@/routes/admin'
+import { index as adminCategories } from '@/routes/admin/categories'
 import { index as adminCustomers } from '@/routes/admin/customers'
 import { edit as editInformation } from '@/routes/admin/information'
 import { index as adminUsers } from '@/routes/admin/users'
@@ -20,6 +21,16 @@ const mainNavItems: NavGroup[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutDashboardIcon,
+      },
+    ],
+  },
+  {
+    title: 'Catálogo',
+    items: [
+      {
+        title: 'Categorías',
+        href: adminCategories(),
+        icon: FolderTreeIcon,
       },
     ],
   },

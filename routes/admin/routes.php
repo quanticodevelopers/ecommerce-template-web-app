@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Auth\ConfirmPasswordController as AdminConfirmPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -21,6 +22,14 @@ Route::prefix('admin')
                 Route::redirect('/', 'admin/dashboard');
                 Route::get('/dashboard', DashboardController::class)
                     ->name('dashboard');
+
+                Route::controller(AdminCategoryController::class)
+                    ->group(function () {
+                        Route::get('/categories', 'index')
+                            ->name('categories.index');
+                        Route::get('/categories/{category}/subcategories', 'subcategories')
+                            ->name('categories.subcategories');
+                    });
 
                 Route::controller(AdminUserController::class)
                     ->group(function () {
