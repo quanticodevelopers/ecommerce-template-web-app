@@ -3,8 +3,8 @@ import { FolderTreeIcon } from 'lucide-react'
 import Heading from '@/components/heading'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import CreateCategoryModal from '@/pages/admin/categories/components/create-category-modal'
 import CategoryRowActions from '@/pages/admin/categories/components/category-row-actions'
+import CreateCategoryModal from '@/pages/admin/categories/components/create-category-modal'
 import { index as categoriesIndex, subcategories } from '@/routes/admin/categories'
 import type { CategoryListItem, CategoryParent, SelectOption } from '@/types'
 
@@ -104,7 +104,7 @@ export default function CategoriesIndex({ categories, parent_category, category_
                           key={category.id}
                           className="align-middle transition-colors hover:bg-muted/30"
                         >
-                          <td className="whitespace-nowrap px-6 py-4 font-mono text-foreground">{category.code}</td>
+                          <td className="px-6 py-4 font-mono whitespace-nowrap text-foreground">{category.code}</td>
                           <td className="px-6 py-4">
                             <div className="space-y-1">
                               <p className="font-medium text-foreground">{category.name}</p>
@@ -127,7 +127,10 @@ export default function CategoriesIndex({ categories, parent_category, category_
                             </Link>
                           </td>
                           <td className="px-6 py-4 text-right">
-                            <CategoryRowActions category={category} />
+                            <CategoryRowActions
+                              category={category}
+                              parentCategoryOptions={category_parent_options}
+                            />
                           </td>
                         </tr>
                       )

@@ -23,6 +23,8 @@ return [
         'string' => 'El campo :attribute tiene que tener entre :min - :max caracteres.',
     ],
     'boolean' => 'El campo :attribute debe tener un valor verdadero o falso.',
+    'category_parent_self' => 'Una categoría no puede ser su propia categoría padre.',
+    'category_parent_descendant' => 'Una categoría no puede asignarse como hija de una de sus descendientes.',
     'can' => 'El campo :attribute contiene un valor no autorizado.',
     'confirmed' => 'La confirmación de :attribute no coincide.',
     'contains' => 'Al campo :attribute le falta un valor obligatorio.',

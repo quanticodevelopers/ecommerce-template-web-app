@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +46,34 @@ class CategoryController extends Controller
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => __('actions.categories.created'),
+        ]);
+
+        if ($category->parent_id === null) {
+            return to_route('admin.categories.index');
+        }
+
+        $parentCategory = Category::query()->findOrFail($category->parent_id);
+
+        return to_route('admin.categories.subcategories', $parentCategory);
+    }
+
+    /**
+     * Update the specified category.
+     */
+    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $category->update([
+            'name' => $validated['name'],
+            'parent_id' => $validated['parent_id'] ?? null,
+            'short_description' => $validated['short_description'] ?? null,
+            'is_active' => $validated['is_active'],
+        ]);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => __('actions.categories.updated'),
         ]);
 
         if ($category->parent_id === null) {

@@ -23,6 +23,8 @@ return [
         'string' => 'The :attribute field must be between :min and :max characters.',
     ],
     'boolean' => 'The :attribute field must be true or false.',
+    'category_parent_self' => 'A category cannot be its own parent.',
+    'category_parent_descendant' => 'A category cannot be assigned to one of its descendants.',
     'can' => 'The :attribute field contains an unauthorized value.',
     'confirmed' => 'The :attribute field confirmation does not match.',
     'contains' => 'The :attribute field is missing a required value.',

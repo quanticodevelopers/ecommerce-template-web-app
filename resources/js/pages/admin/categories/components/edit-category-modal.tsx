@@ -1,7 +1,7 @@
 import { Form } from '@inertiajs/react'
-import { FolderPlusIcon } from 'lucide-react'
+import { PencilIcon } from 'lucide-react'
 import { useState } from 'react'
-import { store as categoriesStore } from '@/actions/App/Http/Controllers/Admin/CategoryController'
+import { update as categoriesUpdate } from '@/actions/App/Http/Controllers/Admin/CategoryController'
 import InputError from '@/components/input-error'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
@@ -11,19 +11,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Spinner } from '@/components/ui/spinner'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import type { SelectOption } from '@/types'
+import type { CategoryListItem, SelectOption } from '@/types'
 
 const ROOT_PARENT_VALUE = '__root__'
 
-type CreateCategoryModalProps = {
+type EditCategoryModalProps = {
+  category: CategoryListItem
   parentCategoryOptions: SelectOption[]
-  defaultParentId?: string | null
   triggerClassName?: string
 }
 
-export default function CreateCategoryModal({ parentCategoryOptions, defaultParentId = null, triggerClassName }: CreateCategoryModalProps) {
+export default function EditCategoryModal({ category, parentCategoryOptions, triggerClassName }: EditCategoryModalProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const defaultValue = defaultParentId ?? ROOT_PARENT_VALUE
+  const defaultParentValue = category.parent?.id ?? ROOT_PARENT_VALUE
+  const editableParentOptions = parentCategoryOptions.filter((parentCategory) => parentCategory.value !== category.id)
+  const defaultStatusValue = category.is_active ? '1' : '0'
 
   return (
     <Dialog
@@ -31,20 +33,25 @@ export default function CreateCategoryModal({ parentCategoryOptions, defaultPare
       onOpenChange={setIsOpen}
     >
       <DialogTrigger asChild>
-        <Button className={cn(triggerClassName)}>
-          <FolderPlusIcon className="size-4" />
-          Nueva categoría
+        <Button
+          className={cn(triggerClassName)}
+          variant="ghost"
+          size="icon"
+          type="button"
+          aria-label={`Editar ${category.name}`}
+        >
+          <PencilIcon className="size-4" />
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Crear categoría</DialogTitle>
-          <DialogDescription>Completa los datos obligatorios para registrar una categoría del catálogo.</DialogDescription>
+          <DialogTitle>Editar categoría</DialogTitle>
+          <DialogDescription>Actualiza los datos de la categoría seleccionada.</DialogDescription>
         </DialogHeader>
 
         <Form
-          {...categoriesStore.form()}
+          {...categoriesUpdate.form(category.id)}
           options={{
             preserveScroll: true,
           }}
@@ -56,32 +63,33 @@ export default function CreateCategoryModal({ parentCategoryOptions, defaultPare
             <>
               <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
                 <div className="grid gap-2 md:col-span-2">
-                  <Label htmlFor="name">Nombre</Label>
+                  <Label htmlFor={`edit-name-${category.id}`}>Nombre</Label>
                   <Input
-                    id="name"
+                    id={`edit-name-${category.id}`}
                     name="name"
                     maxLength={128}
                     required
+                    defaultValue={category.name}
                     placeholder="Nombre de la categoría"
                   />
                   <InputError message={errors.name} />
                 </div>
 
                 <div className="grid gap-2 md:col-span-2">
-                  <Label htmlFor="parent_id">Categoría padre</Label>
+                  <Label htmlFor={`edit-parent_id-${category.id}`}>Categoría padre</Label>
                   <Select
                     name="parent_id"
-                    defaultValue={defaultValue}
+                    defaultValue={defaultParentValue}
                   >
                     <SelectTrigger
-                      id="parent_id"
+                      id={`edit-parent_id-${category.id}`}
                       className="w-full"
                     >
                       <SelectValue placeholder="Selecciona una categoría padre" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value={ROOT_PARENT_VALUE}>Sin categoría padre</SelectItem>
-                      {parentCategoryOptions.map((parentCategory) => (
+                      {editableParentOptions.map((parentCategory) => (
                         <SelectItem
                           key={parentCategory.value}
                           value={parentCategory.value}
@@ -95,15 +103,36 @@ export default function CreateCategoryModal({ parentCategoryOptions, defaultPare
                 </div>
 
                 <div className="grid gap-2 md:col-span-2">
-                  <Label htmlFor="short_description">Descripción breve</Label>
+                  <Label htmlFor={`edit-short_description-${category.id}`}>Descripción breve</Label>
                   <Textarea
-                    id="short_description"
+                    id={`edit-short_description-${category.id}`}
                     name="short_description"
                     maxLength={128}
                     rows={3}
+                    defaultValue={category.short_description ?? ''}
                     placeholder="Descripción breve"
                   />
                   <InputError message={errors.short_description} />
+                </div>
+
+                <div className="grid gap-2 md:col-span-2">
+                  <Label htmlFor={`edit-is_active-${category.id}`}>Estado</Label>
+                  <Select
+                    name="is_active"
+                    defaultValue={defaultStatusValue}
+                  >
+                    <SelectTrigger
+                      id={`edit-is_active-${category.id}`}
+                      className="w-full"
+                    >
+                      <SelectValue placeholder="Selecciona un estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Inactiva</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <InputError message={errors.is_active} />
                 </div>
               </div>
 
@@ -123,7 +152,7 @@ export default function CreateCategoryModal({ parentCategoryOptions, defaultPare
                   disabled={processing}
                 >
                   {processing && <Spinner />}
-                  Crear categoría
+                  Guardar cambios
                 </Button>
               </DialogFooter>
             </>

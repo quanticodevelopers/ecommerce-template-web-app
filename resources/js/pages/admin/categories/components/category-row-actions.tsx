@@ -4,10 +4,12 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
-import type { CategoryListItem } from '@/types'
+import EditCategoryModal from '@/pages/admin/categories/components/edit-category-modal'
+import type { CategoryListItem, SelectOption } from '@/types'
 
 type CategoryRowActionsProps = {
   category: CategoryListItem
+  parentCategoryOptions: SelectOption[]
 }
 
 function formatDate(value: string | null): string {
@@ -30,12 +32,17 @@ function formatDescription(value: string | null): string {
   return value ?? '—'
 }
 
-export default function CategoryRowActions({ category }: CategoryRowActionsProps) {
+export default function CategoryRowActions({ category, parentCategoryOptions }: CategoryRowActionsProps) {
   const [isOpen, setIsOpen] = useState(false)
   const status = formatStatus(category.is_active)
 
   return (
-    <>
+    <div className="inline-flex items-center gap-1">
+      <EditCategoryModal
+        category={category}
+        parentCategoryOptions={parentCategoryOptions}
+      />
+
       <Button
         type="button"
         variant="ghost"
@@ -111,6 +118,6 @@ export default function CategoryRowActions({ category }: CategoryRowActionsProps
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   )
 }

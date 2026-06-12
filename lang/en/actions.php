@@ -115,6 +115,7 @@ return [
     'update' => 'Update',
     'categories' => [
         'created' => 'Category created successfully.',
+        'updated' => 'Category updated successfully.',
     ],
     'user' => 'User',
     'view' => 'View',

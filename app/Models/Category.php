@@ -45,6 +45,21 @@ class Category extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
+    /**
+     * @return array<int, string>
+     */
+    public function descendantIds(): array
+    {
+        $descendantIds = [];
+
+        foreach ($this->children()->select('id')->get() as $child) {
+            $descendantIds[] = $child->getKey();
+            $descendantIds = array_merge($descendantIds, $child->descendantIds());
+        }
+
+        return array_values(array_unique($descendantIds));
+    }
+
     public function sluggable(): array
     {
         return [

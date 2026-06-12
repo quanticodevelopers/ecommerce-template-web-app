@@ -29,6 +29,8 @@ Route::prefix('admin')
                             ->name('categories.index');
                         Route::post('/categories', 'store')
                             ->name('categories.store');
+                        Route::patch('/categories/{category}', 'update')
+                            ->name('categories.update');
                         Route::get('/categories/{category}/subcategories', 'subcategories')
                             ->name('categories.subcategories');
                     });

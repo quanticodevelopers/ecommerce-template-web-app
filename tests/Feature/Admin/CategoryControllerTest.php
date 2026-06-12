@@ -165,3 +165,137 @@ test('admins must keep category short descriptions within the configured limit',
         ])
         ->assertSessionHasErrors('short_description');
 });
+
+test('guests are redirected to the admin login page when updating categories', function () {
+    $category = Category::factory()->create();
+
+    $response = $this->patch(route('admin.categories.update', $category), [
+        'name' => 'Updated category',
+        'parent_id' => '__root__',
+        'short_description' => 'Updated description',
+        'is_active' => true,
+    ]);
+
+    $response->assertRedirect(route('admin.auth.login'));
+});
+
+test('admins can update a category without changing its slug or code', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $category = Category::factory()
+        ->inactive()
+        ->create([
+            'name' => 'Original Name',
+            'short_description' => 'Original description',
+        ]);
+
+    $originalSlug = $category->slug;
+    $originalCode = $category->code;
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.categories.update', $category), [
+            'name' => 'Updated Name',
+            'parent_id' => '__root__',
+            'short_description' => 'Updated description',
+            'is_active' => true,
+        ]);
+
+    $response->assertRedirect(route('admin.categories.index'));
+    $response->assertInertiaFlash('toast.type', 'success');
+    $response->assertInertiaFlash('toast.message', __('actions.categories.updated'));
+
+    $category->refresh();
+
+    expect($category->name)->toBe('Updated Name')
+        ->and($category->short_description)->toBe('Updated description')
+        ->and($category->is_active)->toBeTrue()
+        ->and($category->parent_id)->toBeNull()
+        ->and($category->slug)->toBe($originalSlug)
+        ->and($category->code)->toBe($originalCode);
+});
+
+test('admins can move a category under another parent when updating', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $currentParent = Category::factory()
+        ->create(['name' => 'Parent A']);
+
+    $newParent = Category::factory()
+        ->create(['name' => 'Parent B']);
+
+    $category = Category::factory()
+        ->forParent($currentParent)
+        ->create([
+            'name' => 'Child Category',
+            'short_description' => 'Child description',
+        ]);
+
+    $response = $this->actingAs($admin)
+        ->patch(route('admin.categories.update', $category), [
+            'name' => 'Child Category',
+            'parent_id' => $newParent->id,
+            'short_description' => 'Child description',
+            'is_active' => false,
+        ]);
+
+    $response->assertRedirect(route('admin.categories.subcategories', $newParent));
+    $response->assertInertiaFlash('toast.type', 'success');
+    $response->assertInertiaFlash('toast.message', __('actions.categories.updated'));
+
+    expect($category->refresh()->parent_id)->toBe($newParent->id)
+        ->and($category->is_active)->toBeFalse();
+});
+
+test('admins cannot assign a category as its own parent', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $category = Category::factory()->create([
+        'name' => 'Standalone',
+    ]);
+
+    $this->actingAs($admin)
+        ->patch(route('admin.categories.update', $category), [
+            'name' => 'Standalone',
+            'parent_id' => $category->id,
+            'short_description' => 'Standalone description',
+            'is_active' => true,
+        ])
+        ->assertSessionHasErrors('parent_id');
+});
+
+test('admins cannot assign a category to one of its descendants', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $rootCategory = Category::factory()->create([
+        'name' => 'Root',
+    ]);
+
+    $childCategory = Category::factory()
+        ->forParent($rootCategory)
+        ->create([
+            'name' => 'Child',
+        ]);
+
+    $grandChildCategory = Category::factory()
+        ->forParent($childCategory)
+        ->create([
+            'name' => 'Grandchild',
+        ]);
+
+    $this->actingAs($admin)
+        ->patch(route('admin.categories.update', $rootCategory), [
+            'name' => 'Root',
+            'parent_id' => $grandChildCategory->id,
+            'short_description' => 'Root description',
+            'is_active' => true,
+        ])
+        ->assertSessionHasErrors('parent_id');
+});
