@@ -71,9 +71,9 @@ export default function CategoriesIndex({ categories, parent_category, category_
                   <col className="w-[9ch]" />
                   <col />
                   <col />
-                  <col className="w-[8rem]" />
-                  <col className="w-[11rem]" />
-                  <col className="w-[10rem]" />
+                  <col className="w-32" />
+                  <col className="w-44" />
+                  <col className="w-40" />
                 </colgroup>
                 <thead className="bg-muted/40 text-muted-foreground">
                   <tr>

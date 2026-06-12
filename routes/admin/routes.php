@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Auth\ConfirmPasswordController as AdminConfirmPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -33,6 +34,12 @@ Route::prefix('admin')
                             ->name('categories.update');
                         Route::get('/categories/{category}/subcategories', 'subcategories')
                             ->name('categories.subcategories');
+                    });
+
+                Route::controller(AdminBrandController::class)
+                    ->group(function () {
+                        Route::get('/brands', 'index')
+                            ->name('brands.index');
                     });
 
                 Route::controller(AdminUserController::class)
