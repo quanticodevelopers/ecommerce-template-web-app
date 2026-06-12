@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react'
-import { FolderTreeIcon } from 'lucide-react'
+import { BlocksIcon } from 'lucide-react'
 import Heading from '@/components/heading'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -41,7 +41,7 @@ export default function CategoriesIndex({ categories, parent_category, category_
           <Heading
             title={title}
             description={description}
-            badgeIcon={FolderTreeIcon}
+            badgeIcon={BlocksIcon}
             badgeLabel="Catálogo"
           />
 

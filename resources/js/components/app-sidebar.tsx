@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react'
-import { FolderTreeIcon, LayoutDashboardIcon, SettingsIcon, ShoppingBagIcon, SquareArrowOutUpRightIcon, TagIcon, UsersIcon } from 'lucide-react'
+import { BlocksIcon, LayoutDashboardIcon, SettingsIcon, ShoppingBagIcon, SquareArrowOutUpRightIcon, TagIcon, UsersIcon } from 'lucide-react'
 import { useMemo } from 'react'
 import AppLogo from '@/components/app-logo'
 import { NavFooter } from '@/components/nav-footer'
@@ -31,7 +31,7 @@ const mainNavItems: NavGroup[] = [
       {
         title: 'Categorías',
         href: adminCategories(),
-        icon: FolderTreeIcon,
+        icon: BlocksIcon,
       },
       {
         title: 'Marcas',
