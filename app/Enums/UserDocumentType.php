@@ -2,26 +2,25 @@
 
 namespace App\Enums;
 
+use App\Concerns\HasLabelOptions;
+
 enum UserDocumentType: string
 {
+    use HasLabelOptions;
+
     case DNI = 'dni';
     case CE = 'ce';
     case PASAPORTE = 'pasaporte';
 
-    public function label(): string
+    /**
+     * @return array<string, string>
+     */
+    protected static function labels(): array
     {
-        return match ($this) {
-            self::DNI => 'DNI',
-            self::CE => 'Carnet de Extranjería',
-            self::PASAPORTE => 'Pasaporte',
-        };
-    }
-
-    public static function options(): array
-    {
-        return array_map(
-            fn (self $case) => ['value' => $case->value, 'label' => $case->label()],
-            self::cases(),
-        );
+        return [
+            self::DNI->value => 'DNI',
+            self::CE->value => 'Carnet de Extranjería',
+            self::PASAPORTE->value => 'Pasaporte',
+        ];
     }
 }

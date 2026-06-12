@@ -2,18 +2,25 @@
 
 namespace App\Enums;
 
+use App\Concerns\HasLabelOptions;
+
 enum UserRole: string
 {
+    use HasLabelOptions;
+
     case CUSTOMER = 'customer';
     case ADMIN = 'admin';
     case SUPER_ADMIN = 'super_admin';
 
-    public function label(): string
+    /**
+     * @return array<string, string>
+     */
+    protected static function labels(): array
     {
-        return match ($this) {
-            self::CUSTOMER => 'Cliente',
-            self::ADMIN => 'Administrador',
-            self::SUPER_ADMIN => 'Super Administrador',
-        };
+        return [
+            self::CUSTOMER->value => 'Cliente',
+            self::ADMIN->value => 'Administrador',
+            self::SUPER_ADMIN->value => 'Super Administrador',
+        ];
     }
 }
