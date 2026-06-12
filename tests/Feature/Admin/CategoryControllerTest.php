@@ -11,7 +11,7 @@ test('guests are redirected to the admin login page when accessing categories in
     $response->assertRedirect(route('admin.auth.login'));
 });
 
-test('admins can see only root categories', function () {
+test('admins can see only root categories and parent options', function () {
     $admin = User::factory()
         ->admin()
         ->create();
@@ -33,6 +33,7 @@ test('admins can see only root categories', function () {
             ->component('admin/categories/index')
             ->where('parent_category', null)
             ->has('categories', 2)
+            ->has('category_parent_options', 3)
             ->where('categories.0.name', 'Hogar')
             ->where('categories.0.parent', null)
             ->where('categories.1.name', 'Tecnología')
@@ -44,7 +45,7 @@ test('admins can see only root categories', function () {
         ->and($anotherRootCategory->refresh()->parent_id)->toBeNull();
 });
 
-test('admins can see the subcategories of a category', function () {
+test('admins can see the subcategories of a category and its parent is preselected', function () {
     $admin = User::factory()
         ->admin()
         ->create();
@@ -70,6 +71,7 @@ test('admins can see the subcategories of a category', function () {
             ->component('admin/categories/index')
             ->where('parent_category.name', $rootCategory->name)
             ->has('categories', 2)
+            ->has('category_parent_options', 4)
             ->where('categories.0.name', 'Accesorios')
             ->where('categories.0.parent.id', $rootCategory->id)
             ->where('categories.1.name', 'Laptops')
@@ -81,10 +83,25 @@ test('admins can see the subcategories of a category', function () {
         ->and($secondChild->refresh()->parent_id)->toBe($rootCategory->id);
 });
 
-test('categories generate slug and code automatically', function () {
-    $category = Category::factory()->create([
-        'name' => 'Moda Hombre',
-    ]);
+test('admins can create a root category with generated slug and code', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $response = $this->actingAs($admin)
+        ->post(route('admin.categories.store'), [
+            'name' => 'Moda Hombre',
+            'parent_id' => '__root__',
+            'short_description' => 'Ropa masculina',
+        ]);
+
+    $response->assertRedirect(route('admin.categories.index'));
+    $response->assertInertiaFlash('toast.type', 'success');
+    $response->assertInertiaFlash('toast.message', __('actions.categories.created'));
+
+    $category = Category::query()
+        ->where('name', 'Moda Hombre')
+        ->firstOrFail();
 
     expect($category->slug)->toBe('moda-hombre')
         ->and($category->code)->toMatch('/^CA[A-Z0-9]{4}$/')
@@ -92,4 +109,59 @@ test('categories generate slug and code automatically', function () {
         ->and($category->parent_id)->toBeNull();
 
     expect(Str::startsWith($category->code, 'CA'))->toBeTrue();
+});
+
+test('admins can create a subcategory and return to its parent listing', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $parentCategory = Category::factory()
+        ->create(['name' => 'Tecnología']);
+
+    $response = $this->actingAs($admin)
+        ->post(route('admin.categories.store'), [
+            'name' => 'Periféricos',
+            'parent_id' => $parentCategory->id,
+            'short_description' => 'Accesorios para equipo',
+        ]);
+
+    $response->assertRedirect(route('admin.categories.subcategories', $parentCategory));
+    $response->assertInertiaFlash('toast.type', 'success');
+    $response->assertInertiaFlash('toast.message', __('actions.categories.created'));
+
+    $category = Category::query()
+        ->where('name', 'Periféricos')
+        ->firstOrFail();
+
+    expect($category->parent_id)->toBe($parentCategory->id)
+        ->and($category->is_active)->toBeTrue();
+});
+
+test('admins must provide a valid category name when creating categories', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $this->actingAs($admin)
+        ->post(route('admin.categories.store'), [
+            'name' => '',
+            'parent_id' => '__root__',
+            'short_description' => 'Ropa masculina',
+        ])
+        ->assertSessionHasErrors('name');
+});
+
+test('admins must keep category short descriptions within the configured limit', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+
+    $this->actingAs($admin)
+        ->post(route('admin.categories.store'), [
+            'name' => 'Moda Hombre',
+            'parent_id' => '__root__',
+            'short_description' => str_repeat('a', 129),
+        ])
+        ->assertSessionHasErrors('short_description');
 });

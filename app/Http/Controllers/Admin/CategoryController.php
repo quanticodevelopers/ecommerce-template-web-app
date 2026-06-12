@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,6 +28,34 @@ class CategoryController extends Controller
         return $this->renderIndex($category);
     }
 
+    /**
+     * Store a newly created category.
+     */
+    public function store(StoreCategoryRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $category = Category::query()->create([
+            'name' => $validated['name'],
+            'parent_id' => $validated['parent_id'] ?? null,
+            'short_description' => $validated['short_description'] ?? null,
+            'is_active' => true,
+        ]);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => __('actions.categories.created'),
+        ]);
+
+        if ($category->parent_id === null) {
+            return to_route('admin.categories.index');
+        }
+
+        $parentCategory = Category::query()->findOrFail($category->parent_id);
+
+        return to_route('admin.categories.subcategories', $parentCategory);
+    }
+
     private function renderIndex(?Category $parentCategory): Response
     {
         $query = Category::query()
@@ -42,12 +72,23 @@ class CategoryController extends Controller
 
         $categories = $query->get();
 
+        $categoryParentOptions = Category::query()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(static fn (Category $category): array => [
+                'value' => $category->id,
+                'label' => $category->name,
+            ])
+            ->all();
+
         return Inertia::render('admin/categories/index', [
             'categories' => CategoryResource::collection($categories)->resolve(),
             'parent_category' => $parentCategory === null ? null : [
                 'id' => $parentCategory->id,
                 'name' => $parentCategory->name,
             ],
+            'category_parent_options' => $categoryParentOptions,
         ]);
     }
 }

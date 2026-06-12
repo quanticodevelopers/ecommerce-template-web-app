@@ -3,13 +3,15 @@ import { FolderTreeIcon } from 'lucide-react'
 import Heading from '@/components/heading'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import CreateCategoryModal from '@/pages/admin/categories/components/create-category-modal'
 import CategoryRowActions from '@/pages/admin/categories/components/category-row-actions'
 import { index as categoriesIndex, subcategories } from '@/routes/admin/categories'
-import type { CategoryListItem, CategoryParent } from '@/types'
+import type { CategoryListItem, CategoryParent, SelectOption } from '@/types'
 
 type CategoriesIndexProps = {
   categories: CategoryListItem[]
   parent_category: CategoryParent | null
+  category_parent_options: SelectOption[]
 }
 
 function formatStatus(isActive: boolean): { label: string; variant: 'default' | 'secondary' } {
@@ -26,7 +28,7 @@ function getHeadingDescription(parentCategory: CategoryParent | null): string {
     : `Gestiona las subcategorías asociadas a ${parentCategory.name}.`
 }
 
-export default function CategoriesIndex({ categories, parent_category }: CategoriesIndexProps) {
+export default function CategoriesIndex({ categories, parent_category, category_parent_options }: CategoriesIndexProps) {
   const title = getHeadingTitle(parent_category)
   const description = getHeadingDescription(parent_category)
 
@@ -42,6 +44,14 @@ export default function CategoriesIndex({ categories, parent_category }: Categor
             badgeIcon={FolderTreeIcon}
             badgeLabel="Catálogo"
           />
+
+          <div className="flex w-full flex-wrap items-center justify-start gap-3 md:w-auto md:justify-end">
+            <CreateCategoryModal
+              parentCategoryOptions={category_parent_options}
+              defaultParentId={parent_category?.id ?? null}
+              triggerClassName="w-full md:w-auto"
+            />
+          </div>
         </div>
 
         <Card className="gap-0 border-sidebar-border/70 pt-4 shadow-none dark:border-sidebar-border">
@@ -61,9 +71,9 @@ export default function CategoriesIndex({ categories, parent_category }: Categor
                   <col className="w-[9ch]" />
                   <col />
                   <col />
-                  <col className="w-34" />
-                  <col className="w-44" />
-                  <col className="w-30" />
+                  <col className="w-[8rem]" />
+                  <col className="w-[11rem]" />
+                  <col className="w-[10rem]" />
                 </colgroup>
                 <thead className="bg-muted/40 text-muted-foreground">
                   <tr>
@@ -94,7 +104,7 @@ export default function CategoriesIndex({ categories, parent_category }: Categor
                           key={category.id}
                           className="align-middle transition-colors hover:bg-muted/30"
                         >
-                          <td className="px-6 py-4 font-mono whitespace-nowrap text-foreground">{category.code}</td>
+                          <td className="whitespace-nowrap px-6 py-4 font-mono text-foreground">{category.code}</td>
                           <td className="px-6 py-4">
                             <div className="space-y-1">
                               <p className="font-medium text-foreground">{category.name}</p>

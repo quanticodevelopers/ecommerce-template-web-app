@@ -113,6 +113,9 @@ return [
     'unsubscribe' => 'Darse de baja',
     'up' => 'Arriba',
     'update' => 'Actualizar',
+    'categories' => [
+        'created' => 'Categoría creada correctamente.',
+    ],
     'user' => 'Usuario',
     'view' => 'Ver',
     'yes' => 'Sí',

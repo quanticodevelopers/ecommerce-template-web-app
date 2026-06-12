@@ -113,6 +113,9 @@ return [
     'unsubscribe' => 'Unsubscribe',
     'up' => 'Up',
     'update' => 'Update',
+    'categories' => [
+        'created' => 'Category created successfully.',
+    ],
     'user' => 'User',
     'view' => 'View',
     'yes' => 'Yes',

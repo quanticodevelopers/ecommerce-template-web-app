@@ -27,6 +27,8 @@ Route::prefix('admin')
                     ->group(function () {
                         Route::get('/categories', 'index')
                             ->name('categories.index');
+                        Route::post('/categories', 'store')
+                            ->name('categories.store');
                         Route::get('/categories/{category}/subcategories', 'subcategories')
                             ->name('categories.subcategories');
                     });
