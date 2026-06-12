@@ -17,12 +17,19 @@ class SiteSetting extends Model
     use HasFactory;
 
     public const string KEY_LOGO_PATH = 'logo_path';
+
     public const string KEY_SITE_NAME = 'site_name';
+
     public const string KEY_SITE_DESCRIPTION = 'site_description';
+
     public const string KEY_SITE_KEYWORDS = 'site_keywords';
+
     public const string KEY_FOOTER_CREDIT_NAME = 'footer_credit_name';
+
     public const string KEY_EMAIL = 'email';
+
     public const string KEY_PHONE = 'phone';
+
     public const string KEY_ADDRESS = 'address';
 
     /**
