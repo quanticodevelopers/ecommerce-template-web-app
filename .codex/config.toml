@@ -1,4 +1,5 @@
 sandbox_mode = "danger-full-access"
+
 [mcp_servers.laravel-boost]
-command = "C:\\Users\\abern\\.config\\herd\\bin\\php.bat"
-args = ["D:\\Programas\\Herd\\ecommerce-template-web-app\\artisan", "boost:mcp"]
+command = "php"
+args = ["artisan", "boost:mcp"]
