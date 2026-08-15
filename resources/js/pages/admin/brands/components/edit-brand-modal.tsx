@@ -1,5 +1,6 @@
+import { Edit02Icon, Image01Icon, RefreshIcon, Upload04Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
-import { ImageIcon, PencilIcon, RotateCcwIcon, UploadIcon } from 'lucide-react'
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { update as brandsUpdate } from '@/actions/App/Http/Controllers/Admin/BrandController'
@@ -88,7 +89,10 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
           type="button"
           aria-label={`Editar ${brand.name}`}
         >
-          <PencilIcon className="size-4" />
+          <HugeiconsIcon
+            icon={Edit02Icon}
+            className="size-4"
+          />
         </Button>
       </DialogTrigger>
 
@@ -138,7 +142,10 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                           src={logoPreview}
                         />
                       ) : (
-                        <ImageIcon className="size-8 text-muted-foreground" />
+                        <HugeiconsIcon
+                          icon={Image01Icon}
+                          className="size-8 text-muted-foreground"
+                        />
                       )}
                     </div>
 
@@ -155,7 +162,10 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                           size="sm"
                           onClick={() => fileInputRef.current?.click()}
                         >
-                          <UploadIcon className="size-4" />
+                          <HugeiconsIcon
+                            icon={Upload04Icon}
+                            className="size-4"
+                          />
                           Cambiar logo
                         </Button>
 
@@ -165,7 +175,10 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                           size="sm"
                           onClick={resetLocalState}
                         >
-                          <RotateCcwIcon className="size-4" />
+                          <HugeiconsIcon
+                            icon={RefreshIcon}
+                            className="size-4"
+                          />
                           Restablecer vista
                         </Button>
                       </div>

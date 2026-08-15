@@ -1,5 +1,6 @@
+import { CheckmarkCircle02Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form, Head } from '@inertiajs/react'
-import { CheckCircle2Icon } from 'lucide-react'
 import InputError from '@/components/input-error'
 import TextLink from '@/components/text-link'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -17,7 +18,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
       {status && (
         <Alert className="w-full text-green-700 dark:text-green-400">
-          <CheckCircle2Icon />
+          <HugeiconsIcon icon={CheckmarkCircle02Icon} />
           <AlertDescription className="text-green-700/80 dark:text-green-400/80">{status}</AlertDescription>
         </Alert>
       )}

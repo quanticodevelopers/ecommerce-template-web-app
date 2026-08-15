@@ -1,5 +1,5 @@
+import { DashboardBrowsingIcon, GridViewIcon, Settings01Icon, ShoppingBag01Icon, SquareArrowUpRightIcon, Tag01Icon, UserMultiple02Icon } from '@hugeicons/core-free-icons'
 import { Link, usePage } from '@inertiajs/react'
-import { BlocksIcon, LayoutDashboardIcon, SettingsIcon, ShoppingBagIcon, SquareArrowOutUpRightIcon, TagIcon, UsersIcon } from 'lucide-react'
 import { useMemo } from 'react'
 import AppLogo from '@/components/app-logo'
 import { NavFooter } from '@/components/nav-footer'
@@ -21,7 +21,7 @@ const mainNavItems: NavGroup[] = [
       {
         title: 'Dashboard',
         href: dashboard(),
-        icon: LayoutDashboardIcon,
+        icon: DashboardBrowsingIcon,
       },
     ],
   },
@@ -31,12 +31,12 @@ const mainNavItems: NavGroup[] = [
       {
         title: 'Categorías',
         href: adminCategories(),
-        icon: BlocksIcon,
+        icon: GridViewIcon,
       },
       {
         title: 'Marcas',
         href: adminBrands(),
-        icon: TagIcon,
+        icon: Tag01Icon,
       },
     ],
   },
@@ -46,7 +46,7 @@ const mainNavItems: NavGroup[] = [
       {
         title: 'Clientes',
         href: adminCustomers(),
-        icon: ShoppingBagIcon,
+        icon: ShoppingBag01Icon,
       },
     ],
   },
@@ -56,12 +56,12 @@ const mainNavItems: NavGroup[] = [
       {
         title: 'Usuarios',
         href: adminUsers(),
-        icon: UsersIcon,
+        icon: UserMultiple02Icon,
       },
       {
         title: 'Configuración',
         href: editInformation(),
-        icon: SettingsIcon,
+        icon: Settings01Icon,
       },
     ],
   },
@@ -75,7 +75,7 @@ export function AppSidebar() {
       {
         title: 'Ir a la web',
         href: url,
-        icon: SquareArrowOutUpRightIcon,
+        icon: SquareArrowUpRightIcon,
       },
     ],
     [url],

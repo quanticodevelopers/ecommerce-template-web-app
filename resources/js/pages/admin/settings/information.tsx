@@ -1,5 +1,6 @@
+import { Delete02Icon, Image01Icon, RefreshIcon, SaveIcon, Upload04Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form, Head } from '@inertiajs/react'
-import { ImageIcon, RotateCcwIcon, SaveIcon, Trash2Icon, UploadIcon } from 'lucide-react'
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import InformationController from '@/actions/App/Http/Controllers/Admin/Settings/InformationController'
@@ -105,7 +106,10 @@ const Information = ({ settings }: InformationProps) => {
                       src={logoPreview}
                     />
                   ) : (
-                    <ImageIcon className="size-8 text-muted-foreground" />
+                    <HugeiconsIcon
+                      icon={Image01Icon}
+                      className="size-8 text-muted-foreground"
+                    />
                   )}
                 </div>
 
@@ -122,7 +126,10 @@ const Information = ({ settings }: InformationProps) => {
                       size="sm"
                       onClick={() => fileInputRef.current?.click()}
                     >
-                      <UploadIcon className="size-4" />
+                      <HugeiconsIcon
+                        icon={Upload04Icon}
+                        className="size-4"
+                      />
                       Subir nuevo
                     </Button>
 
@@ -133,7 +140,10 @@ const Information = ({ settings }: InformationProps) => {
                       disabled={!settings.logo_url && !logoPreview}
                       onClick={handleRemoveLogo}
                     >
-                      <Trash2Icon className="size-4" />
+                      <HugeiconsIcon
+                        icon={Delete02Icon}
+                        className="size-4"
+                      />
                       Quitar
                     </Button>
 
@@ -298,7 +308,10 @@ const Information = ({ settings }: InformationProps) => {
                   variant="outline"
                   disabled={processing}
                 >
-                  <RotateCcwIcon className="size-4" />
+                  <HugeiconsIcon
+                    icon={RefreshIcon}
+                    className="size-4"
+                  />
                   Cancelar
                 </Button>
 
@@ -306,7 +319,14 @@ const Information = ({ settings }: InformationProps) => {
                   disabled={processing}
                   type="submit"
                 >
-                  {processing ? <Spinner /> : <SaveIcon className="size-4" />}
+                  {processing ? (
+                    <Spinner />
+                  ) : (
+                    <HugeiconsIcon
+                      icon={SaveIcon}
+                      className="size-4"
+                    />
+                  )}
                   Guardar cambios
                 </Button>
               </div>

@@ -1,5 +1,6 @@
+import { ArrowUpDownIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { usePage } from '@inertiajs/react'
-import { ChevronsUpDown } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar'
 import { UserInfo } from '@/components/user-info'
@@ -26,7 +27,10 @@ export function NavUser() {
               data-test="sidebar-menu-button"
             >
               <UserInfo user={auth.user} />
-              <ChevronsUpDown className="ml-auto size-4" />
+              <HugeiconsIcon
+                icon={ArrowUpDownIcon}
+                className="ml-auto size-4"
+              />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

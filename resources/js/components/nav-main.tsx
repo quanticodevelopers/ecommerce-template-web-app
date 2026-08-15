@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react'
+import { Icon } from '@/components/ui/icon'
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { useCurrentUrl } from '@/hooks/use-current-url'
 import type { NavGroup } from '@/types'
@@ -24,7 +25,7 @@ export function NavMain({ group = [] }: { group: NavGroup[] }) {
                 href={item.href}
                 prefetch
               >
-                {item.icon && <item.icon />}
+                <Icon iconNode={item.icon} />
                 <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>

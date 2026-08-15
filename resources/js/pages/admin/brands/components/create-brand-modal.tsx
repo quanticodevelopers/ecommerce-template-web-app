@@ -1,5 +1,6 @@
+import { Add01Icon, Delete02Icon, Image01Icon, RefreshIcon, Upload04Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
-import { ImageIcon, PlusIcon, RotateCcwIcon, Trash2Icon, UploadIcon } from 'lucide-react'
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { store as brandsStore } from '@/actions/App/Http/Controllers/Admin/BrandController'
@@ -68,7 +69,10 @@ export default function CreateBrandModal() {
     >
       <DialogTrigger asChild>
         <Button type="button">
-          <PlusIcon className="size-4" />
+          <HugeiconsIcon
+            icon={Add01Icon}
+            className="size-4"
+          />
           Nueva marca
         </Button>
       </DialogTrigger>
@@ -118,7 +122,10 @@ export default function CreateBrandModal() {
                           src={logoPreview}
                         />
                       ) : (
-                        <ImageIcon className="size-8 text-muted-foreground" />
+                        <HugeiconsIcon
+                          icon={Image01Icon}
+                          className="size-8 text-muted-foreground"
+                        />
                       )}
                     </div>
 
@@ -135,7 +142,10 @@ export default function CreateBrandModal() {
                           size="sm"
                           onClick={() => fileInputRef.current?.click()}
                         >
-                          <UploadIcon className="size-4" />
+                          <HugeiconsIcon
+                            icon={Upload04Icon}
+                            className="size-4"
+                          />
                           Seleccionar logo
                         </Button>
 
@@ -146,7 +156,10 @@ export default function CreateBrandModal() {
                           disabled={!logoPreview}
                           onClick={resetLocalState}
                         >
-                          <Trash2Icon className="size-4" />
+                          <HugeiconsIcon
+                            icon={Delete02Icon}
+                            className="size-4"
+                          />
                           Quitar selección
                         </Button>
                       </div>
@@ -203,7 +216,10 @@ export default function CreateBrandModal() {
                       resetLocalState()
                     }}
                   >
-                    <RotateCcwIcon className="size-4" />
+                    <HugeiconsIcon
+                      icon={RefreshIcon}
+                      className="size-4"
+                    />
                     Cancelar
                   </Button>
                 </DialogClose>

@@ -1,5 +1,6 @@
+import { UserAdd01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
-import { UserPlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { store as usersStore } from '@/actions/App/Http/Controllers/Admin/UserController'
 import InputError from '@/components/input-error'
@@ -27,7 +28,10 @@ export default function CreateAdminUserModal({ documentTypeOptions, triggerClass
     >
       <DialogTrigger asChild>
         <Button className={cn(triggerClassName)}>
-          <UserPlusIcon className="size-4" />
+          <HugeiconsIcon
+            icon={UserAdd01Icon}
+            className="size-4"
+          />
           Nuevo usuario
         </Button>
       </DialogTrigger>

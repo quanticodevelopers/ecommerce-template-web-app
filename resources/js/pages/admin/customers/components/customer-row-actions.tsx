@@ -1,4 +1,5 @@
-import { EyeIcon } from 'lucide-react'
+import { ViewIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import CustomerDetailModal from '@/pages/admin/customers/components/customer-detail-modal'
@@ -21,7 +22,10 @@ export default function CustomerRowActions({ customer }: CustomerRowActionsProps
           aria-label={`Ver detalles de ${customer.email}`}
           onClick={() => setIsDetailModalOpen(true)}
         >
-          <EyeIcon className="size-4" />
+          <HugeiconsIcon
+            icon={ViewIcon}
+            className="size-4"
+          />
         </Button>
       </div>
 

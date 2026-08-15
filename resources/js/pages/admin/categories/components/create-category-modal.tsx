@@ -1,5 +1,6 @@
+import { FolderAddIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
-import { FolderPlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { store as categoriesStore } from '@/actions/App/Http/Controllers/Admin/CategoryController'
 import InputError from '@/components/input-error'
@@ -32,7 +33,10 @@ export default function CreateCategoryModal({ parentCategoryOptions, defaultPare
     >
       <DialogTrigger asChild>
         <Button className={cn(triggerClassName)}>
-          <FolderPlusIcon className="size-4" />
+          <HugeiconsIcon
+            icon={FolderAddIcon}
+            className="size-4"
+          />
           Nueva categoría
         </Button>
       </DialogTrigger>

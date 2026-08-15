@@ -1,5 +1,5 @@
+import { ShoppingBag01Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
-import { ShoppingBagIcon } from 'lucide-react'
 import Heading from '@/components/heading'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -41,7 +41,7 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
           <Heading
             title="Clientes"
             description="Gestiona los usuarios clientes registrados en la tienda y revisa su información en un solo lugar."
-            badgeIcon={ShoppingBagIcon}
+            badgeIcon={ShoppingBag01Icon}
             badgeLabel="Tienda"
           />
 

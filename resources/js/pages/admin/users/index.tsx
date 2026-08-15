@@ -1,5 +1,5 @@
+import { UserMultiple02Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
-import { UsersIcon } from 'lucide-react'
 import Heading from '@/components/heading'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -51,7 +51,7 @@ export default function UsersIndex({ users, document_type_options, created_user_
           <Heading
             title="Usuarios"
             description="Gestiona los usuarios con acceso al panel administrativo y revisa su información principal en un solo lugar."
-            badgeIcon={UsersIcon}
+            badgeIcon={UserMultiple02Icon}
             badgeLabel="Administración"
           />
 

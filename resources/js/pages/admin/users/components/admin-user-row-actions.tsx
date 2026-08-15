@@ -1,5 +1,6 @@
+import { Key01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
-import { EllipsisVerticalIcon, KeyRoundIcon } from 'lucide-react'
 import { useState } from 'react'
 import { resetPassword as usersResetPassword } from '@/actions/App/Http/Controllers/Admin/UserController'
 import InputError from '@/components/input-error'
@@ -28,7 +29,10 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
             className="size-8"
             aria-label={`Acciones para ${user.email}`}
           >
-            <EllipsisVerticalIcon className="size-4" />
+            <HugeiconsIcon
+              icon={MoreVerticalIcon}
+              className="size-4"
+            />
           </Button>
         </DropdownMenuTrigger>
 
@@ -39,7 +43,10 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
               setIsResetPasswordOpen(true)
             }}
           >
-            <KeyRoundIcon className="size-4" />
+            <HugeiconsIcon
+              icon={Key01Icon}
+              className="size-4"
+            />
             Restablecer contraseña
           </DropdownMenuItem>
         </DropdownMenuContent>

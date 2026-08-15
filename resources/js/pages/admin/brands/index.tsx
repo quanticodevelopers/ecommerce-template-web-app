@@ -1,5 +1,5 @@
+import { Tag01Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
-import { TagIcon } from 'lucide-react'
 import Heading from '@/components/heading'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -26,7 +26,7 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
           <Heading
             title="Marcas"
             description="Gestiona las marcas del catálogo y revisa su estado, código y logo."
-            badgeIcon={TagIcon}
+            badgeIcon={Tag01Icon}
             badgeLabel="Catálogo"
           />
 

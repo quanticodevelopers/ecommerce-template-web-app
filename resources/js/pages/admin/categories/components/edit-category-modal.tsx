@@ -1,5 +1,6 @@
+import { Edit02Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
-import { PencilIcon } from 'lucide-react'
 import { useState } from 'react'
 import { update as categoriesUpdate } from '@/actions/App/Http/Controllers/Admin/CategoryController'
 import InputError from '@/components/input-error'
@@ -40,7 +41,10 @@ export default function EditCategoryModal({ category, parentCategoryOptions, tri
           type="button"
           aria-label={`Editar ${category.name}`}
         >
-          <PencilIcon className="size-4" />
+          <HugeiconsIcon
+            icon={Edit02Icon}
+            className="size-4"
+          />
         </Button>
       </DialogTrigger>
 

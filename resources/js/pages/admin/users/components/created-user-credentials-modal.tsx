@@ -1,4 +1,5 @@
-import { CheckIcon, CopyIcon, KeyRoundIcon } from 'lucide-react'
+import { Copy01Icon, Key01Icon, Tick01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -41,7 +42,10 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <KeyRoundIcon className="size-4" />
+            <HugeiconsIcon
+              icon={Key01Icon}
+              className="size-4"
+            />
             Credenciales generadas
           </DialogTitle>
           <DialogDescription>Guarda estas credenciales y compartelas con el usuario administrador correspondiente.</DialogDescription>
@@ -68,7 +72,10 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
             onClick={copyCredentials}
             disabled={createdUserCredentials === null}
           >
-            {isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
+            <HugeiconsIcon
+              icon={isCopied ? Tick01Icon : Copy01Icon}
+              className="size-4"
+            />
             {isCopied ? 'Copiado' : 'Copiar'}
           </Button>
 

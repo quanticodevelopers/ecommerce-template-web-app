@@ -1,4 +1,5 @@
-import { EyeIcon } from 'lucide-react'
+import { ViewIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -51,7 +52,10 @@ export default function CategoryRowActions({ category, parentCategoryOptions }: 
         aria-label={`Ver información de ${category.name}`}
         onClick={() => setIsOpen(true)}
       >
-        <EyeIcon className="size-4" />
+        <HugeiconsIcon
+          icon={ViewIcon}
+          className="size-4"
+        />
       </Button>
 
       <Dialog

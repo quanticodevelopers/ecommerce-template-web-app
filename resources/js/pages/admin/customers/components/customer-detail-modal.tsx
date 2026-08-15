@@ -1,4 +1,5 @@
-import { MailIcon, PhoneIcon, UserIcon } from 'lucide-react'
+import { Call02Icon, Mail01Icon, UserIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
@@ -31,7 +32,10 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <UserIcon className="size-4" />
+            <HugeiconsIcon
+              icon={UserIcon}
+              className="size-4"
+            />
             Información del cliente
           </DialogTitle>
           <DialogDescription>Datos completos del cliente registrado en la plataforma.</DialogDescription>
@@ -54,7 +58,10 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
 
             <div className="space-y-3 rounded-lg border bg-muted/30 p-4 text-sm">
               <div className="flex items-center gap-3">
-                <MailIcon className="size-4 shrink-0 text-muted-foreground" />
+                <HugeiconsIcon
+                  icon={Mail01Icon}
+                  className="size-4 shrink-0 text-muted-foreground"
+                />
                 <div>
                   <p className="text-xs text-muted-foreground">Correo electrónico</p>
                   <p className="font-medium text-foreground">{customer.email}</p>
@@ -62,7 +69,10 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
               </div>
 
               <div className="flex items-center gap-3">
-                <PhoneIcon className="size-4 shrink-0 text-muted-foreground" />
+                <HugeiconsIcon
+                  icon={Call02Icon}
+                  className="size-4 shrink-0 text-muted-foreground"
+                />
                 <div>
                   <p className="text-xs text-muted-foreground">Teléfono</p>
                   <p className="font-medium text-foreground">{customer.phone || '—'}</p>

@@ -1,8 +1,9 @@
+import { Book02Icon, LockKeyIcon, Settings01Icon, Sun01Icon, UserEdit01Icon } from '@hugeicons/core-free-icons'
 import { Link } from '@inertiajs/react'
-import { BookIcon, LockKeyholeIcon, SettingsIcon, SunIcon, UserPenIcon } from 'lucide-react'
 import type { PropsWithChildren } from 'react'
 import Heading from '@/components/heading'
 import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
 import { useCurrentUrl } from '@/hooks/use-current-url'
 import { cn, toUrl } from '@/lib/utils'
 import { edit as editAppearance } from '@/routes/admin/appearance'
@@ -15,22 +16,22 @@ const sidebarNavItems: NavItem[] = [
   {
     title: 'Información del sitio',
     href: editInformation(),
-    icon: BookIcon,
+    icon: Book02Icon,
   },
   {
     title: 'Perfil',
     href: editProfile(),
-    icon: UserPenIcon,
+    icon: UserEdit01Icon,
   },
   {
     title: 'Seguridad',
     href: editSecurity(),
-    icon: LockKeyholeIcon,
+    icon: LockKeyIcon,
   },
   {
     title: 'Apariencia',
     href: editAppearance(),
-    icon: SunIcon,
+    icon: Sun01Icon,
   },
 ]
 
@@ -42,7 +43,7 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
       <Heading
         title="Configuración"
         description="Administra tu perfil y la configuracion de tu cuenta"
-        badgeIcon={SettingsIcon}
+        badgeIcon={Settings01Icon}
         badgeLabel="Administración"
       />
 
@@ -63,7 +64,10 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
                 })}
               >
                 <Link href={item.href}>
-                  {item.icon && <item.icon className="h-4 w-4" />}
+                  <Icon
+                    iconNode={item.icon}
+                    className="h-4 w-4"
+                  />
                   {item.title}
                 </Link>
               </Button>

@@ -1,5 +1,6 @@
+import { CheckmarkCircle02Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Form, Head } from '@inertiajs/react'
-import { CheckCircle2Icon } from 'lucide-react'
 import TextLink from '@/components/text-link'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -14,7 +15,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
       {status === 'verification-link-sent' && (
         <Alert className="w-full text-green-700 dark:text-green-400">
-          <CheckCircle2Icon />
+          <HugeiconsIcon icon={CheckmarkCircle02Icon} />
           <AlertDescription className="text-green-700/80 dark:text-green-400/80">
             Se ha enviado un nuevo enlace de verificación al correo electrónico que proporcionaste durante el registro.
           </AlertDescription>

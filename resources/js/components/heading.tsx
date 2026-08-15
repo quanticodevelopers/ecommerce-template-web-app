@@ -1,4 +1,4 @@
-import type { LucideIcon } from 'lucide-react'
+import type { IconSvgElement } from '@hugeicons/react'
 import { Badge } from '@/components/ui/badge'
 import { Icon } from '@/components/ui/icon'
 import { cn } from '@/lib/utils'
@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 interface HeadingProps {
   title: string
   description?: string
-  badgeIcon?: LucideIcon
+  badgeIcon?: IconSvgElement
   badgeLabel?: string
   variant?: 'default' | 'small'
 }

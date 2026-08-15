@@ -1,5 +1,6 @@
+import { FilterHorizontalIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Head, usePage } from '@inertiajs/react'
-import { ListFilterIcon } from 'lucide-react'
 import AstroidIcon from '@/components/astroid-icon'
 import { Button } from '@/components/ui/button'
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
@@ -46,7 +47,7 @@ export default function DashboardIndex() {
                 variant="outline"
                 size="lg"
               >
-                <ListFilterIcon /> Este mes
+                <HugeiconsIcon icon={FilterHorizontalIcon} /> Este mes
               </Button>
             </div>
           </div>
