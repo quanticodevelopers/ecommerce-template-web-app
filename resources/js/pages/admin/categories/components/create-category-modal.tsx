@@ -1,4 +1,4 @@
-import { FolderAddIcon } from '@hugeicons/core-free-icons'
+import { Add01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
 import { useState } from 'react'
@@ -34,7 +34,7 @@ export default function CreateCategoryModal({ parentCategoryOptions, defaultPare
       <DialogTrigger asChild>
         <Button className={cn(triggerClassName)}>
           <HugeiconsIcon
-            icon={FolderAddIcon}
+            icon={Add01Icon}
             className="size-4"
           />
           Nueva categoría

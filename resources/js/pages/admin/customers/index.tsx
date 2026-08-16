@@ -2,7 +2,7 @@ import { ShoppingBag01Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
 import Heading from '@/components/heading'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { useInitials } from '@/hooks/use-initials'
 import { dateFormatter } from '@/lib/utils'
 import CustomerRowActions from '@/pages/admin/customers/components/customer-row-actions'
@@ -36,7 +36,7 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
     <>
       <Head title="Clientes" />
 
-      <div className="p4 flex flex-col gap-8 lg:p-8">
+      <div className="flex flex-col gap-8 p-4 lg:p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <Heading
             title="Clientes"
@@ -53,25 +53,22 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
           </div>
         </div>
 
-        <Card className="gap-0 border-sidebar-border/70 pt-4 shadow-none dark:border-sidebar-border">
-          <CardHeader className="border-b border-border/60 pb-4">
-            <div className="flex items-center justify-between gap-2">
-              <CardTitle>Listado de clientes</CardTitle>
-              <div className="rounded-lg border border-border/60 bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground sm:text-sm">
-                {customers.length} cliente{customers.length === 1 ? '' : 's'}
-              </div>
-            </div>
-          </CardHeader>
-
-          <CardContent className="p-0">
+        <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
+          <CardContent className="px-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-border text-sm">
+              <table className="min-w-full table-fixed divide-y divide-border text-sm">
+                <colgroup>
+                  <col />
+                  <col />
+                  <col className="w-35" />
+                  <col className="w-20" />
+                </colgroup>
                 <thead className="bg-muted/40 text-muted-foreground">
                   <tr>
                     <th className="px-6 py-3.5 text-left font-medium">Usuario</th>
-                    <th className="px-6 py-3.5 text-left font-medium">Doc. de Id.</th>
-                    <th className="w-35 px-6 py-3.5 text-center font-medium">F. de registro</th>
-                    <th className="w-20 px-6 py-3.5 text-right font-medium">Acciones</th>
+                    <th className="px-6 py-3.5 text-left font-medium">Correo electrónico</th>
+                    <th className="px-6 py-3.5 text-center font-medium">F. de registro</th>
+                    <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border bg-background">
@@ -96,12 +93,12 @@ export default function CustomersIndex({ customers }: CustomersIndexProps) {
                               <AvatarFallback>{getInitials(customer.name, customer.last_name)}</AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-medium text-foreground">{formatFullName(customer)}</p>
-                              <p className="text-xs text-muted-foreground">{customer.email}</p>
+                              <p className="font-medium text-nowrap text-foreground">{formatFullName(customer)}</p>
+                              <p className="text-xs text-nowrap text-muted-foreground">{formatDocument(customer)}</p>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-muted-foreground">{formatDocument(customer)}</td>
+                        <td className="px-6 py-4 text-nowrap text-muted-foreground">{customer.email}</td>
                         <td className="px-6 py-4 text-center text-muted-foreground">{formatDate(customer.created_at)}</td>
                         <td className="px-6 py-4 text-right">
                           <CustomerRowActions customer={customer} />

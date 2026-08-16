@@ -1,4 +1,4 @@
-import { ViewIcon } from '@hugeicons/core-free-icons'
+import { ExternalLinkIcon, ViewIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
@@ -39,6 +39,19 @@ export default function CategoryRowActions({ category, parentCategoryOptions }: 
 
   return (
     <div className="inline-flex items-center gap-1">
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="size-8"
+        aria-label={`Ver página de ${category.name}`}
+      >
+        <HugeiconsIcon
+          icon={ExternalLinkIcon}
+          className="size-4"
+        />
+      </Button>
+
       <EditCategoryModal
         category={category}
         parentCategoryOptions={parentCategoryOptions}

@@ -1,4 +1,4 @@
-import { ViewIcon } from '@hugeicons/core-free-icons'
+import { ExternalLinkIcon, ViewIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
@@ -34,6 +34,19 @@ export default function BrandRowActions({ brand }: BrandRowActionsProps) {
 
   return (
     <div className="inline-flex items-center gap-1">
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="size-8"
+        aria-label={`Ver página de ${brand.name}`}
+      >
+        <HugeiconsIcon
+          icon={ExternalLinkIcon}
+          className="size-4"
+        />
+      </Button>
+
       <EditBrandModal brand={brand} />
 
       <Button

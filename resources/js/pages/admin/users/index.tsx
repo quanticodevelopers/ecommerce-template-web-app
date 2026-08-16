@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react'
 import Heading from '@/components/heading'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { useInitials } from '@/hooks/use-initials'
 import { dateFormatter } from '@/lib/utils'
 import AdminUserRowActions from '@/pages/admin/users/components/admin-user-row-actions'
@@ -63,28 +63,28 @@ export default function UsersIndex({ users, document_type_options, created_user_
           </div>
         </div>
 
-        <Card className="gap-0 border-sidebar-border/70 pt-4 shadow-none dark:border-sidebar-border">
-          <CardHeader className="border-b border-border/60 pb-4">
-            <div className="flex items-center justify-between gap-2">
-              <CardTitle>Listado de usuarios</CardTitle>
-              <div className="rounded-lg border border-border/60 bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground sm:text-sm">
-                {users.length} usuario{users.length === 1 ? '' : 's'}
-              </div>
-            </div>
-          </CardHeader>
-
-          <CardContent className="p-0">
+        <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
+          <CardContent className="px-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-border text-sm">
+              <table className="min-w-full table-fixed divide-y divide-border text-sm">
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                  <col className="w-35" />
+                  <col className="w-40" />
+                  <col className="w-35" />
+                  <col className="w-15" />
+                </colgroup>
                 <thead className="bg-muted/40 text-muted-foreground">
                   <tr>
                     <th className="px-6 py-3.5 text-left font-medium">Usuario</th>
                     <th className="px-6 py-3.5 text-left font-medium">Correo electrónico</th>
                     <th className="px-6 py-3.5 text-center font-medium">Doc. de Id.</th>
-                    <th className="w-35 px-6 py-3.5 text-center font-medium">Celular</th>
-                    <th className="w-40 px-6 py-3.5 text-center font-medium">Rol</th>
-                    <th className="w-35 px-6 py-3.5 text-center font-medium">Registro</th>
-                    <th className="w-15 px-6 py-3.5 text-right font-medium">Acciones</th>
+                    <th className="px-6 py-3.5 text-center font-medium">Celular</th>
+                    <th className="px-6 py-3.5 text-center font-medium">Rol</th>
+                    <th className="px-6 py-3.5 text-center font-medium">Registro</th>
+                    <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border bg-background">
@@ -108,7 +108,7 @@ export default function UsersIndex({ users, document_type_options, created_user_
                             <Avatar>
                               <AvatarFallback>{getInitials(user.name, user.last_name)}</AvatarFallback>
                             </Avatar>
-                            <p className="font-medium text-foreground">{formatFullName(user)}</p>
+                            <p className="font-medium text-nowrap text-foreground">{formatFullName(user)}</p>
                           </div>
                         </td>
                         <td className="px-6 py-4 text-foreground">{user.email}</td>

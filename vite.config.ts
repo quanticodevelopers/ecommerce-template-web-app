@@ -15,6 +15,9 @@ export default defineConfig({
         google('Inter', {
           weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
         }),
+        google('Source Code Pro', {
+          weights: [400, 700]
+        })
       ],
     }),
     inertia(),

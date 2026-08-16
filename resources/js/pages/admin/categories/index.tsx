@@ -2,7 +2,7 @@ import { GridViewIcon } from '@hugeicons/core-free-icons'
 import { Head, Link } from '@inertiajs/react'
 import Heading from '@/components/heading'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import CategoryRowActions from '@/pages/admin/categories/components/category-row-actions'
 import CreateCategoryModal from '@/pages/admin/categories/components/create-category-modal'
 import { index as categoriesIndex, subcategories } from '@/routes/admin/categories'
@@ -54,23 +54,13 @@ export default function CategoriesIndex({ categories, parent_category, category_
           </div>
         </div>
 
-        <Card className="gap-0 border-sidebar-border/70 pt-4 shadow-none dark:border-sidebar-border">
-          <CardHeader className="border-b border-border/60 pb-4">
-            <div className="flex items-center justify-between gap-2">
-              <CardTitle>Listado de categorías</CardTitle>
-              <div className="rounded-lg border border-border/60 bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground sm:text-sm">
-                {categories.length} categoría{categories.length === 1 ? '' : 's'}
-              </div>
-            </div>
-          </CardHeader>
-
-          <CardContent className="p-0">
+        <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
+          <CardContent className="px-0">
             <div className="overflow-x-auto">
               <table className="min-w-full table-fixed divide-y divide-border text-sm">
                 <colgroup>
                   <col className="w-[9ch]" />
-                  <col />
-                  <col />
+                  <col className="min-w-60" />
                   <col className="w-32" />
                   <col className="w-44" />
                   <col className="w-40" />
@@ -79,7 +69,6 @@ export default function CategoriesIndex({ categories, parent_category, category_
                   <tr>
                     <th className="px-6 py-3.5 text-left font-medium">Código</th>
                     <th className="px-6 py-3.5 text-left font-medium">Nombre</th>
-                    <th className="px-6 py-3.5 text-left font-medium">Slug</th>
                     <th className="px-6 py-3.5 text-center font-medium">Estado</th>
                     <th className="px-6 py-3.5 text-center font-medium">Subcategorías</th>
                     <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
@@ -113,14 +102,13 @@ export default function CategoriesIndex({ categories, parent_category, category_
                               </p>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-muted-foreground">{category.slug}</td>
                           <td className="px-6 py-4 text-center">
                             <Badge variant={status.variant}>{status.label}</Badge>
                           </td>
                           <td className="px-6 py-4 text-center">
                             <Link
                               href={subcategories({ category: category.id })}
-                              className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+                              className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80 dark:text-white dark:hover:text-white/80"
                               prefetch
                             >
                               <span>Ver subcategorías</span>

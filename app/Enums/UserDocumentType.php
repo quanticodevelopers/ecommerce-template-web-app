@@ -19,7 +19,7 @@ enum UserDocumentType: string
     {
         return [
             self::DNI->value => 'DNI',
-            self::CE->value => 'Carnet de Extranjería',
+            self::CE->value => 'CE',
             self::PASAPORTE->value => 'Pasaporte',
         ];
     }

@@ -2,7 +2,7 @@ import { Tag01Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
 import Heading from '@/components/heading'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import BrandRowActions from '@/pages/admin/brands/components/brand-row-actions'
 import CreateBrandModal from '@/pages/admin/brands/components/create-brand-modal'
 import { index as brandsIndex } from '@/routes/admin/brands'
@@ -35,24 +35,14 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
           </div>
         </div>
 
-        <Card className="gap-0 border-sidebar-border/70 pt-4 shadow-none dark:border-sidebar-border">
-          <CardHeader className="border-b border-border/60 pb-4">
-            <div className="flex items-center justify-between gap-2">
-              <CardTitle>Listado de marcas</CardTitle>
-              <div className="rounded-lg border border-border/60 bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground sm:text-sm">
-                {brands.length} marca{brands.length === 1 ? '' : 's'}
-              </div>
-            </div>
-          </CardHeader>
-
-          <CardContent className="p-0">
+        <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
+          <CardContent className="px-0">
             <div className="overflow-x-auto">
               <table className="min-w-full table-fixed divide-y divide-border text-sm">
                 <colgroup>
                   <col className="w-29" />
                   <col className="w-[9ch]" />
-                  <col />
-                  <col />
+                  <col className="min-w-60" />
                   <col className="w-32" />
                   <col className="w-24" />
                 </colgroup>
@@ -61,7 +51,6 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
                     <th className="px-6 py-3.5 text-center font-medium">Logo</th>
                     <th className="px-6 py-3.5 text-left font-medium">Código</th>
                     <th className="px-6 py-3.5 text-left font-medium">Nombre</th>
-                    <th className="px-6 py-3.5 text-left font-medium">Slug</th>
                     <th className="px-6 py-3.5 text-center font-medium">Estado</th>
                     <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
@@ -100,7 +89,6 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
                           </td>
                           <td className="px-6 py-4 font-mono whitespace-nowrap text-foreground">{brand.code}</td>
                           <td className="px-6 py-4 font-medium text-foreground">{brand.name}</td>
-                          <td className="px-6 py-4 text-muted-foreground">{brand.slug}</td>
                           <td className="px-6 py-4 text-center">
                             <Badge variant={status.variant}>{status.label}</Badge>
                           </td>

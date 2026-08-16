@@ -36,7 +36,10 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent
+          align="end"
+          className="w-52"
+        >
           <DropdownMenuItem
             onSelect={(event) => {
               event.preventDefault()
