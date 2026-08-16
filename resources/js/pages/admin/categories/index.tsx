@@ -94,25 +94,26 @@ export default function CategoriesIndex({ categories, parent_category, category_
                           className="align-middle transition-colors hover:bg-muted/30"
                         >
                           <td className="px-6 py-4 font-mono whitespace-nowrap text-foreground">{category.code}</td>
-                          <td className="px-6 py-4">
-                            <div className="space-y-1">
-                              <p className="font-medium text-foreground">{category.name}</p>
-                              <p className="text-xs text-muted-foreground">
-                                {category.children_count} subcategoría{category.children_count === 1 ? '' : 's'}
-                              </p>
-                            </div>
-                          </td>
+                          <td className="px-6 py-4 font-medium text-foreground">{category.name}</td>
                           <td className="px-6 py-4 text-center">
                             <Badge variant={status.variant}>{status.label}</Badge>
                           </td>
                           <td className="px-6 py-4 text-center">
-                            <Link
-                              href={subcategories({ category: category.id })}
-                              className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80 dark:text-white dark:hover:text-white/80"
-                              prefetch
-                            >
-                              <span>Ver subcategorías</span>
-                            </Link>
+                            <span className="text-sm whitespace-nowrap text-foreground">
+                              {category.children_count} subcategoría{category.children_count === 1 ? '' : 's'}{' '}
+                              <span>
+                                (
+                                <Link
+                                  href={subcategories({ category: category.id })}
+                                  className="font-medium text-primary transition-colors hover:text-primary/80 hover:underline dark:text-white dark:hover:text-white/80"
+                                  aria-label={`Ver subcategorías de ${category.name}`}
+                                  prefetch
+                                >
+                                  Ver más
+                                </Link>
+                                )
+                              </span>
+                            </span>
                           </td>
                           <td className="px-6 py-4 text-right">
                             <CategoryRowActions
