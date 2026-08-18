@@ -1,4 +1,4 @@
-import { Form, Head, usePage } from '@inertiajs/react'
+import { Form, Head } from '@inertiajs/react'
 import ProfileController from '@/actions/App/Http/Controllers/Admin/Settings/ProfileController'
 import DeleteUser from '@/components/delete-user'
 import Heading from '@/components/heading'
@@ -8,11 +8,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
+import { useAuthenticatedUser } from '@/hooks/use-authenticated-user'
 import { edit } from '@/routes/admin/profile'
 import type { SelectOption } from '@/types'
 
 const Profile = ({ document_type_options }: { document_type_options: SelectOption[] }) => {
-  const { auth } = usePage().props
+  const user = useAuthenticatedUser()
 
   return (
     <>
@@ -41,7 +42,7 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
                   <Input
                     id="name"
                     className="mt-1 block w-full"
-                    defaultValue={auth.user.name}
+                    defaultValue={user.name}
                     name="name"
                     required
                     autoComplete="name"
@@ -59,7 +60,7 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
                   <Input
                     id="last_name"
                     className="mt-1 block w-full"
-                    defaultValue={auth.user.last_name}
+                    defaultValue={user.last_name}
                     name="last_name"
                     required
                     autoComplete="family-name"
@@ -78,7 +79,7 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
                   <Label htmlFor="document_type">Tipo de documento</Label>
 
                   <Select
-                    defaultValue={auth.user.document_type.toString() ?? 'dni'}
+                    defaultValue={user.document_type.value}
                     name="document_type"
                   >
                     <SelectTrigger
@@ -111,7 +112,7 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
                   <Input
                     id="document_number"
                     className="mt-1 block w-full"
-                    defaultValue={auth.user.document_number}
+                    defaultValue={user.document_number}
                     name="document_number"
                     required
                     placeholder="Número de documento"
@@ -131,7 +132,7 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
                   <Input
                     id="phone"
                     className="mt-1 block w-full"
-                    defaultValue={auth.user.phone}
+                    defaultValue={user.phone}
                     name="phone"
                     required
                     placeholder="Ej: 987654321"
@@ -149,7 +150,7 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
                     id="email"
                     type="email"
                     className="mt-1 block w-full"
-                    defaultValue={auth.user.email}
+                    defaultValue={user.email}
                     name="email"
                     required
                     autoComplete="username"

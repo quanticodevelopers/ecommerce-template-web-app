@@ -1,18 +1,19 @@
 import { FilterHorizontalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Head, usePage } from '@inertiajs/react'
+import { Head } from '@inertiajs/react'
 import AstroidIcon from '@/components/astroid-icon'
 import { Button } from '@/components/ui/button'
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
+import { useAuthenticatedUser } from '@/hooks/use-authenticated-user'
 import { formatPeruDashboardDate, getPeruDashboardGreeting } from '@/lib/utils'
 import { dashboard } from '@/routes/admin'
 
 export default function DashboardIndex() {
-  const { auth } = usePage().props
+  const user = useAuthenticatedUser()
   const currentDate = new Date()
   const greeting = getPeruDashboardGreeting(currentDate)
   const formattedDate = formatPeruDashboardDate(currentDate)
-  const fullName = `${auth.user.name} ${auth.user.last_name}`.trim()
+  const fullName = `${user.name} ${user.last_name}`.trim()
 
   return (
     <>

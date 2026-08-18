@@ -1,24 +1,21 @@
 import { Logout01Icon, Settings01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Link, router } from '@inertiajs/react'
+import { Link } from '@inertiajs/react'
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { UserInfo } from '@/components/user-info'
+import { useLogoutCleanup } from '@/hooks/use-logout-cleanup'
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
 import { logout } from '@/routes'
 import { edit } from '@/routes/admin/profile'
 import type { User } from '@/types'
 
-type Props = {
+interface UserMenuContentProps {
   user: User
 }
 
-export function UserMenuContent({ user }: Props) {
+export function UserMenuContent({ user }: UserMenuContentProps) {
   const cleanup = useMobileNavigation()
-
-  const handleLogout = () => {
-    cleanup()
-    router.flushAll()
-  }
+  const handleLogout = useLogoutCleanup()
 
   return (
     <>
@@ -26,7 +23,7 @@ export function UserMenuContent({ user }: Props) {
         <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
           <UserInfo
             user={user}
-            showEmail={true}
+            showRole
           />
         </div>
       </DropdownMenuLabel>
@@ -43,7 +40,7 @@ export function UserMenuContent({ user }: Props) {
               icon={Settings01Icon}
               className="mr-2"
             />
-            Configuracion
+            Configuración
           </Link>
         </DropdownMenuItem>
       </DropdownMenuGroup>
@@ -60,7 +57,7 @@ export function UserMenuContent({ user }: Props) {
             icon={Logout01Icon}
             className="mr-2"
           />
-          Cerrar sesion
+          Cerrar sesión
         </Link>
       </DropdownMenuItem>
     </>

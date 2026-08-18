@@ -1,10 +1,10 @@
-import { DashboardBrowsingIcon, GridViewIcon, Settings01Icon, ShoppingBag01Icon, SquareArrowUpRightIcon, Tag01Icon, UserMultiple02Icon } from '@hugeicons/core-free-icons'
-import { Link, usePage } from '@inertiajs/react'
-import { useMemo } from 'react'
+import { DashboardBrowsingIcon, GridViewIcon, Settings01Icon, ShoppingBag01Icon, Tag01Icon, UserMultiple02Icon } from '@hugeicons/core-free-icons'
+import { Link } from '@inertiajs/react'
 import AppLogo from '@/components/app-logo'
-import { NavFooter } from '@/components/nav-footer'
 import { NavMain } from '@/components/nav-main'
-import { NavUser } from '@/components/nav-user'
+import SidebarFooterActions from '@/components/sidebar-footer-actions'
+import SidebarLogoutButton from '@/components/sidebar-logout-button'
+import { SidebarUserMenu } from '@/components/sidebar-user-menu'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { dashboard } from '@/routes/admin'
 import { index as adminBrands } from '@/routes/admin/brands'
@@ -12,7 +12,7 @@ import { index as adminCategories } from '@/routes/admin/categories'
 import { index as adminCustomers } from '@/routes/admin/customers'
 import { edit as editInformation } from '@/routes/admin/information'
 import { index as adminUsers } from '@/routes/admin/users'
-import type { NavGroup, NavItem } from '@/types'
+import type { NavGroup } from '@/types'
 
 const mainNavItems: NavGroup[] = [
   {
@@ -68,19 +68,6 @@ const mainNavItems: NavGroup[] = [
 ]
 
 export function AppSidebar() {
-  const { url } = usePage().props
-
-  const footerNavItems: NavItem[] = useMemo(
-    () => [
-      {
-        title: 'Ir a la web',
-        href: url,
-        icon: SquareArrowUpRightIcon,
-      },
-    ],
-    [url],
-  )
-
   return (
     <Sidebar
       collapsible="icon"
@@ -109,11 +96,9 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        <NavFooter
-          items={footerNavItems}
-          className="mt-auto"
-        />
-        <NavUser />
+        <SidebarFooterActions className="mt-auto" />
+        <SidebarLogoutButton className="hidden lg:block" />
+        <SidebarUserMenu className="block md:hidden" />
       </SidebarFooter>
     </Sidebar>
   )

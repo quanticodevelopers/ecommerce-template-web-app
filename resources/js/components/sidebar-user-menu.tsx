@@ -1,4 +1,4 @@
-import { ArrowUpDownIcon } from '@hugeicons/core-free-icons'
+import { ChevronDownIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { usePage } from '@inertiajs/react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -7,7 +7,11 @@ import { UserInfo } from '@/components/user-info'
 import { UserMenuContent } from '@/components/user-menu-content'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-export function NavUser() {
+interface SidebarUserMenuProps {
+  className?: string
+}
+
+export function SidebarUserMenu({ className = '' }: SidebarUserMenuProps) {
   const { auth } = usePage().props
   const { state } = useSidebar()
   const isMobile = useIsMobile()
@@ -17,7 +21,7 @@ export function NavUser() {
   }
 
   return (
-    <SidebarMenu>
+    <SidebarMenu className={className}>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -26,9 +30,12 @@ export function NavUser() {
               className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent"
               data-test="sidebar-menu-button"
             >
-              <UserInfo user={auth.user} />
+              <UserInfo
+                user={auth.user}
+                showRole
+              />
               <HugeiconsIcon
-                icon={ArrowUpDownIcon}
+                icon={ChevronDownIcon}
                 className="ml-auto size-4"
               />
             </SidebarMenuButton>

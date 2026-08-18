@@ -1,16 +1,6 @@
-import type { UserDocumentTypeOption, UserRoleOption } from './enums'
+import type { User } from './user'
 
-export type UserListItem = {
-  id: string
-  document_type: UserDocumentTypeOption
-  document_number: string
-  name: string
-  last_name: string
-  email: string
-  phone: string
-  role: UserRoleOption
-  created_at: string | null
-}
+export type UserListItem = User
 
 export type CreatedUserCredentials = {
   name: string

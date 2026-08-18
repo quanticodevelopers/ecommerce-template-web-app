@@ -1,5 +1,7 @@
-import AppearanceDropdown from '@/components/apperance-dropdown'
 import { Breadcrumbs } from '@/components/breadcrumbs'
+import HeaderUserMenu from '@/components/header-user-menu'
+import MessagesDropdown from '@/components/messages-dropdown'
+import NotificationsDropdown from '@/components/notifications-dropdown'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types'
@@ -13,7 +15,10 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="hidden items-center gap-2 md:flex">
-        <AppearanceDropdown />
+        <MessagesDropdown />
+        <NotificationsDropdown />
+        <Separator orientation="vertical" />
+        <HeaderUserMenu />
       </div>
     </header>
   )
