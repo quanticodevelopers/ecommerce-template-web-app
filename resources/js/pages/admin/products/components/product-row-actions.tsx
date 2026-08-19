@@ -34,6 +34,7 @@ export default function ProductRowActions({ product }: ProductRowActionsProps) {
         <Link
           aria-label={`Editar ${product.name}`}
           href={productsEdit(product.id)}
+          prefetch
         >
           <Icon
             iconNode={Edit02Icon}

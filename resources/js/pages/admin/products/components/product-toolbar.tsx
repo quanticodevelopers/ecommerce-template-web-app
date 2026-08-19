@@ -65,7 +65,11 @@ export default function ProductToolbar({ initialSearch }: ProductToolbarProps) {
         asChild
         className="w-full sm:w-auto"
       >
-        <Link href={productsCreate()}>
+        <Link
+          href={productsCreate()}
+          prefetch="mount"
+          cacheFor="1m"
+        >
           <Icon iconNode={Add01Icon} />
           Nuevo producto
         </Link>
