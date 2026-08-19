@@ -4,5 +4,6 @@ Before planning or editing, find the row whose globs match the file's path and r
 
 | Applies to | Rule file |
 | --- | --- |
+| app/Actions/Products/**, config/product-images.php, resources/js/pages/admin/products/** | .ai/rules/admin-products.md |
 | resources/js/** | .ai/rules/js.md |
 | app/Models/ProductImage.php,database/migrations/*product_images*,resources/js/pages/admin/products/** | .ai/rules/products.md |

@@ -1,21 +1,20 @@
-import { Cancel01Icon, Search01Icon } from '@hugeicons/core-free-icons'
-import { router } from '@inertiajs/react'
+import { Add01Icon, Cancel01Icon, Search01Icon } from '@hugeicons/core-free-icons'
+import { Link, router } from '@inertiajs/react'
 import { useState } from 'react'
-import type { FormEvent } from 'react'
+import type { SubmitEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
-import { index as productsIndex } from '@/routes/admin/products'
+import { create as productsCreate, index as productsIndex } from '@/routes/admin/products'
 
 type ProductToolbarProps = {
   initialSearch: string
-  total: number
 }
 
-export default function ProductToolbar({ initialSearch, total }: ProductToolbarProps) {
+export default function ProductToolbar({ initialSearch }: ProductToolbarProps) {
   const [search, setSearch] = useState(initialSearch)
 
-  function submitSearch(event: FormEvent<HTMLFormElement>) {
+  function submitSearch(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
 
     router.get(productsIndex().url, search.trim() === '' ? {} : { search: search.trim() }, {
@@ -62,9 +61,15 @@ export default function ProductToolbar({ initialSearch, total }: ProductToolbarP
         <Button type="submit">Buscar</Button>
       </form>
 
-      <p className="shrink-0 text-sm text-muted-foreground">
-        {total} {total === 1 ? 'producto' : 'productos'}
-      </p>
+      <Button
+        asChild
+        className="w-full sm:w-auto"
+      >
+        <Link href={productsCreate()}>
+          <Icon iconNode={Add01Icon} />
+          Nuevo producto
+        </Link>
+      </Button>
     </div>
   )
 }

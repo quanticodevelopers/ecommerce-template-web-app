@@ -2,15 +2,64 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Products\CreateProductAction;
+use App\Exceptions\ProductImageProcessingException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Resources\Admin\ProductResource;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProductController extends Controller
 {
+    /**
+     * Show the form for creating a product.
+     */
+    public function create(): Response
+    {
+        return Inertia::render('admin/products/create', [
+            'brands' => Brand::query()
+                ->select(['id', 'name'])
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get(),
+            'categories' => Category::query()
+                ->select(['id', 'name'])
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get(),
+        ]);
+    }
+
+    /**
+     * Store a newly created product.
+     */
+    public function store(StoreProductRequest $request, CreateProductAction $createProduct): RedirectResponse
+    {
+        try {
+            $createProduct->handle($request->validated());
+        } catch (ProductImageProcessingException $exception) {
+            report($exception);
+
+            throw ValidationException::withMessages([
+                'images' => 'No se pudieron procesar las imágenes. Inténtalo nuevamente.',
+            ]);
+        }
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => __('actions.products.created'),
+        ]);
+
+        return to_route('admin.products.index');
+    }
+
     /**
      * Display a paginated listing of products.
      */

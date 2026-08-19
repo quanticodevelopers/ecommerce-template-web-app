@@ -121,6 +121,9 @@ return [
         'created' => 'Marca creada correctamente.',
         'updated' => 'Marca actualizada correctamente.',
     ],
+    'products' => [
+        'created' => 'Producto creado correctamente.',
+    ],
     'user' => 'Usuario',
     'view' => 'Ver',
     'yes' => 'Sí',

@@ -28,10 +28,7 @@ export default function ProductsIndex({ products, filters }: ProductsIndexProps)
           badgeLabel="Catálogo"
         />
 
-        <ProductToolbar
-          initialSearch={filters.search}
-          total={products.meta.total}
-        />
+        <ProductToolbar initialSearch={filters.search} />
 
         <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
           <CardContent className="px-0">

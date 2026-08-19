@@ -3,6 +3,7 @@
 return [
     'primary_variant' => 'xl',
     'listing_variant' => 'sm',
+    'quality' => 82,
 
     'variants' => [
         'xl' => [

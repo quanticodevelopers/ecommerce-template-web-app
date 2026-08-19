@@ -47,8 +47,15 @@ Route::prefix('admin')
                             ->name('brands.update');
                     });
 
-                Route::get('/products', [AdminProductController::class, 'index'])
-                    ->name('products.index');
+                Route::controller(AdminProductController::class)
+                    ->group(function () {
+                        Route::get('/products', 'index')
+                            ->name('products.index');
+                        Route::get('/products/create', 'create')
+                            ->name('products.create');
+                        Route::post('/products', 'store')
+                            ->name('products.store');
+                    });
 
                 Route::controller(AdminUserController::class)
                     ->group(function () {
