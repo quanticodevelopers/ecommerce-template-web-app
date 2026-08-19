@@ -9,6 +9,7 @@ use GdImage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Throwable;
 
 class ProcessProductImageAction
@@ -36,6 +37,7 @@ class ProcessProductImageAction
             }
 
             $paths = [];
+            $filename = Str::lower((string) Str::ulid()).'.avif';
 
             foreach ($configuredVariants as $variant => $dimensions) {
                 if (! is_string($variant) || ! is_array($dimensions)) {
@@ -49,7 +51,7 @@ class ProcessProductImageAction
                     continue;
                 }
 
-                $path = $this->variantPath($product, $variant, $position);
+                $path = $this->variantPath($product, $variant, $filename);
                 $variantImage = $this->centerCrop($sourceImage, $width, $height);
                 $encodedImage = $this->encodeAsAvif($variantImage, $quality);
                 imagedestroy($variantImage);
@@ -144,10 +146,8 @@ class ProcessProductImageAction
         return $contents;
     }
 
-    private function variantPath(Product $product, string $variant, int $position): string
+    private function variantPath(Product $product, string $variant, string $filename): string
     {
-        $sequence = str_pad((string) ($position + 1), 2, '0', STR_PAD_LEFT);
-
-        return "images/products/{$product->id}/{$variant}/image-{$sequence}.avif";
+        return "images/products/{$product->id}/{$variant}/{$filename}";
     }
 }

@@ -123,6 +123,7 @@ return [
     ],
     'products' => [
         'created' => 'Producto creado correctamente.',
+        'updated' => 'Producto actualizado correctamente.',
     ],
     'user' => 'Usuario',
     'view' => 'Ver',

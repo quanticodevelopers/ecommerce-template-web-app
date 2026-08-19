@@ -34,7 +34,9 @@ class CreateProductAction
 
                 $product = Product::query()->create($validated);
 
-                foreach ($images as $position => $image) {
+                foreach ($images as $position => $slot) {
+                    $image = is_array($slot) ? ($slot['file'] ?? null) : null;
+
                     if ($image instanceof UploadedFile) {
                         $this->processProductImage->handle($image, $product, $position);
                     }

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Products\CreateProductAction;
+use App\Actions\Products\UpdateProductAction;
 use App\Exceptions\ProductImageProcessingException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProductRequest;
+use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Http\Resources\Admin\ProductFormResource;
 use App\Http\Resources\Admin\ProductResource;
 use App\Models\Brand;
 use App\Models\Category;
@@ -55,6 +58,58 @@ class ProductController extends Controller
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => __('actions.products.created'),
+        ]);
+
+        return to_route('admin.products.index');
+    }
+
+    /**
+     * Show the form for editing a product.
+     */
+    public function edit(Product $product): Response
+    {
+        return Inertia::render('admin/products/edit', [
+            'product' => ProductFormResource::make($product->load('images'))->resolve(),
+            'brands' => Brand::query()
+                ->select(['id', 'name'])
+                ->where(function ($query) use ($product): void {
+                    $query->where('is_active', true)
+                        ->orWhere('id', $product->brand_id);
+                })
+                ->orderBy('name')
+                ->get(),
+            'categories' => Category::query()
+                ->select(['id', 'name'])
+                ->where(function ($query) use ($product): void {
+                    $query->where('is_active', true)
+                        ->orWhere('id', $product->category_id);
+                })
+                ->orderBy('name')
+                ->get(),
+        ]);
+    }
+
+    /**
+     * Update the specified product.
+     */
+    public function update(
+        UpdateProductRequest $request,
+        Product $product,
+        UpdateProductAction $updateProduct,
+    ): RedirectResponse {
+        try {
+            $updateProduct->handle($product, $request->validated());
+        } catch (ProductImageProcessingException $exception) {
+            report($exception);
+
+            throw ValidationException::withMessages([
+                'images' => 'No se pudieron procesar las imágenes. Inténtalo nuevamente.',
+            ]);
+        }
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => __('actions.products.updated'),
         ]);
 
         return to_route('admin.products.index');

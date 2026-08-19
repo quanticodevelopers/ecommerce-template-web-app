@@ -64,7 +64,8 @@ class StoreProductRequest extends FormRequest
             'flag' => ['nullable', Rule::enum(ProductFlag::class)],
             'is_draft' => ['required', 'boolean'],
             'images' => ['required', 'array', 'min:1', 'max:5'],
-            'images.*' => [
+            'images.*' => ['required', 'array:file'],
+            'images.*.file' => [
                 'required',
                 'file',
                 'max:2048',
@@ -87,10 +88,10 @@ class StoreProductRequest extends FormRequest
             'images.required' => 'Debes seleccionar al menos una imagen.',
             'images.min' => 'Debes seleccionar al menos una imagen.',
             'images.max' => 'Puedes seleccionar un máximo de 5 imágenes.',
-            'images.*.max' => 'Cada imagen debe pesar como máximo 2 MB.',
-            'images.*.mimes' => 'Las imágenes deben ser JPG, JPEG, PNG, WebP o AVIF.',
-            'images.*.mimetypes' => 'Las imágenes deben ser JPG, JPEG, PNG, WebP o AVIF.',
-            'images.*.extensions' => 'Las imágenes deben ser JPG, JPEG, PNG, WebP o AVIF.',
+            'images.*.file.max' => 'Cada imagen debe pesar como máximo 2 MB.',
+            'images.*.file.mimes' => 'Las imágenes deben ser JPG, JPEG, PNG, WebP o AVIF.',
+            'images.*.file.mimetypes' => 'Las imágenes deben ser JPG, JPEG, PNG, WebP o AVIF.',
+            'images.*.file.extensions' => 'Las imágenes deben ser JPG, JPEG, PNG, WebP o AVIF.',
         ];
     }
 }

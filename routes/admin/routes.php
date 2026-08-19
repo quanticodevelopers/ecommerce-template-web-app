@@ -55,6 +55,10 @@ Route::prefix('admin')
                             ->name('products.create');
                         Route::post('/products', 'store')
                             ->name('products.store');
+                        Route::get('/products/{product}/edit', 'edit')
+                            ->name('products.edit');
+                        Route::patch('/products/{product}', 'update')
+                            ->name('products.update');
                     });
 
                 Route::controller(AdminUserController::class)

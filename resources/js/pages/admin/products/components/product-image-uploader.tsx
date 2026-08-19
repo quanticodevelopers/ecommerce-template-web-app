@@ -4,14 +4,18 @@ import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { cn } from '@/lib/utils'
+import type { ProductFormImage, ProductImageSlot } from '@/types'
 
 type ProductImageUploaderProps = {
   error?: string
-  onChange: (files: File[]) => void
+  initialImages?: ProductFormImage[]
+  onChange: (images: ProductImageSlot[]) => void
 }
 
 type ProductImagePreview = {
-  file: File
+  alt: string
+  existingId: string | null
+  file: File | null
   id: string
   url: string
 }
@@ -20,10 +24,18 @@ const maximumImages = 5
 const maximumFileSize = 2 * 1024 * 1024
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/avif'])
 
-export default function ProductImageUploader({ error, onChange }: ProductImageUploaderProps) {
+export default function ProductImageUploader({ error, initialImages = [], onChange }: ProductImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const previewsRef = useRef<ProductImagePreview[]>([])
-  const [previews, setPreviews] = useState<ProductImagePreview[]>([])
+  const [previews, setPreviews] = useState<ProductImagePreview[]>(() =>
+    initialImages.map((image) => ({
+      alt: image.alt,
+      existingId: image.id,
+      file: null,
+      id: image.id,
+      url: image.url,
+    })),
+  )
   const [localError, setLocalError] = useState<string | null>(null)
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
 
@@ -33,14 +45,23 @@ export default function ProductImageUploader({ error, onChange }: ProductImageUp
 
   useEffect(
     () => () => {
-      previewsRef.current.forEach((preview) => URL.revokeObjectURL(preview.url))
+      previewsRef.current.forEach((preview) => {
+        if (preview.file !== null) {
+          URL.revokeObjectURL(preview.url)
+        }
+      })
     },
     [],
   )
 
   function updatePreviews(nextPreviews: ProductImagePreview[]): void {
     setPreviews(nextPreviews)
-    onChange(nextPreviews.map((preview) => preview.file))
+    onChange(
+      nextPreviews.map((preview) => ({
+        id: preview.existingId,
+        file: preview.file,
+      })),
+    )
   }
 
   function handleFilesSelected(event: ChangeEvent<HTMLInputElement>): void {
@@ -77,6 +98,8 @@ export default function ProductImageUploader({ error, onChange }: ProductImageUp
     updatePreviews([
       ...previews,
       ...selectedFiles.map((file) => ({
+        alt: file.name,
+        existingId: null,
         file,
         id: crypto.randomUUID(),
         url: URL.createObjectURL(file),
@@ -86,8 +109,13 @@ export default function ProductImageUploader({ error, onChange }: ProductImageUp
 
   function removeImage(index: number): void {
     const preview = previews[index]
-    URL.revokeObjectURL(preview.url)
+
+    if (preview.file !== null) {
+      URL.revokeObjectURL(preview.url)
+    }
+
     setLocalError(null)
+
     updatePreviews(previews.filter((_, previewIndex) => previewIndex !== index))
   }
 
@@ -119,7 +147,7 @@ export default function ProductImageUploader({ error, onChange }: ProductImageUp
           <p className="font-medium">
             Imágenes <span className="text-destructive">*</span>
           </p>
-          <p className="text-sm text-muted-foreground">Entre 1 y 5 imágenes. Se recortarán al centro en proporción 1:1 y se guardarán en AVIF.</p>
+          <p className="text-sm text-muted-foreground">Entre 1 y 5 imágenes. Las nuevas se recortarán al centro en proporción 1:1 y se guardarán en AVIF.</p>
         </div>
 
         <Button
@@ -171,7 +199,7 @@ export default function ProductImageUploader({ error, onChange }: ProductImageUp
               onDrop={(event) => handleDrop(event, index)}
             >
               <img
-                alt={`Vista previa ${index + 1}`}
+                alt={preview.alt || `Vista previa ${index + 1}`}
                 className="aspect-square w-full object-cover"
                 src={preview.url}
               />
