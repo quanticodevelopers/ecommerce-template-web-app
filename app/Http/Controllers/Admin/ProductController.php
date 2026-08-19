@@ -8,6 +8,7 @@ use App\Exceptions\ProductImageProcessingException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductFormResource;
 use App\Http\Resources\Admin\ProductResource;
 use App\Models\Brand;
@@ -61,6 +62,22 @@ class ProductController extends Controller
         ]);
 
         return to_route('admin.products.index');
+    }
+
+    /**
+     * Display the specified product.
+     */
+    public function show(Product $product): Response
+    {
+        $product->load([
+            'brand:id,name',
+            'category:id,name',
+            'images:id,product_id,path,variants,alt,position',
+        ]);
+
+        return Inertia::render('admin/products/show', [
+            'product' => ProductDetailResource::make($product)->resolve(),
+        ]);
     }
 
     /**

@@ -21,6 +21,13 @@ test('guests are redirected to the admin login page when accessing product creat
         ->assertRedirect(route('admin.auth.login'));
 });
 
+test('guests are redirected to the admin login page when accessing product details', function () {
+    $product = Product::factory()->create();
+
+    $this->get(route('admin.products.show', $product))
+        ->assertRedirect(route('admin.auth.login'));
+});
+
 test('admins can see the product creation page with active catalog options', function () {
     $admin = User::factory()->admin()->create();
     $activeBrand = Brand::factory()->active()->create(['name' => 'Marca activa']);
@@ -200,6 +207,66 @@ test('the base price remains optional when creating a product', function () {
     $product = Product::query()->where('sku', 'NO-BASE-PRICE')->firstOrFail();
 
     expect($product->base_price)->toBeNull();
+});
+
+test('admins can see every product detail with ordered images and timestamps', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->admin()->create();
+    $brand = Brand::factory()->create(['name' => 'Andes']);
+    $category = Category::factory()->create(['name' => 'Accesorios']);
+    $product = Product::factory()->published()->for($brand)->for($category)->create([
+        'name' => 'Mochila Técnica',
+        'sku' => 'MOCHILA-001',
+        'barcode' => '7751234567890',
+        'short_description' => 'Lista para rutas largas.',
+        'description' => '<h2>Detalles</h2><p>Material impermeable.</p>',
+        'base_price' => '199.90',
+        'sale_price' => '149.90',
+        'flag' => ProductFlag::FEATURED,
+    ]);
+    $secondImage = ProductImage::factory()->for($product)->create([
+        'path' => "images/products/{$product->id}/xl/second.avif",
+        'variants' => ['sm' => "images/products/{$product->id}/sm/second.avif"],
+        'alt' => 'Vista posterior',
+        'position' => 1,
+    ]);
+    $firstImage = ProductImage::factory()->for($product)->create([
+        'path' => "images/products/{$product->id}/xl/first.avif",
+        'variants' => ['sm' => "images/products/{$product->id}/sm/first.avif"],
+        'alt' => 'Vista frontal',
+        'position' => 0,
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('admin.products.show', $product))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('admin/products/show')
+            ->where('product.id', $product->id)
+            ->where('product.name', 'Mochila Técnica')
+            ->where('product.sku', 'MOCHILA-001')
+            ->where('product.barcode', '7751234567890')
+            ->where('product.slug', $product->slug)
+            ->where('product.short_description', 'Lista para rutas largas.')
+            ->where('product.description', '<h2>Detalles</h2><p>Material impermeable.</p>')
+            ->where('product.base_price', '199.90')
+            ->where('product.sale_price', '149.90')
+            ->where('product.flag.value', ProductFlag::FEATURED->value)
+            ->where('product.flag.label', ProductFlag::FEATURED->label())
+            ->where('product.brand.name', 'Andes')
+            ->where('product.category.name', 'Accesorios')
+            ->where('product.published_at', $product->published_at?->toIso8601String())
+            ->where('product.created_at', $product->created_at->toIso8601String())
+            ->where('product.updated_at', $product->updated_at->toIso8601String())
+            ->has('product.images', 2)
+            ->where('product.images.0.id', $firstImage->id)
+            ->where('product.images.0.position', 0)
+            ->where('product.images.0.url', Storage::disk('public')->url($firstImage->path))
+            ->where('product.images.0.thumbnail_url', Storage::disk('public')->url($firstImage->variants['sm']))
+            ->where('product.images.1.id', $secondImage->id)
+            ->where('product.images.1.position', 1),
+        );
 });
 
 test('guests are redirected to the admin login page when accessing product edition', function () {

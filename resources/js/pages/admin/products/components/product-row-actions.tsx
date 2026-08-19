@@ -1,8 +1,8 @@
-import { Edit02Icon, ExternalLinkIcon } from '@hugeicons/core-free-icons'
+import { Edit02Icon, ExternalLinkIcon, ViewIcon } from '@hugeicons/core-free-icons'
 import { Link } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
-import { edit as productsEdit } from '@/routes/admin/products'
+import { edit as productsEdit, show as productsShow } from '@/routes/admin/products'
 import type { ProductListItem } from '@/types'
 
 type ProductRowActionsProps = {
@@ -17,12 +17,30 @@ export default function ProductRowActions({ product }: ProductRowActionsProps) {
         variant="ghost"
         size="icon"
         className="size-8"
-        aria-label={`Ver página de ${product.name}`}
+        aria-label={`Abrir ${product.name} en la tienda`}
       >
         <Icon
           iconNode={ExternalLinkIcon}
           className="size-4"
         />
+      </Button>
+
+      <Button
+        asChild
+        variant="ghost"
+        size="icon"
+        className="size-8"
+      >
+        <Link
+          aria-label={`Ver detalle de ${product.name}`}
+          href={productsShow(product.id)}
+          prefetch
+        >
+          <Icon
+            iconNode={ViewIcon}
+            className="size-4"
+          />
+        </Link>
       </Button>
 
       <Button

@@ -119,6 +119,9 @@ importers:
       sonner:
         specifier: ^2.0.0
         version: 2.0.7(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      swiper:
+        specifier: ^14.1.0
+        version: 14.1.0
       tailwind-merge:
         specifier: ^3.0.1
         version: 3.6.0
@@ -4396,6 +4399,10 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  swiper@14.1.0:
+    resolution: {integrity: sha512-ppit/AqmGvThKlXy4I1/9N/gEyb9s/BDHWciWNeIxbfteFKUhPQXrYuOMKszomXKd9WiLd+/0vKdPHW+0N0mhA==}
+    engines: {node: '>= 4.7.0'}
 
   systeminformation@5.33.1:
     resolution: {integrity: sha512-DEN6ICHk3Tk0Uf/hrAHh7xlt7iL5CJFBtPZinA0H62DrGG/KPKqq/Nzj6lCXPS4Ay/sf/14zNnk9LpqKzBIc+w==}
@@ -9225,6 +9232,8 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  swiper@14.1.0: {}
 
   systeminformation@5.33.1: {}
 
