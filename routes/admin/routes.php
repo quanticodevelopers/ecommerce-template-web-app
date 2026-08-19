@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,9 @@ Route::prefix('admin')
                         Route::patch('/brands/{brand}', 'update')
                             ->name('brands.update');
                     });
+
+                Route::get('/products', [AdminProductController::class, 'index'])
+                    ->name('products.index');
 
                 Route::controller(AdminUserController::class)
                     ->group(function () {

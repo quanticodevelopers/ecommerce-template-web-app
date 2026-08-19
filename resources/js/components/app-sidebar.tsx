@@ -1,4 +1,4 @@
-import { DashboardBrowsingIcon, GridViewIcon, Settings01Icon, ShoppingBag01Icon, Tag01Icon, UserMultiple02Icon } from '@hugeicons/core-free-icons'
+import { DashboardBrowsingIcon, GridViewIcon, Package01Icon, Settings01Icon, ShoppingBag01Icon, Tag01Icon, UserMultiple02Icon } from '@hugeicons/core-free-icons'
 import { Link } from '@inertiajs/react'
 import AppLogo from '@/components/app-logo'
 import { NavMain } from '@/components/nav-main'
@@ -11,6 +11,7 @@ import { index as adminBrands } from '@/routes/admin/brands'
 import { index as adminCategories } from '@/routes/admin/categories'
 import { index as adminCustomers } from '@/routes/admin/customers'
 import { edit as editInformation } from '@/routes/admin/information'
+import { index as adminProducts } from '@/routes/admin/products'
 import { index as adminUsers } from '@/routes/admin/users'
 import type { NavGroup } from '@/types'
 
@@ -28,6 +29,11 @@ const mainNavItems: NavGroup[] = [
   {
     title: 'Catálogo',
     items: [
+      {
+        title: 'Productos',
+        href: adminProducts(),
+        icon: Package01Icon,
+      },
       {
         title: 'Categorías',
         href: adminCategories(),
