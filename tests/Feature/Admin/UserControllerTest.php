@@ -50,15 +50,42 @@ test('admins can create administrator users with generated credentials', functio
     $response = $this->actingAs($admin)
         ->post(route('admin.users.store'), $payload);
 
-    $response->assertRedirect(route('admin.users.index'));
-    $createdUser = User::query()->where('email', $payload['email'])->first();
+    $response
+        ->assertRedirect(route('admin.users.index'))
+        ->assertInertiaFlash('toast.type', 'success');
+
+    $createdUser = User::query()->where('email', $payload['email'])->firstOrFail();
     $credentials = $response->getSession()->get('created_user_credentials');
 
-    expect($credentials)->toBeArray()
+    expect($createdUser->role)->toBe(UserRole::ADMIN)
+        ->and($createdUser->email_verified_at)->not->toBeNull()
+        ->and($credentials)->toBeArray()
         ->and($credentials['email'])->toBe($payload['email'])
         ->and($credentials['password'])->toHaveLength(18)
         ->and($credentials['password'])->toMatch('/^[a-zA-Z0-9]+$/')
         ->and(Hash::check($credentials['password'], $createdUser->password))->toBeTrue();
+});
+
+test('administrator creation rejects an email and document already in use', function () {
+    $admin = User::factory()->admin()->create();
+    $existingUser = User::factory()->create([
+        'document_type' => 'dni',
+        'document_number' => '12345678',
+        'email' => 'existing@example.com',
+    ]);
+
+    $this->actingAs($admin)
+        ->post(route('admin.users.store'), [
+            'document_type' => 'dni',
+            'document_number' => $existingUser->document_number,
+            'name' => 'Daniel',
+            'last_name' => 'Perez',
+            'email' => $existingUser->email,
+            'phone' => '987654321',
+        ])
+        ->assertSessionHasErrors(['document_number', 'email']);
+
+    expect(User::query()->count())->toBe(2);
 });
 
 test('admins can reset another administrator password with generated credentials', function () {

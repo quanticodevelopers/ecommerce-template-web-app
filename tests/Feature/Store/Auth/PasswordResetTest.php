@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
 test('reset password link screen can be rendered', function () {
@@ -41,32 +42,35 @@ test('reset password screen can be rendered', function () {
 test('password can be reset with valid token', function () {
     Notification::fake();
 
-    $user = User::factory()
-        ->admin()
-        ->create();
+    $user = User::factory()->create();
+    $previousPasswordHash = $user->password;
 
     $this->post(route('password.email'), ['email' => $user->email]);
 
-    Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
+    Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user, $previousPasswordHash) {
         $response = $this->post(route('password.update'), [
             'token' => $notification->token,
             'email' => $user->email,
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'password' => 'new-password',
+            'password_confirmation' => 'new-password',
         ]);
 
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect(route('store.auth.login'));
 
+        $user->refresh();
+
+        expect(Hash::check('new-password', $user->password))->toBeTrue()
+            ->and($user->password)->not->toBe($previousPasswordHash);
+
         return true;
     });
 });
 
 test('password cannot be reset with invalid token', function () {
-    $user = User::factory()
-        ->admin()
-        ->create();
+    $user = User::factory()->create();
+    $previousPasswordHash = $user->password;
 
     $response = $this->post(route('password.update'), [
         'token' => 'invalid-token',
@@ -76,4 +80,6 @@ test('password cannot be reset with invalid token', function () {
     ]);
 
     $response->assertSessionHasErrors('email');
+
+    expect($user->refresh()->password)->toBe($previousPasswordHash);
 });

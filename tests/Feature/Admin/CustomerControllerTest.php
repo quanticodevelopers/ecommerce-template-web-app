@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the admin login page when accessing customers index', function () {
@@ -9,13 +10,12 @@ test('guests are redirected to the admin login page when accessing customers ind
     $response->assertRedirect(route('admin.auth.login'));
 });
 
-test('admins can see customer users', function () {
+test('customer listing includes customer and administrator users', function () {
     $admin = User::factory()
         ->admin()
         ->create();
 
-    User::factory()
-        ->create();
+    $customer = User::factory()->create();
 
     $this->actingAs($admin)
         ->get(route('admin.customers.index'))
@@ -23,5 +23,11 @@ test('admins can see customer users', function () {
         ->assertInertia(fn (Assert $page) => $page
             ->component('admin/customers/index')
             ->has('customers', 2)
+            ->where('customers', function (Collection $customers) use ($admin, $customer): bool {
+                $listedUserIds = collect($customers)->pluck('id')->sort()->values()->all();
+                $expectedUserIds = collect([$admin->id, $customer->id])->sort()->values()->all();
+
+                return $listedUserIds === $expectedUserIds;
+            })
         );
 });

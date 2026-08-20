@@ -39,12 +39,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin(): bool
     {
-        return in_array($this->role, [UserRole::ADMIN, UserRole::SUPER_ADMIN]);
+        return in_array($this->getAttribute('role'), [UserRole::ADMIN, UserRole::SUPER_ADMIN], true);
     }
 
-    /** Scopes */
+    /** @param Builder<User> $query */
     #[Scope]
-    public function customers(Builder $query): void
+    protected function customers(Builder $query): void
     {
         $query->whereIn('role', [UserRole::CUSTOMER->value, UserRole::ADMIN->value]);
     }

@@ -209,6 +209,53 @@ test('the base price remains optional when creating a product', function () {
     expect($product->base_price)->toBeNull();
 });
 
+test('product creation rejects inactive catalog relations', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->admin()->create();
+    $brand = Brand::factory()->inactive()->create();
+    $category = Category::factory()->inactive()->create();
+
+    $this->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Producto inválido',
+            'sku' => 'INACTIVE-RELATIONS',
+            'barcode' => '7751234567890',
+            'brand_id' => $brand->id,
+            'category_id' => $category->id,
+            'sale_price' => '100.00',
+            'is_draft' => true,
+            'images' => [['file' => UploadedFile::fake()->image('product.jpg')]],
+        ])
+        ->assertSessionHasErrors(['brand_id', 'category_id']);
+
+    expect(Product::query()->where('sku', 'INACTIVE-RELATIONS')->exists())->toBeFalse();
+});
+
+test('product creation requires unique sku and barcode values', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->admin()->create();
+    $brand = Brand::factory()->active()->create();
+    $category = Category::factory()->active()->create();
+    $existingProduct = Product::factory()->for($brand)->for($category)->create();
+
+    $this->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Producto duplicado',
+            'sku' => $existingProduct->sku,
+            'barcode' => $existingProduct->barcode,
+            'brand_id' => $brand->id,
+            'category_id' => $category->id,
+            'sale_price' => '100.00',
+            'is_draft' => true,
+            'images' => [['file' => UploadedFile::fake()->image('product.jpg')]],
+        ])
+        ->assertSessionHasErrors(['sku', 'barcode']);
+
+    expect(Product::query()->count())->toBe(1);
+});
+
 test('admins can see every product detail with ordered images and timestamps', function () {
     Storage::fake('public');
 

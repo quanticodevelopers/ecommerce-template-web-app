@@ -2,7 +2,6 @@
 
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the admin login page when accessing categories index', function () {
@@ -107,8 +106,6 @@ test('admins can create a root category with generated slug and code', function 
         ->and($category->code)->toMatch('/^CA[A-Z0-9]{4}$/')
         ->and($category->is_active)->toBeTrue()
         ->and($category->parent_id)->toBeNull();
-
-    expect(Str::startsWith($category->code, 'CA'))->toBeTrue();
 });
 
 test('admins can create a subcategory and return to its parent listing', function () {
@@ -164,6 +161,20 @@ test('admins must keep category short descriptions within the configured limit',
             'short_description' => str_repeat('a', 129),
         ])
         ->assertSessionHasErrors('short_description');
+});
+
+test('admins cannot create a category with a nonexistent parent', function () {
+    $admin = User::factory()->admin()->create();
+
+    $this->actingAs($admin)
+        ->post(route('admin.categories.store'), [
+            'name' => 'Categoría huérfana',
+            'parent_id' => '01J00000000000000000000000',
+            'short_description' => 'Sin padre válido',
+        ])
+        ->assertSessionHasErrors('parent_id');
+
+    expect(Category::query()->where('name', 'Categoría huérfana')->exists())->toBeFalse();
 });
 
 test('guests are redirected to the admin login page when updating categories', function () {
