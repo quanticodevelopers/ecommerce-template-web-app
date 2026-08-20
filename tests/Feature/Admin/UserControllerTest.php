@@ -107,3 +107,19 @@ test('admins must confirm password to reset an administrator password', function
 
     expect($targetAdmin->refresh()->password)->toBe($previousPasswordHash);
 });
+
+test('admins cannot reset a customer password', function () {
+    $admin = User::factory()
+        ->admin()
+        ->create();
+    $customer = User::factory()->create();
+    $previousPasswordHash = $customer->password;
+
+    $this->actingAs($admin)
+        ->patch(route('admin.users.reset-password', $customer), [
+            'password' => 'password',
+        ])
+        ->assertNotFound();
+
+    expect($customer->refresh()->password)->toBe($previousPasswordHash);
+});

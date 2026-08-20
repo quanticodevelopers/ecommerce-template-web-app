@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Categories\CreateCategoryAction;
+use App\Actions\Categories\UpdateCategoryAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
@@ -32,57 +34,34 @@ class CategoryController extends Controller
     /**
      * Store a newly created category.
      */
-    public function store(StoreCategoryRequest $request): RedirectResponse
+    public function store(StoreCategoryRequest $request, CreateCategoryAction $createCategory): RedirectResponse
     {
-        $validated = $request->validated();
-
-        $category = Category::query()->create([
-            'name' => $validated['name'],
-            'parent_id' => $validated['parent_id'] ?? null,
-            'short_description' => $validated['short_description'] ?? null,
-            'is_active' => true,
-        ]);
+        $category = $createCategory->handle($request->validated());
 
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => __('actions.categories.created'),
         ]);
 
-        if ($category->parent_id === null) {
-            return to_route('admin.categories.index');
-        }
-
-        $parentCategory = Category::query()->findOrFail($category->parent_id);
-
-        return to_route('admin.categories.subcategories', $parentCategory);
+        return $this->redirectToCategoryListing($category);
     }
 
     /**
      * Update the specified category.
      */
-    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
-    {
-        $validated = $request->validated();
-
-        $category->update([
-            'name' => $validated['name'],
-            'parent_id' => $validated['parent_id'] ?? null,
-            'short_description' => $validated['short_description'] ?? null,
-            'is_active' => $validated['is_active'],
-        ]);
+    public function update(
+        UpdateCategoryRequest $request,
+        Category $category,
+        UpdateCategoryAction $updateCategory,
+    ): RedirectResponse {
+        $updateCategory->handle($category, $request->validated());
 
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => __('actions.categories.updated'),
         ]);
 
-        if ($category->parent_id === null) {
-            return to_route('admin.categories.index');
-        }
-
-        $parentCategory = Category::query()->findOrFail($category->parent_id);
-
-        return to_route('admin.categories.subcategories', $parentCategory);
+        return $this->redirectToCategoryListing($category);
     }
 
     private function renderIndex(?Category $parentCategory): Response
@@ -119,5 +98,16 @@ class CategoryController extends Controller
             ],
             'category_parent_options' => $categoryParentOptions,
         ]);
+    }
+
+    private function redirectToCategoryListing(Category $category): RedirectResponse
+    {
+        if ($category->parent_id === null) {
+            return to_route('admin.categories.index');
+        }
+
+        $parentCategory = Category::query()->findOrFail($category->parent_id);
+
+        return to_route('admin.categories.subcategories', $parentCategory);
     }
 }

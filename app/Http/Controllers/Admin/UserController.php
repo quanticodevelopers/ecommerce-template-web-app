@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Users\CreateAdminUserAction;
+use App\Actions\Users\ResetAdminUserPasswordAction;
 use App\Enums\UserDocumentType;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
@@ -10,7 +12,6 @@ use App\Http\Requests\Admin\StoreAdminUserRequest;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -37,62 +38,49 @@ class UserController extends Controller
     /**
      * Store a newly created administrator user.
      */
-    public function store(StoreAdminUserRequest $request): RedirectResponse
+    public function store(StoreAdminUserRequest $request, CreateAdminUserAction $createAdminUser): RedirectResponse
     {
-        $validated = $request->validated();
-        $generatedPassword = Str::random(18);
-
-        $user = User::query()->create([
-            'document_type' => $validated['document_type'],
-            'document_number' => $validated['document_number'],
-            'name' => $validated['name'],
-            'last_name' => $validated['last_name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'password' => $generatedPassword,
-            'role' => UserRole::ADMIN,
-        ]);
-
-        $user->forceFill([
-            'email_verified_at' => now(),
-        ])->save();
+        ['user' => $user, 'password' => $generatedPassword] = $createAdminUser->handle($request->validated());
 
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => 'Usuario administrador creado correctamente.',
         ]);
 
-        return to_route('admin.users.index')->with('created_user_credentials', [
-            'name' => trim($user->name.' '.$user->last_name),
-            'email' => $user->email,
-            'password' => $generatedPassword,
-        ]);
+        return to_route('admin.users.index')->with(
+            'created_user_credentials',
+            $this->credentialsFor($user, $generatedPassword),
+        );
     }
 
     /**
      * Reset an administrator user's password.
      */
-    public function resetPassword(ConfirmAdminPasswordRequest $request, User $user): RedirectResponse
-    {
-        if ($user->role !== UserRole::ADMIN) {
-            abort(404);
-        }
-
-        $generatedPassword = Str::random(18);
-
-        $user->forceFill([
-            'password' => $generatedPassword,
-        ])->save();
+    public function resetPassword(
+        ConfirmAdminPasswordRequest $request,
+        User $user,
+        ResetAdminUserPasswordAction $resetAdminUserPassword,
+    ): RedirectResponse {
+        $generatedPassword = $resetAdminUserPassword->handle($user);
 
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => 'Contraseña de usuario administrador restablecida correctamente.',
         ]);
 
-        return to_route('admin.users.index')->with('created_user_credentials', [
+        return to_route('admin.users.index')->with(
+            'created_user_credentials',
+            $this->credentialsFor($user, $generatedPassword),
+        );
+    }
+
+    /** @return array{name: string, email: string, password: string} */
+    private function credentialsFor(User $user, string $password): array
+    {
+        return [
             'name' => trim($user->name.' '.$user->last_name),
             'email' => $user->email,
-            'password' => $generatedPassword,
-        ]);
+            'password' => $password,
+        ];
     }
 }
