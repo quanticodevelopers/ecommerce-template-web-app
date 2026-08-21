@@ -1,42 +1,50 @@
 import { SquareArrowUpRightIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { usePage } from '@inertiajs/react'
+import type { ComponentPropsWithoutRef } from 'react'
 import AppearanceDropdown from '@/components/appearance-dropdown'
-import { Button } from '@/components/ui/button'
-import { SidebarMenu, SidebarMenuItem } from '@/components/ui/sidebar'
-import { toUrl } from '@/lib/utils'
+import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
+import { cn, toUrl } from '@/lib/utils'
 
-interface SidebarFooterActionsProps {
-  className?: string
-}
+type SidebarFooterActionsProps = ComponentPropsWithoutRef<typeof SidebarGroup>
 
-function SidebarFooterActions({ className = '' }: SidebarFooterActionsProps) {
+function SidebarFooterActions({ className, ...props }: SidebarFooterActionsProps) {
   const { url } = usePage().props
 
   return (
-    <SidebarMenu className={className}>
-      <SidebarMenuItem>
-        <div className="grid grid-cols-2 gap-1 group-data-[collapsible=icon]:grid-cols-1">
-          <Button
-            variant="ghost"
-            className="font-normal group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:px-0"
-            asChild
-          >
-            <a
-              href={toUrl(url)}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Ir a la web"
-              title="Ir a la web"
+    <SidebarGroup
+      {...props}
+      className={cn('group-data-[collapsible=icon]:p-0', className)}
+    >
+      <SidebarGroupContent>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <AppearanceDropdown />
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
             >
-              <HugeiconsIcon icon={SquareArrowUpRightIcon} />
-              <span className="group-data-[collapsible=icon]:hidden">Ir a la web</span>
-            </a>
-          </Button>
-          <AppearanceDropdown />
-        </div>
-      </SidebarMenuItem>
-    </SidebarMenu>
+              <a
+                href={toUrl(url)}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Ir a la web"
+                title="Ir a la web"
+              >
+                <HugeiconsIcon
+                  icon={SquareArrowUpRightIcon}
+                  className="size-5"
+                />
+                <span>Ir a la web</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
   )
 }
 

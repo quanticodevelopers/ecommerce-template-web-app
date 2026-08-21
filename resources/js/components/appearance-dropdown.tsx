@@ -2,8 +2,8 @@ import { ComputerIcon, Moon02Icon, Sun01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import type { IconSvgElement } from '@hugeicons/react'
 import { useMemo } from 'react'
-import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
 import { useAppearance } from '@/hooks/use-appearance'
 import type { Appearance } from '@/hooks/use-appearance'
 
@@ -27,17 +27,22 @@ function AppearanceDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
+        <SidebarMenuButton
+          className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
           aria-label="Cambiar apariencia"
           title="Cambiar apariencia"
-          className="font-normal group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:px-0"
         >
-          <HugeiconsIcon icon={currenteAppearance.icon} />
-          <span className="group-data-[collapsible=icon]:hidden">{currenteAppearance.label}</span>
-        </Button>
+          <HugeiconsIcon
+            icon={currenteAppearance.icon}
+            className="size-5"
+          />
+          <span>{currenteAppearance.label}</span>
+        </SidebarMenuButton>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        side="top"
+        align="end"
+      >
         {tabs.map(({ value, icon, label }) => (
           <DropdownMenuItem
             key={value}
