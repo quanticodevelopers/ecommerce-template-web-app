@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from '@hugeicons/core-free-icons'
+import { UnfoldMoreIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { usePage } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
@@ -30,7 +30,7 @@ function HeaderUserMenu({ className }: HeaderUserMenuProps) {
               showRole={true}
             />
             <HugeiconsIcon
-              icon={ChevronDownIcon}
+              icon={UnfoldMoreIcon}
               className="size-4"
             />
           </Button>

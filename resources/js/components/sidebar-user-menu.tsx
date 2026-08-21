@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from '@hugeicons/core-free-icons'
+import { UnfoldMoreIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { usePage } from '@inertiajs/react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -35,7 +35,7 @@ export function SidebarUserMenu({ className = '' }: SidebarUserMenuProps) {
                 showRole
               />
               <HugeiconsIcon
-                icon={ChevronDownIcon}
+                icon={UnfoldMoreIcon}
                 className="ml-auto size-4"
               />
             </SidebarMenuButton>
