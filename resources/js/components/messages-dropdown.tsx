@@ -14,13 +14,13 @@ function MessagesDropdown({ className = '' }: MessagesDropdownProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="icon-lg"
+            size="icon"
             aria-label="Visualizar mensajes"
             title="Visualizar mensajes"
           >
             <HugeiconsIcon
               icon={Mail01Icon}
-              className="size-4"
+              strokeWidth={1.5}
             />
           </Button>
         </DropdownMenuTrigger>

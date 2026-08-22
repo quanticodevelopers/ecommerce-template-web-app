@@ -15,7 +15,10 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
       {status === 'verification-link-sent' && (
         <Alert className="w-full text-green-700 dark:text-green-400">
-          <HugeiconsIcon icon={CheckmarkCircle02Icon} />
+          <HugeiconsIcon
+            icon={CheckmarkCircle02Icon}
+            strokeWidth={1.5}
+          />
           <AlertDescription className="text-green-700/80 dark:text-green-400/80">
             Se ha enviado un nuevo enlace de verificación al correo electrónico que proporcionaste durante el registro.
           </AlertDescription>

@@ -30,7 +30,7 @@ export default function CreateAdminUserModal({ documentTypeOptions, triggerClass
         <Button className={cn(triggerClassName)}>
           <HugeiconsIcon
             icon={UserAdd01Icon}
-            className="size-4"
+            strokeWidth={1.5}
           />
           Nuevo usuario
         </Button>

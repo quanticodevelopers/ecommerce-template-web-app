@@ -1,8 +1,8 @@
 import { ArrowLeft01Icon, Edit02Icon, Package01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Head, Link } from '@inertiajs/react'
 import Heading from '@/components/heading'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import ProductDescription from '@/pages/admin/products/components/product-description'
 import ProductDetailOverview from '@/pages/admin/products/components/product-detail-overview'
 import ProductImageGallery from '@/pages/admin/products/components/product-image-gallery'
@@ -33,7 +33,10 @@ export default function ProductsShow({ product }: ProductsShowProps) {
               variant="outline"
             >
               <Link href={productsIndex()}>
-                <Icon iconNode={ArrowLeft01Icon} />
+                <HugeiconsIcon
+                  icon={ArrowLeft01Icon}
+                  strokeWidth={1.5}
+                />
                 Volver
               </Link>
             </Button>
@@ -42,7 +45,10 @@ export default function ProductsShow({ product }: ProductsShowProps) {
                 href={productsEdit(product.id)}
                 prefetch
               >
-                <Icon iconNode={Edit02Icon} />
+                <HugeiconsIcon
+                  icon={Edit02Icon}
+                  strokeWidth={1.5}
+                />
                 Editar producto
               </Link>
             </Button>

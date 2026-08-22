@@ -39,6 +39,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <HugeiconsIcon
               icon={Settings01Icon}
               className="mr-2"
+              strokeWidth={1.5}
             />
             Configuración
           </Link>
@@ -56,6 +57,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
           <HugeiconsIcon
             icon={Logout01Icon}
             className="mr-2"
+            strokeWidth={1.5}
           />
           Cerrar sesión
         </Link>

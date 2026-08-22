@@ -42,13 +42,12 @@ export default function CategoryRowActions({ category, parentCategoryOptions }: 
       <Button
         type="button"
         variant="ghost"
-        size="icon"
-        className="size-8"
+        size="icon-xs"
         aria-label={`Ver página de ${category.name}`}
       >
         <HugeiconsIcon
           icon={ExternalLinkIcon}
-          className="size-4"
+          strokeWidth={1.5}
         />
       </Button>
 
@@ -60,14 +59,13 @@ export default function CategoryRowActions({ category, parentCategoryOptions }: 
       <Button
         type="button"
         variant="ghost"
-        size="icon"
-        className="size-8"
+        size="icon-xs"
         aria-label={`Ver información de ${category.name}`}
         onClick={() => setIsOpen(true)}
       >
         <HugeiconsIcon
           icon={ViewIcon}
-          className="size-4"
+          strokeWidth={1.5}
         />
       </Button>
 

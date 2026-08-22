@@ -1,9 +1,9 @@
 import { Add01Icon, Cancel01Icon, Search01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Link, router } from '@inertiajs/react'
 import { useState } from 'react'
 import type { SubmitEvent } from 'react'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
 import { create as productsCreate, index as productsIndex } from '@/routes/admin/products'
 
@@ -36,7 +36,10 @@ export default function ProductToolbar({ initialSearch }: ProductToolbarProps) {
       >
         <InputGroup>
           <InputGroupAddon>
-            <Icon iconNode={Search01Icon} />
+            <HugeiconsIcon
+              icon={Search01Icon}
+              strokeWidth={1.5}
+            />
           </InputGroupAddon>
           <InputGroupInput
             aria-label="Buscar productos"
@@ -53,12 +56,21 @@ export default function ProductToolbar({ initialSearch }: ProductToolbarProps) {
                 onClick={clearSearch}
                 size="icon-xs"
               >
-                <Icon iconNode={Cancel01Icon} />
+                <HugeiconsIcon
+                  icon={Cancel01Icon}
+                  strokeWidth={1.5}
+                />
               </InputGroupButton>
             </InputGroupAddon>
           )}
         </InputGroup>
-        <Button type="submit">Buscar</Button>
+        <Button type="submit">
+          Buscar
+          <HugeiconsIcon
+            icon={Search01Icon}
+            strokeWidth={1.5}
+          />
+        </Button>
       </form>
 
       <Button
@@ -70,7 +82,10 @@ export default function ProductToolbar({ initialSearch }: ProductToolbarProps) {
           prefetch="mount"
           cacheFor="1m"
         >
-          <Icon iconNode={Add01Icon} />
+          <HugeiconsIcon
+            icon={Add01Icon}
+            strokeWidth={1.5}
+          />
           Nuevo producto
         </Link>
       </Button>

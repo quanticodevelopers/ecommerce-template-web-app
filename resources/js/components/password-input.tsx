@@ -26,6 +26,7 @@ export default function PasswordInput({ className, ref, ...props }: Omit<Compone
         <HugeiconsIcon
           icon={showPassword ? ViewOffIcon : ViewIcon}
           className="size-4"
+          strokeWidth={1.5}
         />
       </button>
     </div>

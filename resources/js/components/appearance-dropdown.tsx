@@ -34,7 +34,7 @@ function AppearanceDropdown() {
         >
           <HugeiconsIcon
             icon={currenteAppearance.icon}
-            className="size-5"
+            strokeWidth={1.5}
           />
           <span>{currenteAppearance.label}</span>
         </SidebarMenuButton>
@@ -52,7 +52,7 @@ function AppearanceDropdown() {
             <span className="flex items-center gap-2">
               <HugeiconsIcon
                 icon={icon}
-                className="h-5 w-5"
+                strokeWidth={1.5}
               />
               {label}
             </span>

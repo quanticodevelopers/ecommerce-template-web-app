@@ -32,6 +32,7 @@ function HeaderUserMenu({ className }: HeaderUserMenuProps) {
             <HugeiconsIcon
               icon={UnfoldMoreIcon}
               className="size-4"
+              strokeWidth={1.5}
             />
           </Button>
         </DropdownMenuTrigger>

@@ -36,7 +36,8 @@ export function NavUser({ className = '' }: NavUserProps) {
               />
               <HugeiconsIcon
                 icon={UnfoldMoreIcon}
-                className="ml-auto size-4"
+                className="ml-auto"
+                strokeWidth={1.5}
               />
             </SidebarMenuButton>
           </DropdownMenuTrigger>

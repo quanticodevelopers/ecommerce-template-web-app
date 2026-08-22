@@ -1,4 +1,5 @@
 import { Edit02Icon, PackageAddIcon, SaveIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Head, Link, useForm } from '@inertiajs/react'
 import type { SubmitEvent } from 'react'
 import { store as productsStore, update as productsUpdate } from '@/actions/App/Http/Controllers/Admin/ProductController'
@@ -7,7 +8,6 @@ import InputError from '@/components/input-error'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Icon } from '@/components/ui/icon'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -171,7 +171,7 @@ export default function ProductFormPage({ brands, categories, product }: Product
                       >
                         <SelectValue placeholder="Selecciona una marca" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent position="popper">
                         {brands.map((brand) => (
                           <SelectItem
                             key={brand.id}
@@ -199,7 +199,7 @@ export default function ProductFormPage({ brands, categories, product }: Product
                       >
                         <SelectValue placeholder="Selecciona una categoría" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent position="popper">
                         {categories.map((category) => (
                           <SelectItem
                             key={category.id}
@@ -358,7 +358,14 @@ export default function ProductFormPage({ brands, categories, product }: Product
                   disabled={processing}
                   type="submit"
                 >
-                  {processing ? <Spinner /> : <Icon iconNode={SaveIcon} />}
+                  {processing ? (
+                    <Spinner />
+                  ) : (
+                    <HugeiconsIcon
+                      icon={SaveIcon}
+                      strokeWidth={1.5}
+                    />
+                  )}
                   {isEditing ? 'Guardar cambios' : 'Guardar producto'}
                 </Button>
               </CardContent>

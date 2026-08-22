@@ -107,7 +107,10 @@ export default function Login({ status, canResetPassword }: Props) {
 
       {status && (
         <Alert className="w-full text-green-700 dark:text-green-400">
-          <HugeiconsIcon icon={CheckmarkCircle02Icon} />
+          <HugeiconsIcon
+            icon={CheckmarkCircle02Icon}
+            strokeWidth={1.5}
+          />
           <AlertDescription className="text-green-700/80 dark:text-green-400/80">{status}</AlertDescription>
         </Alert>
       )}

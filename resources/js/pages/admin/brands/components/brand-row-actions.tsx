@@ -37,13 +37,12 @@ export default function BrandRowActions({ brand }: BrandRowActionsProps) {
       <Button
         type="button"
         variant="ghost"
-        size="icon"
-        className="size-8"
+        size="icon-xs"
         aria-label={`Ver página de ${brand.name}`}
       >
         <HugeiconsIcon
           icon={ExternalLinkIcon}
-          className="size-4"
+          strokeWidth={1.5}
         />
       </Button>
 
@@ -52,14 +51,13 @@ export default function BrandRowActions({ brand }: BrandRowActionsProps) {
       <Button
         type="button"
         variant="ghost"
-        size="icon"
-        className="size-8"
+        size="icon-xs"
         aria-label={`Ver información de ${brand.name}`}
         onClick={() => setIsOpen(true)}
       >
         <HugeiconsIcon
           icon={ViewIcon}
-          className="size-4"
+          strokeWidth={1.5}
         />
       </Button>
 

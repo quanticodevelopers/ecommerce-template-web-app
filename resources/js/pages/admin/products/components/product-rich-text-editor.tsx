@@ -18,6 +18,7 @@ import {
   UndoIcon,
   Unlink01Icon,
 } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import Placeholder from '@tiptap/extension-placeholder'
 import Subscript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
@@ -27,7 +28,6 @@ import StarterKit from '@tiptap/starter-kit'
 import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 type ProductRichTextEditorProps = {
@@ -253,14 +253,20 @@ function EditorToolbar({ editor }: EditorToolbarProps) {
         label="Deshacer"
         onClick={() => editor?.chain().focus().undo().run()}
       >
-        <Icon iconNode={UndoIcon} />
+        <HugeiconsIcon
+          icon={UndoIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         disabled={!state.canRedo}
         label="Rehacer"
         onClick={() => editor?.chain().focus().redo().run()}
       >
-        <Icon iconNode={RedoIcon} />
+        <HugeiconsIcon
+          icon={RedoIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
 
       <div className="mx-1 h-6 w-px bg-border" />
@@ -275,34 +281,49 @@ function EditorToolbar({ editor }: EditorToolbarProps) {
         label="Negrita"
         onClick={() => editor?.chain().focus().toggleBold().run()}
       >
-        <Icon iconNode={TextBoldIcon} />
+        <HugeiconsIcon
+          icon={TextBoldIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isItalic}
         label="Cursiva"
         onClick={() => editor?.chain().focus().toggleItalic().run()}
       >
-        <Icon iconNode={TextItalicIcon} />
+        <HugeiconsIcon
+          icon={TextItalicIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isStrike}
         label="Tachado"
         onClick={() => editor?.chain().focus().toggleStrike().run()}
       >
-        <Icon iconNode={TextStrikethroughIcon} />
+        <HugeiconsIcon
+          icon={TextStrikethroughIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isUnderline}
         label="Subrayado"
         onClick={() => editor?.chain().focus().toggleUnderline().run()}
       >
-        <Icon iconNode={TextUnderlineIcon} />
+        <HugeiconsIcon
+          icon={TextUnderlineIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         label="Limpiar formato"
         onClick={() => editor?.chain().focus().unsetAllMarks().clearNodes().run()}
       >
-        <Icon iconNode={TextClearIcon} />
+        <HugeiconsIcon
+          icon={TextClearIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
 
       <div className="mx-1 h-6 w-px bg-border" />
@@ -312,49 +333,70 @@ function EditorToolbar({ editor }: EditorToolbarProps) {
         label="Agregar enlace"
         onClick={setLink}
       >
-        <Icon iconNode={Link01Icon} />
+        <HugeiconsIcon
+          icon={Link01Icon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         disabled={!state.isLink}
         label="Quitar enlace"
         onClick={() => editor?.chain().focus().unsetLink().run()}
       >
-        <Icon iconNode={Unlink01Icon} />
+        <HugeiconsIcon
+          icon={Unlink01Icon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isBulletList}
         label="Lista con viñetas"
         onClick={() => editor?.chain().focus().toggleBulletList().run()}
       >
-        <Icon iconNode={LeftToRightListBulletIcon} />
+        <HugeiconsIcon
+          icon={LeftToRightListBulletIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isOrderedList}
         label="Lista numerada"
         onClick={() => editor?.chain().focus().toggleOrderedList().run()}
       >
-        <Icon iconNode={LeftToRightListNumberIcon} />
+        <HugeiconsIcon
+          icon={LeftToRightListNumberIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isBlockquote}
         label="Cita"
         onClick={() => editor?.chain().focus().toggleBlockquote().run()}
       >
-        <Icon iconNode={LeftToRightBlockQuoteIcon} />
+        <HugeiconsIcon
+          icon={LeftToRightBlockQuoteIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isSuperscript}
         label="Superíndice"
         onClick={() => editor?.chain().focus().toggleSuperscript().run()}
       >
-        <Icon iconNode={TextSuperscriptIcon} />
+        <HugeiconsIcon
+          icon={TextSuperscriptIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isSubscript}
         label="Subíndice"
         onClick={() => editor?.chain().focus().toggleSubscript().run()}
       >
-        <Icon iconNode={TextSubscriptIcon} />
+        <HugeiconsIcon
+          icon={TextSubscriptIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
 
       <div className="mx-1 h-6 w-px bg-border" />
@@ -364,28 +406,40 @@ function EditorToolbar({ editor }: EditorToolbarProps) {
         label="Alinear a la izquierda"
         onClick={() => editor?.chain().focus().setTextAlign('left').run()}
       >
-        <Icon iconNode={TextAlignLeft01Icon} />
+        <HugeiconsIcon
+          icon={TextAlignLeft01Icon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isCentered}
         label="Centrar"
         onClick={() => editor?.chain().focus().setTextAlign('center').run()}
       >
-        <Icon iconNode={TextAlignCenterIcon} />
+        <HugeiconsIcon
+          icon={TextAlignCenterIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isRightAligned}
         label="Alinear a la derecha"
         onClick={() => editor?.chain().focus().setTextAlign('right').run()}
       >
-        <Icon iconNode={TextAlignRight01Icon} />
+        <HugeiconsIcon
+          icon={TextAlignRight01Icon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
       <EditorButton
         active={state.isJustified}
         label="Justificar"
         onClick={() => editor?.chain().focus().setTextAlign('justify').run()}
       >
-        <Icon iconNode={TextAlignJustifyCenterIcon} />
+        <HugeiconsIcon
+          icon={TextAlignJustifyCenterIcon}
+          strokeWidth={1.5}
+        />
       </EditorButton>
     </div>
   )

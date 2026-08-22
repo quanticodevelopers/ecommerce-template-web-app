@@ -1,7 +1,7 @@
 import { ArrowLeft01Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import type { PaginatedProducts } from '@/types'
 
 type ProductPaginationProps = {
@@ -21,23 +21,29 @@ export default function ProductPagination({ pagination }: ProductPaginationProps
           {pagination.links.prev === null ? (
             <Button
               disabled
-              size="sm"
+              size="xs"
               variant="outline"
             >
-              <Icon iconNode={ArrowLeft01Icon} />
+              <HugeiconsIcon
+                icon={ArrowLeft01Icon}
+                strokeWidth={1.5}
+              />
               Anterior
             </Button>
           ) : (
             <Button
               asChild
-              size="sm"
+              size="xs"
               variant="outline"
             >
               <Link
                 href={pagination.links.prev}
                 preserveScroll
               >
-                <Icon iconNode={ArrowLeft01Icon} />
+                <HugeiconsIcon
+                  icon={ArrowLeft01Icon}
+                  strokeWidth={1.5}
+                />
                 Anterior
               </Link>
             </Button>
@@ -50,16 +56,19 @@ export default function ProductPagination({ pagination }: ProductPaginationProps
           {pagination.links.next === null ? (
             <Button
               disabled
-              size="sm"
+              size="xs"
               variant="outline"
             >
               Siguiente
-              <Icon iconNode={ArrowRight01Icon} />
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                strokeWidth={1.5}
+              />
             </Button>
           ) : (
             <Button
               asChild
-              size="sm"
+              size="xs"
               variant="outline"
             >
               <Link
@@ -67,7 +76,10 @@ export default function ProductPagination({ pagination }: ProductPaginationProps
                 preserveScroll
               >
                 Siguiente
-                <Icon iconNode={ArrowRight01Icon} />
+                <HugeiconsIcon
+                  icon={ArrowRight01Icon}
+                  strokeWidth={1.5}
+                />
               </Link>
             </Button>
           )}

@@ -1,7 +1,7 @@
 import { Edit02Icon, ExternalLinkIcon, ViewIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { edit as productsEdit, show as productsShow } from '@/routes/admin/products'
 import type { ProductListItem } from '@/types'
 
@@ -15,48 +15,47 @@ export default function ProductRowActions({ product }: ProductRowActionsProps) {
       <Button
         type="button"
         variant="ghost"
-        size="icon"
-        className="size-8"
+        size="icon-xs"
         aria-label={`Abrir ${product.name} en la tienda`}
       >
-        <Icon
-          iconNode={ExternalLinkIcon}
-          className="size-4"
+        <HugeiconsIcon
+          icon={ExternalLinkIcon}
+          strokeWidth={1.5}
         />
       </Button>
 
       <Button
-        asChild
+        type="button"
         variant="ghost"
-        size="icon"
-        className="size-8"
+        size="icon-xs"
+        asChild
       >
         <Link
           aria-label={`Ver detalle de ${product.name}`}
           href={productsShow(product.id)}
           prefetch
         >
-          <Icon
-            iconNode={ViewIcon}
-            className="size-4"
+          <HugeiconsIcon
+            icon={ViewIcon}
+            strokeWidth={1.5}
           />
         </Link>
       </Button>
 
       <Button
-        asChild
-        className="size-8"
-        size="icon"
+        type="button"
         variant="ghost"
+        size="icon-xs"
+        asChild
       >
         <Link
           aria-label={`Editar ${product.name}`}
           href={productsEdit(product.id)}
           prefetch
         >
-          <Icon
-            iconNode={Edit02Icon}
-            className="size-4"
+          <HugeiconsIcon
+            icon={Edit02Icon}
+            strokeWidth={1.5}
           />
         </Link>
       </Button>

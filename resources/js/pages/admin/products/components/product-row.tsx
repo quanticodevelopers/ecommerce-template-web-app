@@ -1,6 +1,6 @@
 import { BarCode01Icon, Package01Icon, Tag01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Badge } from '@/components/ui/badge'
-import { Icon } from '@/components/ui/icon'
 import ProductRowActions from '@/pages/admin/products/components/product-row-actions'
 import type { ProductFlag, ProductListItem } from '@/types'
 
@@ -46,9 +46,10 @@ export default function ProductRow({ product }: ProductRowProps) {
         <div className="flex items-center gap-4">
           {product.thumbnail === null ? (
             <div className="flex size-14 shrink-0 items-center justify-center rounded-lg border border-dashed bg-muted/30 text-muted-foreground">
-              <Icon
-                iconNode={Package01Icon}
+              <HugeiconsIcon
+                icon={Package01Icon}
                 className="size-5"
+                strokeWidth={1.5}
               />
             </div>
           ) : (
@@ -62,16 +63,18 @@ export default function ProductRow({ product }: ProductRowProps) {
             <p className="truncate font-medium text-foreground">{product.name}</p>
             <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
               <span className="flex items-center gap-1.5 font-mono">
-                <Icon
-                  iconNode={Tag01Icon}
+                <HugeiconsIcon
+                  icon={Tag01Icon}
                   className="size-3.5 shrink-0"
+                  strokeWidth={1.5}
                 />
                 {product.sku}
               </span>
               <span className="flex items-center gap-1.5 font-mono">
-                <Icon
-                  iconNode={BarCode01Icon}
+                <HugeiconsIcon
+                  icon={BarCode01Icon}
                   className="size-3.5 shrink-0"
+                  strokeWidth={1.5}
                 />
                 {product.barcode}
               </span>

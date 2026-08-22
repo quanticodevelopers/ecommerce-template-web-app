@@ -16,15 +16,15 @@ export default function CustomerRowActions({ customer }: CustomerRowActionsProps
     <>
       <div className="flex items-center justify-end gap-1">
         <Button
+          type="button"
           variant="ghost"
-          size="icon"
-          className="size-8"
+          size="icon-xs"
           aria-label={`Ver detalles de ${customer.email}`}
           onClick={() => setIsDetailModalOpen(true)}
         >
           <HugeiconsIcon
             icon={ViewIcon}
-            className="size-4"
+            strokeWidth={1.5}
           />
         </Button>
       </div>

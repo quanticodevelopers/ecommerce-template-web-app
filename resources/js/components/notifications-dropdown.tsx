@@ -14,13 +14,13 @@ function NotificationsDropdown({ className = '' }: NotificationsDropdownProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="icon-lg"
+            size="icon"
             aria-label="Visualizar notificaciones"
             title="Visualizar notificaciones"
           >
             <HugeiconsIcon
               icon={BellIcon}
-              className="size-4"
+              strokeWidth={1.5}
             />
           </Button>
         </DropdownMenuTrigger>

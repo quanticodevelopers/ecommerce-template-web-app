@@ -35,7 +35,7 @@ export default function CreateCategoryModal({ parentCategoryOptions, defaultPare
         <Button className={cn(triggerClassName)}>
           <HugeiconsIcon
             icon={Add01Icon}
-            className="size-4"
+            strokeWidth={1.5}
           />
           Nueva categoría
         </Button>

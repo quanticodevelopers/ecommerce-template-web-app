@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { Icon } from '@/components/ui/icon'
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -36,11 +36,17 @@ export function NavMain({ group = [] }: { group: NavGroup[] }) {
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton tooltip={item.title}>
-                        {item.icon && <Icon iconNode={item.icon} />}
+                        {item.icon && (
+                          <HugeiconsIcon
+                            icon={item.icon}
+                            strokeWidth={1.5}
+                          />
+                        )}
                         <span>{item.title}</span>
-                        <Icon
-                          iconNode={ChevronRightIcon}
+                        <HugeiconsIcon
+                          icon={ChevronRightIcon}
                           className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
+                          strokeWidth={1.5}
                         />
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
@@ -76,7 +82,10 @@ export function NavMain({ group = [] }: { group: NavGroup[] }) {
                     href={item.href}
                     prefetch
                   >
-                    <Icon iconNode={item.icon} />
+                    <HugeiconsIcon
+                      icon={item.icon}
+                      strokeWidth={1.5}
+                    />
                     <span>{item.title}</span>
                   </Link>
                 </SidebarMenuButton>

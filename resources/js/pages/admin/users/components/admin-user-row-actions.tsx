@@ -24,14 +24,14 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
+            type="button"
             variant="ghost"
-            size="icon"
-            className="size-8"
+            size="icon-xs"
             aria-label={`Acciones para ${user.email}`}
           >
             <HugeiconsIcon
               icon={MoreVerticalIcon}
-              className="size-4"
+              strokeWidth={1.5}
             />
           </Button>
         </DropdownMenuTrigger>
@@ -48,7 +48,7 @@ export default function AdminUserRowActions({ user }: AdminUserRowActionsProps) 
           >
             <HugeiconsIcon
               icon={Key01Icon}
-              className="size-4"
+              strokeWidth={1.5}
             />
             Restablecer contraseña
           </DropdownMenuItem>

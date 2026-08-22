@@ -1,8 +1,8 @@
 import { BarcodeIcon, Calendar03Icon, Clock01Icon, Folder01Icon, Link01Icon, Money03Icon, Package01Icon, Tag01Icon } from '@hugeicons/core-free-icons'
 import type { IconSvgElement } from '@hugeicons/react'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Icon } from '@/components/ui/icon'
 import { Separator } from '@/components/ui/separator'
 import type { ProductDetail } from '@/types'
 
@@ -41,9 +41,10 @@ function DetailRow({ icon, label, value, monospaced = false }: DetailRowProps) {
   return (
     <div className="flex items-start gap-3">
       <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-        <Icon
-          iconNode={icon}
+        <HugeiconsIcon
+          icon={icon}
           className="size-4"
+          strokeWidth={1.5}
         />
       </span>
       <div className="min-w-0 space-y-0.5">

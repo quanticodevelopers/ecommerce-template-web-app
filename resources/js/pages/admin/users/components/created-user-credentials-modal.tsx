@@ -44,7 +44,7 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
           <DialogTitle className="flex items-center gap-2">
             <HugeiconsIcon
               icon={Key01Icon}
-              className="size-4"
+              strokeWidth={1.5}
             />
             Credenciales generadas
           </DialogTitle>
@@ -74,7 +74,7 @@ export default function CreatedUserCredentialsModal({ createdUserCredentials }: 
           >
             <HugeiconsIcon
               icon={isCopied ? Tick01Icon : Copy01Icon}
-              className="size-4"
+              strokeWidth={1.5}
             />
             {isCopied ? 'Copiado' : 'Copiar'}
           </Button>

@@ -25,7 +25,10 @@ function SidebarLogoutButton({ className = '' }: SidebarLogoutButtonProps) {
             onClick={handleLogout}
             data-test="logout-button"
           >
-            <HugeiconsIcon icon={Logout01Icon} />
+            <HugeiconsIcon
+              icon={Logout01Icon}
+              strokeWidth={1.5}
+            />
             <span>Cerrar sesión</span>
           </Link>
         </SidebarMenuButton>

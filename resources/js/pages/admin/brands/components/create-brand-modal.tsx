@@ -1,4 +1,4 @@
-import { Add01Icon, Delete02Icon, Image01Icon, RefreshIcon, Upload04Icon } from '@hugeicons/core-free-icons'
+import { Add01Icon, Delete02Icon, Image01Icon, Upload04Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Form } from '@inertiajs/react'
 import type { ChangeEvent } from 'react'
@@ -71,7 +71,7 @@ export default function CreateBrandModal() {
         <Button type="button">
           <HugeiconsIcon
             icon={Add01Icon}
-            className="size-4"
+            strokeWidth={1.5}
           />
           Nueva marca
         </Button>
@@ -125,6 +125,7 @@ export default function CreateBrandModal() {
                         <HugeiconsIcon
                           icon={Image01Icon}
                           className="size-8 text-muted-foreground"
+                          strokeWidth={1.5}
                         />
                       )}
                     </div>
@@ -139,12 +140,12 @@ export default function CreateBrandModal() {
                         <Button
                           type="button"
                           variant="outline"
-                          size="sm"
+                          size="xs"
                           onClick={() => fileInputRef.current?.click()}
                         >
                           <HugeiconsIcon
                             icon={Upload04Icon}
-                            className="size-4"
+                            strokeWidth={1.5}
                           />
                           Seleccionar logo
                         </Button>
@@ -152,13 +153,13 @@ export default function CreateBrandModal() {
                         <Button
                           type="button"
                           variant="outline"
-                          size="sm"
+                          size="xs"
                           disabled={!logoPreview}
                           onClick={resetLocalState}
                         >
                           <HugeiconsIcon
                             icon={Delete02Icon}
-                            className="size-4"
+                            strokeWidth={1.5}
                           />
                           Quitar selección
                         </Button>
@@ -216,10 +217,6 @@ export default function CreateBrandModal() {
                       resetLocalState()
                     }}
                   >
-                    <HugeiconsIcon
-                      icon={RefreshIcon}
-                      className="size-4"
-                    />
                     Cancelar
                   </Button>
                 </DialogClose>

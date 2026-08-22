@@ -1,6 +1,6 @@
 import type { IconSvgElement } from '@hugeicons/react'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Badge } from '@/components/ui/badge'
-import { Icon } from '@/components/ui/icon'
 import { cn } from '@/lib/utils'
 
 interface HeadingProps {
@@ -23,9 +23,10 @@ export default function Heading({ title, description, badgeIcon, badgeLabel, var
           variant="secondary"
           className="w-fit gap-1.5"
         >
-          <Icon
-            iconNode={badgeIcon}
+          <HugeiconsIcon
+            icon={badgeIcon}
             className="size-3.5"
+            strokeWidth={1.5}
           />
           {badgeLabel}
         </Badge>

@@ -36,14 +36,14 @@ export default function EditCategoryModal({ category, parentCategoryOptions, tri
       <DialogTrigger asChild>
         <Button
           className={cn(triggerClassName)}
-          variant="ghost"
-          size="icon"
           type="button"
+          variant="ghost"
+          size="icon-xs"
           aria-label={`Editar ${category.name}`}
         >
           <HugeiconsIcon
             icon={Edit02Icon}
-            className="size-4"
+            strokeWidth={1.5}
           />
         </Button>
       </DialogTrigger>

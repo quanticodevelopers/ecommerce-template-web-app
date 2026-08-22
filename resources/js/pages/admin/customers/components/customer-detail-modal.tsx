@@ -35,6 +35,7 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
             <HugeiconsIcon
               icon={UserIcon}
               className="size-4"
+              strokeWidth={1.5}
             />
             Información del cliente
           </DialogTitle>
@@ -61,6 +62,7 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
                 <HugeiconsIcon
                   icon={Mail01Icon}
                   className="size-4 shrink-0 text-muted-foreground"
+                  strokeWidth={1.5}
                 />
                 <div>
                   <p className="text-xs text-muted-foreground">Correo electrónico</p>
@@ -72,6 +74,7 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
                 <HugeiconsIcon
                   icon={Call02Icon}
                   className="size-4 shrink-0 text-muted-foreground"
+                  strokeWidth={1.5}
                 />
                 <div>
                   <p className="text-xs text-muted-foreground">Teléfono</p>

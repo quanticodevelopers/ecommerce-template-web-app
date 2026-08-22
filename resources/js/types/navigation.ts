@@ -14,7 +14,7 @@ export type NavGroup = {
 export type NavItem = {
   title: string
   href: NonNullable<InertiaLinkProps['href']>
-  icon?: IconSvgElement | null
+  icon: IconSvgElement
   subItems?: NavSubitem[]
 }
 

@@ -1,16 +1,13 @@
 import { ArrowLeft01Icon, ArrowRight01Icon, Image01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { useId, useState } from 'react'
 import type { Swiper as SwiperInstance } from 'swiper'
 import { A11y, Keyboard, Navigation, Thumbs } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Icon } from '@/components/ui/icon'
 import { cn } from '@/lib/utils'
 import type { ProductDetailImage } from '@/types'
-import 'swiper/css'
-import 'swiper/css/a11y'
-import 'swiper/css/thumbs'
 
 type ProductImageGalleryProps = {
   images: ProductDetailImage[]
@@ -35,9 +32,10 @@ export default function ProductImageGallery({ images, productName }: ProductImag
     return (
       <Card className="p-4 shadow-none lg:p-5">
         <div className="mx-auto flex aspect-square w-full max-w-2xl flex-col items-center justify-center gap-3 rounded-xl bg-muted/50 text-muted-foreground ring-1 ring-foreground/10">
-          <Icon
-            iconNode={Image01Icon}
+          <HugeiconsIcon
+            icon={Image01Icon}
             className="size-10"
+            strokeWidth={1.5}
           />
           <span className="text-sm">Este producto no tiene imágenes</span>
         </div>
@@ -61,7 +59,10 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                 )}
                 aria-label="Ver imagen anterior"
               >
-                <Icon iconNode={ArrowLeft01Icon} />
+                <HugeiconsIcon
+                  icon={ArrowLeft01Icon}
+                  strokeWidth={1.5}
+                />
               </Button>
               <Button
                 type="button"
@@ -73,7 +74,10 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                 )}
                 aria-label="Ver imagen siguiente"
               >
-                <Icon iconNode={ArrowRight01Icon} />
+                <HugeiconsIcon
+                  icon={ArrowRight01Icon}
+                  strokeWidth={1.5}
+                />
               </Button>
             </>
           )}

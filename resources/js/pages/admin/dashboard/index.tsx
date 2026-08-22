@@ -44,11 +44,12 @@ export default function DashboardIndex() {
               className="h-10 w-full"
               aria-hidden="true"
             >
-              <Button
-                variant="outline"
-                size="lg"
-              >
-                <HugeiconsIcon icon={FilterHorizontalIcon} /> Este mes
+              <Button variant="outline">
+                <HugeiconsIcon
+                  icon={FilterHorizontalIcon}
+                  strokeWidth={1.5}
+                />{' '}
+                Este mes
               </Button>
             </div>
           </div>

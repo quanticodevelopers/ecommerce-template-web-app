@@ -3,6 +3,9 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/inter';
+@import 'swiper/css';
+@import 'swiper/css/a11y';
+@import 'swiper/css/thumbs';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

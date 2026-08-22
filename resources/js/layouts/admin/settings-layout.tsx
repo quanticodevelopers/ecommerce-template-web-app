@@ -1,9 +1,9 @@
 import { Book02Icon, LockKeyIcon, Settings01Icon, Sun01Icon, UserEdit01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import type { PropsWithChildren } from 'react'
 import Heading from '@/components/heading'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { useCurrentUrl } from '@/hooks/use-current-url'
 import { cn, toUrl } from '@/lib/utils'
 import { edit as editAppearance } from '@/routes/admin/appearance'
@@ -56,7 +56,8 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
             {sidebarNavItems.map((item, index) => (
               <Button
                 key={`${toUrl(item.href)}-${index}`}
-                size="lg"
+                type="button"
+                size="default"
                 variant="ghost"
                 asChild
                 className={cn('w-full justify-start', {
@@ -64,9 +65,9 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
                 })}
               >
                 <Link href={item.href}>
-                  <Icon
-                    iconNode={item.icon}
-                    className="h-4 w-4"
+                  <HugeiconsIcon
+                    icon={item.icon}
+                    strokeWidth={1.5}
                   />
                   {item.title}
                 </Link>

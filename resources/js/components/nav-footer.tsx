@@ -36,7 +36,7 @@ function NavFooter({ className, ...props }: NavFooterProps) {
               >
                 <HugeiconsIcon
                   icon={SquareArrowUpRightIcon}
-                  className="size-5"
+                  strokeWidth={1.5}
                 />
                 <span>Ir a la web</span>
               </a>

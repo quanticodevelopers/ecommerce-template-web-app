@@ -1,8 +1,8 @@
 import { ArrowLeft01Icon, ArrowRight01Icon, Cancel01Icon, Image01Icon, Upload04Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import type { ChangeEvent, DragEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { cn } from '@/lib/utils'
 import type { ProductFormImage, ProductImageSlot } from '@/types'
 
@@ -156,7 +156,10 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
           onClick={() => inputRef.current?.click()}
           variant="outline"
         >
-          <Icon iconNode={Upload04Icon} />
+          <HugeiconsIcon
+            icon={Upload04Icon}
+            strokeWidth={1.5}
+          />
           Agregar imágenes
         </Button>
         <input
@@ -176,9 +179,10 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
           onClick={() => inputRef.current?.click()}
         >
           <span className="grid size-12 place-items-center rounded-full bg-background shadow-sm ring-1 ring-border">
-            <Icon
-              iconNode={Image01Icon}
+            <HugeiconsIcon
+              icon={Image01Icon}
               className="size-6 text-muted-foreground"
+              strokeWidth={1.5}
             />
           </span>
           <span>
@@ -213,7 +217,10 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
                   size="icon-sm"
                   variant="ghost"
                 >
-                  <Icon iconNode={Cancel01Icon} />
+                  <HugeiconsIcon
+                    icon={Cancel01Icon}
+                    strokeWidth={1.5}
+                  />
                 </Button>
               </div>
               <div className="absolute inset-x-0 bottom-0 flex justify-center gap-1 bg-linear-to-t from-black/60 to-transparent p-2">
@@ -226,7 +233,10 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
                   size="icon-sm"
                   variant="ghost"
                 >
-                  <Icon iconNode={ArrowLeft01Icon} />
+                  <HugeiconsIcon
+                    icon={ArrowLeft01Icon}
+                    strokeWidth={1.5}
+                  />
                 </Button>
                 <Button
                   type="button"
@@ -237,7 +247,10 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
                   size="icon-sm"
                   variant="ghost"
                 >
-                  <Icon iconNode={ArrowRight01Icon} />
+                  <HugeiconsIcon
+                    icon={ArrowRight01Icon}
+                    strokeWidth={1.5}
+                  />
                 </Button>
               </div>
             </div>

@@ -33,7 +33,8 @@ export default function AppearanceToggleTab({ className = '', ...props }: HTMLAt
         >
           <HugeiconsIcon
             icon={icon}
-            className="-ml-1 h-4 w-4"
+            className="-ml-1 size-4"
+            strokeWidth={1.5}
           />
           <span className="ml-1.5 text-sm">{label}</span>
         </button>

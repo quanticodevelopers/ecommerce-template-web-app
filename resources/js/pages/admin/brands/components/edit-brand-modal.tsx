@@ -84,14 +84,14 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
       <DialogTrigger asChild>
         <Button
           className={cn(triggerClassName)}
-          variant="ghost"
-          size="icon"
           type="button"
+          variant="ghost"
+          size="icon-xs"
           aria-label={`Editar ${brand.name}`}
         >
           <HugeiconsIcon
             icon={Edit02Icon}
-            className="size-4"
+            strokeWidth={1.5}
           />
         </Button>
       </DialogTrigger>
@@ -145,6 +145,7 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                         <HugeiconsIcon
                           icon={Image01Icon}
                           className="size-8 text-muted-foreground"
+                          strokeWidth={1.5}
                         />
                       )}
                     </div>
@@ -159,12 +160,12 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                         <Button
                           type="button"
                           variant="outline"
-                          size="sm"
+                          size="xs"
                           onClick={() => fileInputRef.current?.click()}
                         >
                           <HugeiconsIcon
                             icon={Upload04Icon}
-                            className="size-4"
+                            strokeWidth={1.5}
                           />
                           Cambiar logo
                         </Button>
@@ -172,12 +173,12 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                         <Button
                           type="button"
                           variant="outline"
-                          size="sm"
+                          size="xs"
                           onClick={resetLocalState}
                         >
                           <HugeiconsIcon
                             icon={RefreshIcon}
-                            className="size-4"
+                            strokeWidth={1.5}
                           />
                           Restablecer vista
                         </Button>

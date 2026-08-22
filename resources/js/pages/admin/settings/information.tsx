@@ -98,17 +98,18 @@ const Information = ({ settings }: InformationProps) => {
           {({ errors, processing, progress }) => (
             <>
               <section className="flex items-start gap-4 bg-background/60">
-                <div className="flex h-22 w-22 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-muted/40">
+                <div className="flex h-22 w-22 shrink-0 items-center justify-center overflow-hidden rounded-lg">
                   {logoPreview ? (
                     <img
                       alt="Logo del sitio"
-                      className="h-full w-full object-contain p-2"
+                      className="h-full w-full object-contain"
                       src={logoPreview}
                     />
                   ) : (
                     <HugeiconsIcon
                       icon={Image01Icon}
                       className="size-8 text-muted-foreground"
+                      strokeWidth={1.5}
                     />
                   )}
                 </div>
@@ -123,12 +124,12 @@ const Information = ({ settings }: InformationProps) => {
                     <Button
                       type="button"
                       variant="outline"
-                      size="sm"
+                      size="xs"
                       onClick={() => fileInputRef.current?.click()}
                     >
                       <HugeiconsIcon
                         icon={Upload04Icon}
-                        className="size-4"
+                        strokeWidth={1.5}
                       />
                       Subir nuevo
                     </Button>
@@ -136,13 +137,13 @@ const Information = ({ settings }: InformationProps) => {
                     <Button
                       type="button"
                       variant={removeLogo ? 'secondary' : 'outline'}
-                      size="sm"
+                      size="xs"
                       disabled={!settings.logo_url && !logoPreview}
                       onClick={handleRemoveLogo}
                     >
                       <HugeiconsIcon
                         icon={Delete02Icon}
-                        className="size-4"
+                        strokeWidth={1.5}
                       />
                       Quitar
                     </Button>
@@ -310,7 +311,7 @@ const Information = ({ settings }: InformationProps) => {
                 >
                   <HugeiconsIcon
                     icon={RefreshIcon}
-                    className="size-4"
+                    strokeWidth={1.5}
                   />
                   Cancelar
                 </Button>
@@ -324,7 +325,7 @@ const Information = ({ settings }: InformationProps) => {
                   ) : (
                     <HugeiconsIcon
                       icon={SaveIcon}
-                      className="size-4"
+                      strokeWidth={1.5}
                     />
                   )}
                   Guardar cambios
