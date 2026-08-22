@@ -1,17 +1,18 @@
 import { DashboardBrowsingIcon, GridViewIcon, Package01Icon, Settings01Icon, ShoppingBag01Icon, Tag01Icon, UserMultiple02Icon } from '@hugeicons/core-free-icons'
 import { Link } from '@inertiajs/react'
 import AppLogo from '@/components/app-logo'
+import NavFooter from '@/components/nav-footer'
 import { NavMain } from '@/components/nav-main'
-import SidebarFooterActions from '@/components/sidebar-footer-actions'
+import { NavUser } from '@/components/nav-user'
 import SidebarLogoutButton from '@/components/sidebar-logout-button'
-import { SidebarUserMenu } from '@/components/sidebar-user-menu'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { dashboard } from '@/routes/admin'
 import { index as adminBrands } from '@/routes/admin/brands'
 import { index as adminCategories } from '@/routes/admin/categories'
 import { index as adminCustomers } from '@/routes/admin/customers'
 import { edit as editInformation } from '@/routes/admin/information'
-import { index as adminProducts } from '@/routes/admin/products'
+import { index as adminIndexProducts } from '@/routes/admin/products'
+import { create as adminCreateProducts } from '@/routes/admin/products'
 import { index as adminUsers } from '@/routes/admin/users'
 import type { NavGroup } from '@/types'
 
@@ -31,8 +32,18 @@ const mainNavItems: NavGroup[] = [
     items: [
       {
         title: 'Productos',
-        href: adminProducts(),
+        href: '#',
         icon: Package01Icon,
+        subItems: [
+          {
+            title: 'Todos los productos',
+            href: adminIndexProducts(),
+          },
+          {
+            title: 'Nuevo producto',
+            href: adminCreateProducts(),
+          },
+        ],
       },
       {
         title: 'Categorías',
@@ -102,9 +113,9 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        <SidebarFooterActions className="mt-auto" />
+        <NavFooter className="mt-auto" />
         <SidebarLogoutButton className="hidden lg:block" />
-        <SidebarUserMenu className="block md:hidden" />
+        <NavUser className="block md:hidden" />
       </SidebarFooter>
     </Sidebar>
   )

@@ -7,11 +7,11 @@ import { UserInfo } from '@/components/user-info'
 import { UserMenuContent } from '@/components/user-menu-content'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-interface SidebarUserMenuProps {
+interface NavUserProps {
   className?: string
 }
 
-export function SidebarUserMenu({ className = '' }: SidebarUserMenuProps) {
+export function NavUser({ className = '' }: NavUserProps) {
   const { auth } = usePage().props
   const { state } = useSidebar()
   const isMobile = useIsMobile()

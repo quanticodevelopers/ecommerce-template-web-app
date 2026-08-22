@@ -6,9 +6,9 @@ import AppearanceDropdown from '@/components/appearance-dropdown'
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { cn, toUrl } from '@/lib/utils'
 
-type SidebarFooterActionsProps = ComponentPropsWithoutRef<typeof SidebarGroup>
+type NavFooterProps = ComponentPropsWithoutRef<typeof SidebarGroup>
 
-function SidebarFooterActions({ className, ...props }: SidebarFooterActionsProps) {
+function NavFooter({ className, ...props }: NavFooterProps) {
   const { url } = usePage().props
 
   return (
@@ -48,4 +48,4 @@ function SidebarFooterActions({ className, ...props }: SidebarFooterActionsProps
   )
 }
 
-export default SidebarFooterActions
+export default NavFooter
