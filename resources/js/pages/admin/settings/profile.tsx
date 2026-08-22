@@ -1,6 +1,5 @@
 import { Form, Head } from '@inertiajs/react'
 import ProfileController from '@/actions/App/Http/Controllers/Admin/Settings/ProfileController'
-import DeleteUser from '@/components/delete-user'
 import Heading from '@/components/heading'
 import InputError from '@/components/input-error'
 import { Button } from '@/components/ui/button'
@@ -177,8 +176,6 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
           )}
         </Form>
       </div>
-
-      <DeleteUser />
     </>
   )
 }

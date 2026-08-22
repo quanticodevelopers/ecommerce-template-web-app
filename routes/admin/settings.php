@@ -23,9 +23,6 @@ Route::middleware(['auth', 'can:access-admin'])
         Route::patch('settings/profile', [ProfileController::class, 'update'])
             ->name('profile.update');
 
-        Route::delete('settings/profile', [ProfileController::class, 'destroy'])
-            ->name('profile.destroy');
-
         Route::get('settings/security', [SecurityController::class, 'edit'])
             ->middleware(RequirePassword::class)
             ->name('security.edit');
