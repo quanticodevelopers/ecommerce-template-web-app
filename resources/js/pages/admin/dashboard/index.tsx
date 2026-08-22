@@ -1,7 +1,6 @@
 import { FilterHorizontalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Head } from '@inertiajs/react'
-import AstroidIcon from '@/components/astroid-icon'
 import { Button } from '@/components/ui/button'
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
 import { useAuthenticatedUser } from '@/hooks/use-authenticated-user'
@@ -13,7 +12,7 @@ export default function DashboardIndex() {
   const currentDate = new Date()
   const greeting = getPeruDashboardGreeting(currentDate)
   const formattedDate = formatPeruDashboardDate(currentDate)
-  const fullName = `${user.name} ${user.last_name}`.trim()
+  const userName = `${user.name}`.trim()
 
   return (
     <>
@@ -31,9 +30,8 @@ export default function DashboardIndex() {
             <div className="space-y-2">
               <h1 className="flex items-center gap-2 text-3xl font-semibold tracking-tight">
                 <span>
-                  {greeting}, <span className="text-primary">{fullName}</span>
+                  {greeting}, <span className="text-primary">{userName}</span>
                 </span>{' '}
-                <AstroidIcon />
               </h1>
               <p className="max-w-2xl text-sm text-muted-foreground">Resumen de la información de tu tienda.</p>
             </div>
