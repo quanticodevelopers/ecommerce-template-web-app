@@ -6,7 +6,7 @@ Alan Alfredo Bernal Espinoza
 
 ## Descripción
 
-Plantilla de aplicación web orientada a e-commerce construida sobre Laravel. Este proyecto sirve como punto de partida (starter kit) que integra Inertia.js con React para renderizado del frontend, autenticación con Laravel Fortify y herramientas modernas de desarrollo y testing.
+Plantilla de aplicación web orientada a e-commerce construida sobre Laravel. Este proyecto sirve como punto de partida (starter kit) que integra Inertia.js con React para renderizado del frontend, autenticación nativa con guards separados para clientes y administradores, y herramientas modernas de desarrollo y testing.
 
 ## Instrucciones de instalación y ejecución (recomendado: Herd)
 
@@ -62,7 +62,7 @@ php artisan view:cache
 - React v19
 - @inertiajs/react v3
 - Tailwind CSS v4
-- Laravel Fortify (autenticación)
+- Autenticación nativa de Laravel con modelos y guards separados
 - Laravel Wayfinder (generación de helpers de rutas/acciones)
 - Laravel Boost (herramientas del proyecto)
 - Vite (bundling)

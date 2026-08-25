@@ -1,26 +1,24 @@
 <?php
 
-use App\Models\User;
+use App\Models\Administrator;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('security page requires password confirmation when enabled', function () {
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
-    $response = $this->actingAs($user)
+    $response = $this->actingAs($user, 'admin')
         ->get(route('admin.security.edit'));
 
     $response->assertRedirect(route('admin.auth.password.confirm'));
 });
 
 test('security page is displayed after password confirmation', function () {
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
-    $response = $this->actingAs($user)
+    $response = $this->actingAs($user, 'admin')
         ->withSession(['auth.password_confirmed_at' => now()->timestamp])
         ->get(route('admin.security.edit'));
 
@@ -33,12 +31,11 @@ test('security page is displayed after password confirmation', function () {
 });
 
 test('password can be updated', function () {
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->from(route('admin.security.edit'))
         ->put(route('admin.user-password.update'), [
             'current_password' => 'password',
@@ -54,12 +51,11 @@ test('password can be updated', function () {
 });
 
 test('correct password must be provided to update password', function () {
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->from(route('admin.security.edit'))
         ->put(route('admin.user-password.update'), [
             'current_password' => 'wrong-password',

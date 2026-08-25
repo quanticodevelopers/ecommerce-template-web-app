@@ -1,17 +1,17 @@
 <?php
 
-use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
 
 test('sends verification notification', function () {
     Notification::fake();
 
-    $user = User::factory()
+    $user = Customer::factory()
         ->unverified()
         ->create();
 
-    $this->actingAs($user)
+    $this->actingAs($user, 'store')
         ->post(route('store.verification.send'))
         ->assertRedirect(route('store.home'));
 
@@ -21,10 +21,10 @@ test('sends verification notification', function () {
 test('does not send verification notification if email is verified', function () {
     Notification::fake();
 
-    $user = User::factory()
+    $user = Customer::factory()
         ->create();
 
-    $this->actingAs($user)
+    $this->actingAs($user, 'store')
         ->post(route('store.verification.send'))
         ->assertRedirect(route('store.home', absolute: false));
 

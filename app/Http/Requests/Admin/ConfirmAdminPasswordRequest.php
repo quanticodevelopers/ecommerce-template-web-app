@@ -23,7 +23,7 @@ class ConfirmAdminPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'password' => ['required', 'string', 'current_password'],
+            'password' => ['required', 'string', 'current_password:admin'],
         ];
     }
 }

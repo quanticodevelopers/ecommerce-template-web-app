@@ -7,8 +7,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
-import { store } from '@/routes/register'
 import { login } from '@/routes/store/auth'
+import { store } from '@/routes/store/auth/register'
 import type { SelectOption } from '@/types'
 
 interface RegisterProps {

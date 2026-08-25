@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Administrator;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the admin login page when accessing dashboard', function () {
@@ -10,10 +10,9 @@ test('guests are redirected to the admin login page when accessing dashboard', f
 });
 
 test('admins can visit the dashboard', function () {
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
-    $this->actingAs($user);
+    $this->actingAs($user, 'admin');
 
     $response = $this->get(route('admin.dashboard'));
     $response

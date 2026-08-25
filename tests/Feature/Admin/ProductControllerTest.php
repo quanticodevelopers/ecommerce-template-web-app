@@ -1,11 +1,11 @@
 <?php
 
 use App\Enums\ProductFlag;
+use App\Models\Administrator;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -29,13 +29,13 @@ test('guests are redirected to the admin login page when accessing product detai
 });
 
 test('admins can see the product creation page with active catalog options', function () {
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $activeBrand = Brand::factory()->active()->create(['name' => 'Marca activa']);
     Brand::factory()->inactive()->create(['name' => 'Marca inactiva']);
     $activeCategory = Category::factory()->active()->create(['name' => 'Categoría activa']);
     Category::factory()->inactive()->create(['name' => 'Categoría inactiva']);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.products.create'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -52,11 +52,11 @@ test('admins can see the product creation page with active catalog options', fun
 test('admins can create a product with sanitized content and ordered avif images', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->active()->create();
     $category = Category::factory()->active()->create();
 
-    $response = $this->actingAs($admin)->post(route('admin.products.store'), [
+    $response = $this->actingAs($admin, 'admin')->post(route('admin.products.store'), [
         'name' => 'Mochila de viaje',
         'sku' => 'MOCHILA-001',
         'barcode' => '7751234567890',
@@ -118,7 +118,7 @@ test('admins can create a product with sanitized content and ordered avif images
 test('product creation requires between one and five valid images', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->create();
     $category = Category::factory()->create();
     $payload = [
@@ -131,11 +131,11 @@ test('product creation requires between one and five valid images', function () 
         'is_draft' => false,
     ];
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.store'), $payload)
         ->assertSessionHasErrors('images');
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.store'), [
             ...$payload,
             'images' => array_map(
@@ -145,7 +145,7 @@ test('product creation requires between one and five valid images', function () 
         ])
         ->assertSessionHasErrors('images');
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.store'), [
             ...$payload,
             'images' => [['file' => UploadedFile::fake()->create('document.txt', 10, 'text/plain')]],
@@ -158,11 +158,11 @@ test('product creation requires between one and five valid images', function () 
 test('the base price must be greater than the sale price when provided', function (string $basePrice) {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->active()->create();
     $category = Category::factory()->active()->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.store'), [
             'name' => 'Producto con precio inválido',
             'sku' => 'INVALID-PRICE',
@@ -187,11 +187,11 @@ test('the base price must be greater than the sale price when provided', functio
 test('the base price remains optional when creating a product', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->active()->create();
     $category = Category::factory()->active()->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.store'), [
             'name' => 'Producto sin precio regular',
             'sku' => 'NO-BASE-PRICE',
@@ -212,11 +212,11 @@ test('the base price remains optional when creating a product', function () {
 test('product creation rejects inactive catalog relations', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->inactive()->create();
     $category = Category::factory()->inactive()->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.store'), [
             'name' => 'Producto inválido',
             'sku' => 'INACTIVE-RELATIONS',
@@ -235,12 +235,12 @@ test('product creation rejects inactive catalog relations', function () {
 test('product creation requires unique sku and barcode values', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->active()->create();
     $category = Category::factory()->active()->create();
     $existingProduct = Product::factory()->for($brand)->for($category)->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.store'), [
             'name' => 'Producto duplicado',
             'sku' => $existingProduct->sku,
@@ -259,7 +259,7 @@ test('product creation requires unique sku and barcode values', function () {
 test('admins can see every product detail with ordered images and timestamps', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->create(['name' => 'Andes']);
     $category = Category::factory()->create(['name' => 'Accesorios']);
     $product = Product::factory()->published()->for($brand)->for($category)->create([
@@ -285,7 +285,7 @@ test('admins can see every product detail with ordered images and timestamps', f
         'position' => 0,
     ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.products.show', $product))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -326,7 +326,7 @@ test('guests are redirected to the admin login page when accessing product editi
 test('admins can see the product edition page with its ordered images', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->inactive()->create(['name' => 'Marca actual']);
     $category = Category::factory()->inactive()->create(['name' => 'Categoría actual']);
     $product = Product::factory()->draft()->for($brand)->for($category)->create([
@@ -348,7 +348,7 @@ test('admins can see the product edition page with its ordered images', function
         'position' => 0,
     ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.products.edit', $product))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -371,7 +371,7 @@ test('admins can see the product edition page with its ordered images', function
 test('admins can update product data and mix reordered existing and new images', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->active()->create();
     $newBrand = Brand::factory()->active()->create();
     $category = Category::factory()->active()->create();
@@ -400,7 +400,7 @@ test('admins can update product data and mix reordered existing and new images',
         ]);
     });
 
-    $response = $this->actingAs($admin)->post(route('admin.products.update', $product), [
+    $response = $this->actingAs($admin, 'admin')->post(route('admin.products.update', $product), [
         '_method' => 'patch',
         'name' => 'Nombre actualizado',
         'sku' => 'UPDATE-001',
@@ -461,7 +461,7 @@ test('admins can update product data and mix reordered existing and new images',
 test('product updates require one to five images that belong to the product', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->active()->create();
     $category = Category::factory()->active()->create();
     $product = Product::factory()->for($brand)->for($category)->create();
@@ -477,11 +477,11 @@ test('product updates require one to five images that belong to the product', fu
         'is_draft' => true,
     ];
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.update', $product), [...$payload, 'images' => []])
         ->assertSessionHasErrors('images');
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.update', $product), [
             ...$payload,
             'images' => collect(range(1, 6))
@@ -492,7 +492,7 @@ test('product updates require one to five images that belong to the product', fu
         ])
         ->assertSessionHasErrors('images');
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.products.update', $product), [
             ...$payload,
             'images' => [['id' => $otherProductImage->id]],
@@ -501,13 +501,13 @@ test('product updates require one to five images that belong to the product', fu
 });
 
 test('admins can see a paginated product listing', function () {
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->create(['name' => 'Acme']);
     $category = Category::factory()->create(['name' => 'Calzado']);
 
     Product::factory()->count(51)->recycle($brand)->recycle($category)->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.products.index'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -521,7 +521,7 @@ test('admins can see a paginated product listing', function () {
 });
 
 test('admins can search products by sku name or barcode', function (string $search) {
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->create();
     $category = Category::factory()->create();
 
@@ -537,7 +537,7 @@ test('admins can search products by sku name or barcode', function (string $sear
         'name' => 'Mochila Urbana',
     ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.products.index', ['search' => $search]))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -554,7 +554,7 @@ test('admins can search products by sku name or barcode', function (string $sear
 test('the product listing includes classification pricing publication and its primary thumbnail', function () {
     Storage::fake('public');
 
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
     $brand = Brand::factory()->create(['name' => 'Andes']);
     $category = Category::factory()->create(['name' => 'Accesorios']);
     $product = Product::factory()->published()->for($brand)->for($category)->create([
@@ -575,7 +575,7 @@ test('the product listing includes classification pricing publication and its pr
         'position' => 0,
     ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.products.index'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page

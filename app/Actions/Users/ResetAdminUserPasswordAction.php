@@ -2,21 +2,21 @@
 
 namespace App\Actions\Users;
 
-use App\Enums\UserRole;
-use App\Models\User;
+use App\Enums\AdministratorRole;
+use App\Models\Administrator;
 use Illuminate\Support\Str;
 
 class ResetAdminUserPasswordAction
 {
-    public function handle(User $user): string
+    public function handle(Administrator $administrator): string
     {
-        if ($user->getAttribute('role') !== UserRole::ADMIN) {
+        if ($administrator->getAttribute('role') !== AdministratorRole::ADMIN) {
             abort(404);
         }
 
         $generatedPassword = Str::random(18);
 
-        $user->forceFill([
+        $administrator->forceFill([
             'password' => $generatedPassword,
         ])->save();
 

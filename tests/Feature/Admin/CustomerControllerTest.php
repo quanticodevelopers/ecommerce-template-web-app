@@ -1,33 +1,25 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Support\Collection;
+use App\Models\Administrator;
+use App\Models\Customer;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the admin login page when accessing customers index', function () {
-    $response = $this->get(route('admin.customers.index'));
-
-    $response->assertRedirect(route('admin.auth.login'));
+    $this->get(route('admin.customers.index'))
+        ->assertRedirect(route('admin.auth.login'));
 });
 
-test('customer listing includes customer and administrator users', function () {
-    $admin = User::factory()
-        ->admin()
-        ->create();
+test('customer listing contains only customer identities', function () {
+    $administrator = Administrator::factory()->create();
+    $customer = Customer::factory()->create();
 
-    $customer = User::factory()->create();
-
-    $this->actingAs($admin)
+    $this->actingAs($administrator, 'admin')
         ->get(route('admin.customers.index'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('admin/customers/index')
-            ->has('customers', 2)
-            ->where('customers', function (Collection $customers) use ($admin, $customer): bool {
-                $listedUserIds = collect($customers)->pluck('id')->sort()->values()->all();
-                $expectedUserIds = collect([$admin->id, $customer->id])->sort()->values()->all();
-
-                return $listedUserIds === $expectedUserIds;
-            })
+            ->has('customers', 1)
+            ->where('customers.0.id', $customer->id)
+            ->where('customers.0.kind', 'customer')
         );
 });

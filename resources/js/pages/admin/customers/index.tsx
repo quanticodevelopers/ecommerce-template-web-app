@@ -7,10 +7,10 @@ import { useInitials } from '@/hooks/use-initials'
 import { dateFormatter } from '@/lib/utils'
 import CustomerRowActions from '@/pages/admin/customers/components/customer-row-actions'
 import { index as customersIndex } from '@/routes/admin/customers'
-import type { UserListItem } from '@/types'
+import type { Customer } from '@/types'
 
 type CustomersIndexProps = {
-  customers: UserListItem[]
+  customers: Customer[]
 }
 
 function formatDate(value: string | null): string {
@@ -21,11 +21,11 @@ function formatDate(value: string | null): string {
   return dateFormatter.format(new Date(value))
 }
 
-function formatFullName(customer: UserListItem): string {
+function formatFullName(customer: Customer): string {
   return `${customer.name} ${customer.last_name}`.trim()
 }
 
-function formatDocument(customer: UserListItem): string {
+function formatDocument(customer: Customer): string {
   return `${customer.document_type.label} ${customer.document_number}`
 }
 

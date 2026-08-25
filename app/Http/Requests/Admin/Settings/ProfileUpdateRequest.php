@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Settings;
 
 use App\Concerns\ProfileValidationRules;
+use App\Models\Administrator;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -17,6 +18,6 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return $this->profileRules($this->user()->id);
+        return $this->profileRules(Administrator::class, $this->user('admin')->id);
     }
 }

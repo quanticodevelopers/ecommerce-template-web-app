@@ -2,8 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\Admin\AdministratorResource;
+use App\Http\Resources\Admin\CustomerResource;
 use App\Http\Resources\Admin\SiteSettingsResource;
-use App\Http\Resources\Admin\UserResource;
+use App\Models\Administrator;
+use App\Models\Customer;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -45,7 +48,11 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'url' => config('app.url'),
             'auth' => [
-                'user' => $user ? UserResource::make($user)->resolve($request) : null,
+                'user' => match (true) {
+                    $user instanceof Administrator => AdministratorResource::make($user)->resolve($request),
+                    $user instanceof Customer => CustomerResource::make($user)->resolve($request),
+                    default => null,
+                },
             ],
             'site' => SiteSettingsResource::make(SiteSetting::cachedRows())->resolve($request),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',

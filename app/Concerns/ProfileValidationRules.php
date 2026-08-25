@@ -3,8 +3,8 @@
 namespace App\Concerns;
 
 use App\Enums\UserDocumentType;
-use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
 trait ProfileValidationRules
@@ -12,19 +12,18 @@ trait ProfileValidationRules
     /**
      * Get the validation rules used to validate user profiles.
      *
+     * @param  class-string<Model>  $model
+     * @param  array<string, mixed>  $input
      * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
-    /**
-     * @param  array<string, mixed>  $input
-     */
-    protected function profileRules(?string $userId = null, array $input = []): array
+    protected function profileRules(string $model, ?string $userId = null, array $input = []): array
     {
         return [
             'document_type' => $this->documentTypeRules(),
-            'document_number' => $this->documentNumberRules($input, $userId),
+            'document_number' => $this->documentNumberRules($model, $input, $userId),
             'name' => $this->nameRules(),
             'last_name' => $this->lastNameRules(),
-            'email' => $this->emailRules($userId),
+            'email' => $this->emailRules($model, $userId),
             'phone' => $this->phoneRules(),
         ];
     }
@@ -42,16 +41,15 @@ trait ProfileValidationRules
     /**
      * Get the validation rules for document number.
      *
+     * @param  class-string<Model>  $model
+     * @param  array<string, mixed>  $input
      * @return array<int, ValidationRule|array<mixed>|string>
      */
-    /**
-     * @param  array<string, mixed>  $input
-     */
-    protected function documentNumberRules(array $input = [], ?string $userId = null): array
+    protected function documentNumberRules(string $model, array $input = [], ?string $userId = null): array
     {
         $type = $this->resolveDocumentType($input);
 
-        $uniqueRule = Rule::unique(User::class)
+        $uniqueRule = Rule::unique($model)
             ->where(fn ($query) => $query->where('document_type', $type));
 
         if ($userId !== null) {
@@ -79,7 +77,7 @@ trait ProfileValidationRules
     {
         $type = $input['document_type'] ?? null;
 
-        if ($type === null && method_exists($this, 'input')) {
+        if ($type === null) {
             $type = $this->input('document_type');
         }
 
@@ -109,9 +107,10 @@ trait ProfileValidationRules
     /**
      * Get the validation rules used to validate user emails.
      *
+     * @param  class-string<Model>  $model
      * @return array<int, ValidationRule|array<mixed>|string>
      */
-    protected function emailRules(?string $userId = null): array
+    protected function emailRules(string $model, ?string $userId = null): array
     {
         return [
             'required',
@@ -119,8 +118,8 @@ trait ProfileValidationRules
             'email',
             'max:128',
             $userId === null
-                ? Rule::unique(User::class)
-                : Rule::unique(User::class)->ignore($userId),
+                ? Rule::unique($model)
+                : Rule::unique($model)->ignore($userId),
         ];
     }
 

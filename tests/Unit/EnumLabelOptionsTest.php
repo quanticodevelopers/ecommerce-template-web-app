@@ -1,11 +1,11 @@
 <?php
 
+use App\Enums\AdministratorRole;
 use App\Enums\UserDocumentType;
-use App\Enums\UserRole;
 
 test('enum labels are resolved from the shared trait', function () {
     expect(UserDocumentType::CE->label())->toBe('CE')
-        ->and(UserRole::SUPER_ADMIN->label())->toBe('Super Administrador');
+        ->and(AdministratorRole::SUPER_ADMIN->label())->toBe('Super Administrador');
 });
 
 test('enum options are generated from the shared trait', function () {

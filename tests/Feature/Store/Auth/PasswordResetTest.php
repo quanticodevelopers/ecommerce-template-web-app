@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -14,10 +14,10 @@ test('reset password link screen can be rendered', function () {
 test('reset password link can be requested', function () {
     Notification::fake();
 
-    $user = User::factory()
+    $user = Customer::factory()
         ->create();
 
-    $this->post(route('password.email'), ['email' => $user->email]);
+    $this->post(route('store.auth.password.email'), ['email' => $user->email]);
 
     Notification::assertSentTo($user, ResetPassword::class);
 });
@@ -25,10 +25,10 @@ test('reset password link can be requested', function () {
 test('reset password screen can be rendered', function () {
     Notification::fake();
 
-    $user = User::factory()
+    $user = Customer::factory()
         ->create();
 
-    $this->post(route('password.email'), ['email' => $user->email]);
+    $this->post(route('store.auth.password.email'), ['email' => $user->email]);
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
         $response = $this->get(route('store.auth.password.reset', $notification->token));
@@ -42,13 +42,13 @@ test('reset password screen can be rendered', function () {
 test('password can be reset with valid token', function () {
     Notification::fake();
 
-    $user = User::factory()->create();
+    $user = Customer::factory()->create();
     $previousPasswordHash = $user->password;
 
-    $this->post(route('password.email'), ['email' => $user->email]);
+    $this->post(route('store.auth.password.email'), ['email' => $user->email]);
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user, $previousPasswordHash) {
-        $response = $this->post(route('password.update'), [
+        $response = $this->post(route('store.auth.password.update'), [
             'token' => $notification->token,
             'email' => $user->email,
             'password' => 'new-password',
@@ -69,10 +69,10 @@ test('password can be reset with valid token', function () {
 });
 
 test('password cannot be reset with invalid token', function () {
-    $user = User::factory()->create();
+    $user = Customer::factory()->create();
     $previousPasswordHash = $user->password;
 
-    $response = $this->post(route('password.update'), [
+    $response = $this->post(route('store.auth.password.update'), [
         'token' => 'invalid-token',
         'email' => $user->email,
         'password' => 'newpassword123',

@@ -10,9 +10,9 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
-import { request } from '@/routes//store/auth/password'
-import { store } from '@/routes/login'
 import { register } from '@/routes/store/auth'
+import { store } from '@/routes/store/auth/login'
+import { request } from '@/routes/store/auth/password'
 
 type Props = {
   status?: string
@@ -75,6 +75,7 @@ export default function Login({ status, canResetPassword }: Props) {
                 <Checkbox
                   id="remember"
                   name="remember"
+                  value="1"
                   tabIndex={3}
                 />
                 <Label htmlFor="remember">Recordarme</Label>

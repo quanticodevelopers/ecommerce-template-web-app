@@ -1,10 +1,10 @@
 <?php
 
+use App\Models\Administrator;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -60,7 +60,7 @@ test('catalog seeders are not invoked in production', function () {
         '--force' => true,
     ])->assertExitCode(0);
 
-    expect(User::query()->count())->toBe(1)
+    expect(Administrator::query()->count())->toBe(1)
         ->and(Category::query()->count())->toBe(0)
         ->and(Brand::query()->count())->toBe(0)
         ->and(Product::query()->count())->toBe(0)

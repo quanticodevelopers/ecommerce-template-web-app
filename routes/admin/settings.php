@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\Settings\SecurityController;
 use App\Http\Middleware\RequirePassword;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'can:access-admin'])
+Route::middleware(['auth:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {

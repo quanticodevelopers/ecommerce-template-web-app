@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AdministratorRole;
 use App\Enums\UserDocumentType;
-use App\Enums\UserRole;
-use App\Models\User;
+use App\Models\Administrator;
 use Illuminate\Database\Seeder;
 
 class SuperAdminUserSeeder extends Seeder
@@ -14,17 +14,16 @@ class SuperAdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::query()->updateOrCreate(
+        Administrator::query()->updateOrCreate(
             ['email' => 'root@quanticodevelopers.pe'],
             [
                 'document_type' => UserDocumentType::DNI,
                 'document_number' => '12345678',
                 'name' => 'Super Admin',
                 'last_name' => config('app.name'),
-                'email_verified_at' => now(),
                 'phone' => '987654321',
                 'password' => config('super-admin.password', 'password'),
-                'role' => UserRole::SUPER_ADMIN,
+                'role' => AdministratorRole::SUPER_ADMIN,
             ]
         );
     }

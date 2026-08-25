@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdministratorController;
+use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController as AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\ConfirmPasswordController as AdminConfirmPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\BrandController as AdminBrandController;
@@ -7,20 +9,24 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::middleware(['guest'])
+        Route::middleware(['guest:admin'])
             ->group(function () {
                 Route::get('/login', AdminLoginController::class)
                     ->name('auth.login');
+                Route::post('/login', [AdminAuthenticatedSessionController::class, 'store'])
+                    ->middleware('throttle:admin-login')
+                    ->name('auth.login.store');
             });
 
-        Route::middleware(['auth', 'can:access-admin'])
+        Route::middleware(['auth:admin'])
             ->group(function () {
+                Route::post('/logout', [AdminAuthenticatedSessionController::class, 'destroy'])
+                    ->name('auth.logout');
                 Route::redirect('/', 'admin/dashboard');
                 Route::get('/dashboard', DashboardController::class)
                     ->name('dashboard');
@@ -63,14 +69,14 @@ Route::prefix('admin')
                             ->name('products.update');
                     });
 
-                Route::controller(AdminUserController::class)
+                Route::controller(AdministratorController::class)
                     ->group(function () {
-                        Route::get('/users', 'index')
-                            ->name('users.index');
-                        Route::post('/users', 'store')
-                            ->name('users.store');
-                        Route::patch('/users/{user}/reset-password', 'resetPassword')
-                            ->name('users.reset-password');
+                        Route::get('/admins', 'index')
+                            ->name('admins.index');
+                        Route::post('/admins', 'store')
+                            ->name('admins.store');
+                        Route::patch('/admins/{administrator}/reset-password', 'resetPassword')
+                            ->name('admins.reset-password');
                     });
 
                 Route::controller(AdminCustomerController::class)
@@ -79,8 +85,10 @@ Route::prefix('admin')
                             ->name('customers.index');
                     });
 
-                Route::get('/confirm-password', AdminConfirmPasswordController::class)
+                Route::get('/confirm-password', [AdminConfirmPasswordController::class, 'create'])
                     ->name('auth.password.confirm');
+                Route::post('/confirm-password', [AdminConfirmPasswordController::class, 'store'])
+                    ->name('auth.password.confirm.store');
             });
     });
 

@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Administrator;
 use App\Models\Brand;
-use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,14 +14,13 @@ test('guests are redirected to the admin login page when accessing brands index'
 });
 
 test('admins can see the brands index', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     Brand::factory()->create(['name' => 'Nike']);
     Brand::factory()->inactive()->create(['name' => 'Adidas']);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.brands.index'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -65,11 +64,10 @@ test('guests are redirected to the admin login page when updating brands', funct
 test('admins can create a brand with a logo stored as webp', function () {
     Storage::fake('public');
 
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
-    $response = $this->actingAs($admin)
+    $response = $this->actingAs($admin, 'admin')
         ->post(route('admin.brands.store'), [
             'name' => 'Puma Peru',
             'short_description' => 'Ropa deportiva',
@@ -96,8 +94,7 @@ test('admins can create a brand with a logo stored as webp', function () {
 test('admins can update a brand without changing its logo', function () {
     Storage::fake('public');
 
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $brand = Brand::factory()->create([
@@ -110,7 +107,7 @@ test('admins can update a brand without changing its logo', function () {
 
     Storage::disk('public')->put($brand->logo_path, 'old-logo');
 
-    $response = $this->actingAs($admin)
+    $response = $this->actingAs($admin, 'admin')
         ->patch(route('admin.brands.update', $brand), [
             'name' => 'Puma Actualizada',
             'short_description' => 'Texto actualizado',
@@ -135,8 +132,7 @@ test('admins can update a brand without changing its logo', function () {
 test('admins can replace a brand logo when updating', function () {
     Storage::fake('public');
 
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $brand = Brand::factory()->create([
@@ -149,7 +145,7 @@ test('admins can replace a brand logo when updating', function () {
 
     Storage::disk('public')->put($brand->logo_path, 'old-logo');
 
-    $response = $this->actingAs($admin)
+    $response = $this->actingAs($admin, 'admin')
         ->patch(route('admin.brands.update', $brand), [
             'name' => 'Puma Peru',
             'short_description' => 'Ropa deportiva',
@@ -169,11 +165,10 @@ test('admins can replace a brand logo when updating', function () {
 });
 
 test('admins must provide a brand name when creating brands', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.brands.store'), [
             'name' => '',
             'short_description' => 'Ropa deportiva',
@@ -183,11 +178,10 @@ test('admins must provide a brand name when creating brands', function () {
 });
 
 test('admins must provide a brand logo when creating brands', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.brands.store'), [
             'name' => 'Puma Peru',
             'short_description' => 'Ropa deportiva',
@@ -196,11 +190,10 @@ test('admins must provide a brand logo when creating brands', function () {
 });
 
 test('admins must keep brand short descriptions within the configured limit when creating brands', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.brands.store'), [
             'name' => 'Puma Peru',
             'short_description' => str_repeat('a', 129),
@@ -210,8 +203,7 @@ test('admins must keep brand short descriptions within the configured limit when
 });
 
 test('admins must provide a valid status when updating brands', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $brand = Brand::factory()->create([
@@ -220,7 +212,7 @@ test('admins must provide a valid status when updating brands', function () {
         'logo_path' => 'images/brands/brand-puma-peru-BR1234.webp',
     ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->patch(route('admin.brands.update', $brand), [
             'name' => 'Puma Peru',
             'short_description' => 'Ropa deportiva',
@@ -230,8 +222,7 @@ test('admins must provide a valid status when updating brands', function () {
 });
 
 test('admins must provide a valid brand logo when replacing it', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $brand = Brand::factory()->create([
@@ -240,7 +231,7 @@ test('admins must provide a valid brand logo when replacing it', function () {
         'logo_path' => 'images/brands/brand-puma-peru-BR1234.webp',
     ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->patch(route('admin.brands.update', $brand), [
             'name' => 'Puma Peru',
             'short_description' => 'Ropa deportiva',

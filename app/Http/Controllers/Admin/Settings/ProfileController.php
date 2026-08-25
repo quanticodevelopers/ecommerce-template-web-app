@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Settings;
 use App\Enums\UserDocumentType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Settings\ProfileUpdateRequest;
+use App\Models\Administrator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -27,13 +28,12 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $administrator = $request->user('admin');
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        abort_unless($administrator instanceof Administrator, 403);
 
-        $request->user()->save();
+        $administrator->fill($request->validated());
+        $administrator->save();
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Profile updated.')]);
 

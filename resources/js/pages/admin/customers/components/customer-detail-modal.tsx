@@ -3,15 +3,15 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
-import type { UserListItem } from '@/types'
+import type { Customer } from '@/types'
 
 type CustomerDetailModalProps = {
-  customer: UserListItem | null
+  customer: Customer | null
   isOpen: boolean
   onClose: () => void
 }
 
-function formatFullName(customer: UserListItem): string {
+function formatFullName(customer: Customer): string {
   return `${customer.name} ${customer.last_name}`.trim()
 }
 

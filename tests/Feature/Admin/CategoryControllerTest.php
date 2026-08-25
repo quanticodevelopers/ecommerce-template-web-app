@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Administrator;
 use App\Models\Category;
-use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the admin login page when accessing categories index', function () {
@@ -11,8 +11,7 @@ test('guests are redirected to the admin login page when accessing categories in
 });
 
 test('admins can see only root categories and parent options', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $rootCategory = Category::factory()
@@ -25,7 +24,7 @@ test('admins can see only root categories and parent options', function () {
     $anotherRootCategory = Category::factory()
         ->create(['name' => 'Tecnología']);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.categories.index'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -45,8 +44,7 @@ test('admins can see only root categories and parent options', function () {
 });
 
 test('admins can see the subcategories of a category and its parent is preselected', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $rootCategory = Category::factory()
@@ -63,7 +61,7 @@ test('admins can see the subcategories of a category and its parent is preselect
     Category::factory()
         ->create(['name' => 'Hogar']);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->get(route('admin.categories.subcategories', $rootCategory))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
@@ -83,11 +81,10 @@ test('admins can see the subcategories of a category and its parent is preselect
 });
 
 test('admins can create a root category with generated slug and code', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
-    $response = $this->actingAs($admin)
+    $response = $this->actingAs($admin, 'admin')
         ->post(route('admin.categories.store'), [
             'name' => 'Moda Hombre',
             'parent_id' => '__root__',
@@ -109,14 +106,13 @@ test('admins can create a root category with generated slug and code', function 
 });
 
 test('admins can create a subcategory and return to its parent listing', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $parentCategory = Category::factory()
         ->create(['name' => 'Tecnología']);
 
-    $response = $this->actingAs($admin)
+    $response = $this->actingAs($admin, 'admin')
         ->post(route('admin.categories.store'), [
             'name' => 'Periféricos',
             'parent_id' => $parentCategory->id,
@@ -136,11 +132,10 @@ test('admins can create a subcategory and return to its parent listing', functio
 });
 
 test('admins must provide a valid category name when creating categories', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.categories.store'), [
             'name' => '',
             'parent_id' => '__root__',
@@ -150,11 +145,10 @@ test('admins must provide a valid category name when creating categories', funct
 });
 
 test('admins must keep category short descriptions within the configured limit', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.categories.store'), [
             'name' => 'Moda Hombre',
             'parent_id' => '__root__',
@@ -164,9 +158,9 @@ test('admins must keep category short descriptions within the configured limit',
 });
 
 test('admins cannot create a category with a nonexistent parent', function () {
-    $admin = User::factory()->admin()->create();
+    $admin = Administrator::factory()->create();
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->post(route('admin.categories.store'), [
             'name' => 'Categoría huérfana',
             'parent_id' => '01J00000000000000000000000',
@@ -191,8 +185,7 @@ test('guests are redirected to the admin login page when updating categories', f
 });
 
 test('admins can update a category without changing its slug or code', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $category = Category::factory()
@@ -205,7 +198,7 @@ test('admins can update a category without changing its slug or code', function 
     $originalSlug = $category->slug;
     $originalCode = $category->code;
 
-    $response = $this->actingAs($admin)
+    $response = $this->actingAs($admin, 'admin')
         ->patch(route('admin.categories.update', $category), [
             'name' => 'Updated Name',
             'parent_id' => '__root__',
@@ -228,8 +221,7 @@ test('admins can update a category without changing its slug or code', function 
 });
 
 test('admins can move a category under another parent when updating', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $currentParent = Category::factory()
@@ -245,7 +237,7 @@ test('admins can move a category under another parent when updating', function (
             'short_description' => 'Child description',
         ]);
 
-    $response = $this->actingAs($admin)
+    $response = $this->actingAs($admin, 'admin')
         ->patch(route('admin.categories.update', $category), [
             'name' => 'Child Category',
             'parent_id' => $newParent->id,
@@ -262,15 +254,14 @@ test('admins can move a category under another parent when updating', function (
 });
 
 test('admins cannot assign a category as its own parent', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $category = Category::factory()->create([
         'name' => 'Standalone',
     ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->patch(route('admin.categories.update', $category), [
             'name' => 'Standalone',
             'parent_id' => $category->id,
@@ -281,8 +272,7 @@ test('admins cannot assign a category as its own parent', function () {
 });
 
 test('admins cannot assign a category to one of its descendants', function () {
-    $admin = User::factory()
-        ->admin()
+    $admin = Administrator::factory()
         ->create();
 
     $rootCategory = Category::factory()->create([
@@ -301,7 +291,7 @@ test('admins cannot assign a category to one of its descendants', function () {
             'name' => 'Grandchild',
         ]);
 
-    $this->actingAs($admin)
+    $this->actingAs($admin, 'admin')
         ->patch(route('admin.categories.update', $rootCategory), [
             'name' => 'Root',
             'parent_id' => $grandChildCategory->id,

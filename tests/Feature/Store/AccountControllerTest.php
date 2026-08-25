@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Customer;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('account overview requires authentication', function () {
@@ -9,17 +9,17 @@ test('account overview requires authentication', function () {
 });
 
 test('account overview requires a verified email', function () {
-    $user = User::factory()->unverified()->create();
+    $user = Customer::factory()->unverified()->create();
 
-    $this->actingAs($user)
+    $this->actingAs($user, 'store')
         ->get(route('store.account.overview'))
         ->assertRedirect(route('store.verification.notice'));
 });
 
 test('verified customers can see their account overview', function () {
-    $user = User::factory()->create();
+    $user = Customer::factory()->create();
 
-    $this->actingAs($user)
+    $this->actingAs($user, 'store')
         ->get(route('store.account.overview'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page

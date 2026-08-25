@@ -19,7 +19,7 @@ export function UserInfo({ user, showEmail = false, showRole = false }: UserInfo
       <div className="grid flex-1 text-left text-sm leading-tight">
         <span className="truncate font-medium">{`${user.name} ${user.last_name}`}</span>
         {showEmail && <span className="truncate text-xs text-muted-foreground">{user.email}</span>}
-        {showRole && <span className="truncate text-xs text-muted-foreground">{user.role.label}</span>}
+        {showRole && user.kind === 'administrator' && <span className="truncate text-xs text-muted-foreground">{user.role.label}</span>}
       </div>
     </>
   )

@@ -1,7 +1,8 @@
 <?php
 
+use App\Models\Administrator;
+use App\Models\Customer;
 use App\Models\SiteSetting;
-use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -15,12 +16,11 @@ afterEach(function () {
 });
 
 test('information page is displayed to admins', function () {
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->get(route('admin.information.edit'));
 
     $response->assertOk();
@@ -30,23 +30,22 @@ test('information page is displayed to admins', function () {
         ->has('settings'));
 });
 
-test('information page is forbidden to non-admin users', function () {
-    $user = User::factory()
+test('customers are redirected to the admin login page', function () {
+    $customer = Customer::factory()
         ->create();
 
     $this
-        ->actingAs($user)
+        ->actingAs($customer, 'store')
         ->get(route('admin.information.edit'))
-        ->assertForbidden();
+        ->assertRedirect(route('admin.auth.login'));
 });
 
 test('site information can be updated', function () {
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->from(route('admin.information.edit'))
         ->post(route('admin.information.update'), [
             '_method' => 'PUT',
@@ -75,8 +74,7 @@ test('site information can be updated', function () {
 test('site logo can be uploaded as a png with 512 by 512 dimensions', function () {
     Storage::fake('public');
 
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     SiteSetting::setMany([
@@ -85,7 +83,7 @@ test('site logo can be uploaded as a png with 512 by 512 dimensions', function (
     ]);
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->post(route('admin.information.update'), [
             '_method' => 'PUT',
             'logo' => UploadedFile::fake()->image('logo.png', 512, 512),
@@ -111,8 +109,7 @@ test('site logo can be uploaded as a png with 512 by 512 dimensions', function (
 test('site logo can be uploaded as an svg with 512 by 512 dimensions', function () {
     Storage::fake('public');
 
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     SiteSetting::setMany([
@@ -128,7 +125,7 @@ test('site logo can be uploaded as an svg with 512 by 512 dimensions', function 
 SVG;
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->post(route('admin.information.update'), [
             '_method' => 'PUT',
             'logo' => UploadedFile::fake()->createWithContent('logo.svg', $svg),
@@ -154,14 +151,13 @@ SVG;
 test('site logo must have the required dimensions', function () {
     Storage::fake('public');
 
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     SiteSetting::setMany(SiteSetting::defaults());
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->from(route('admin.information.edit'))
         ->post(route('admin.information.update'), [
             '_method' => 'PUT',
@@ -183,8 +179,7 @@ test('site logo must have the required dimensions', function () {
 test('existing logo can be removed', function () {
     Storage::fake('public');
 
-    $user = User::factory()
-        ->admin()
+    $user = Administrator::factory()
         ->create();
 
     SiteSetting::setMany([
@@ -195,7 +190,7 @@ test('existing logo can be removed', function () {
     Storage::disk('public')->put('site-settings/logo.png', 'logo');
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($user, 'admin')
         ->post(route('admin.information.update'), [
             '_method' => 'PUT',
             'remove_logo' => '1',

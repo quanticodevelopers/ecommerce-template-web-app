@@ -13,8 +13,6 @@ class RegisterController extends Controller
 {
     public function __invoke(Request $request): Response
     {
-        $request->session()->put('auth.area', 'store');
-
         return Inertia::render('store/auth/register', [
             'document_type_options' => UserDocumentType::options(),
             'passwordRules' => Password::defaults()->toPasswordRulesString(),

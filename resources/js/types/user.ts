@@ -1,6 +1,6 @@
-import type { UserDocumentTypeOption, UserRoleOption } from '@/types/enums'
+import type { AdministratorRoleOption, UserDocumentTypeOption } from '@/types/enums'
 
-export type User = {
+type AuthenticatedIdentity = {
   id: string
   document_type: UserDocumentTypeOption
   document_number: string
@@ -8,6 +8,16 @@ export type User = {
   last_name: string
   email: string
   phone: string
-  role: UserRoleOption
   created_at: string | null
 }
+
+export type Customer = AuthenticatedIdentity & {
+  kind: 'customer'
+}
+
+export type Administrator = AuthenticatedIdentity & {
+  kind: 'administrator'
+  role: AdministratorRoleOption
+}
+
+export type User = Customer | Administrator

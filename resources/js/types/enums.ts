@@ -1,5 +1,5 @@
 export type UserDocumentTypeValue = 'dni' | 'ce' | 'pasaporte'
-export type UserRoleValue = 'customer' | 'admin' | 'super_admin'
+export type AdministratorRoleValue = 'admin' | 'super_admin'
 
 export type EnumOption<TValue extends string> = {
   label: string
@@ -7,4 +7,4 @@ export type EnumOption<TValue extends string> = {
 }
 
 export type UserDocumentTypeOption = EnumOption<UserDocumentTypeValue>
-export type UserRoleOption = EnumOption<UserRoleValue>
+export type AdministratorRoleOption = EnumOption<AdministratorRoleValue>

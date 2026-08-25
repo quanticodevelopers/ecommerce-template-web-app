@@ -1,68 +1,85 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Support\Facades\RateLimiter;
+use App\Models\Administrator;
+use App\Models\Customer;
 
 test('admin login screen can be rendered', function () {
-    $response = $this->get(route('admin.auth.login'));
-
-    $response->assertOk();
+    $this->get(route('admin.auth.login'))->assertOk();
 });
 
-test('admin users can authenticate using the login screen', function () {
-    $user = User::factory()
-        ->admin()
-        ->create();
+test('administrators can authenticate using the admin guard', function () {
+    $administrator = Administrator::factory()->create();
 
-    $response = $this
-        ->withSession(['auth.area' => 'admin'])
-        ->post(route('login.store'), [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+    $response = $this->post(route('admin.auth.login.store'), [
+        'email' => $administrator->email,
+        'password' => 'password',
+    ]);
 
-    $this->assertAuthenticated();
+    $this->assertAuthenticatedAs($administrator, 'admin');
+    $this->assertGuest('store');
     $response->assertRedirect(route('admin.dashboard', absolute: false));
 });
 
-test('admin users can not authenticate with invalid password', function () {
-    $user = User::factory()
-        ->admin()
-        ->create();
+test('administrators can authenticate with remember selected', function () {
+    $administrator = Administrator::factory()->create();
 
-    $this
-        ->withSession(['auth.area' => 'admin'])
-        ->post(route('login.store'), [
-            'email' => $user->email,
-            'password' => 'wrong-password',
-        ]);
-
-    $this->assertGuest();
-});
-
-test('admin users can logout', function () {
-    $user = User::factory()
-        ->admin()
-        ->create();
-
-    $response = $this->actingAs($user)->post(route('logout'));
-
-    $response->assertRedirect(route('store.home'));
-
-    $this->assertGuest();
-});
-
-test('admin users are rate limited', function () {
-    $user = User::factory()
-        ->admin()
-        ->create();
-
-    RateLimiter::increment(md5('login'.implode('|', [$user->email, '127.0.0.1'])), amount: 5);
-
-    $response = $this->post(route('login.store'), [
-        'email' => $user->email,
-        'password' => 'wrong-password',
+    $response = $this->post(route('admin.auth.login.store'), [
+        'email' => $administrator->email,
+        'password' => 'password',
+        'remember' => '1',
     ]);
 
-    $response->assertTooManyRequests();
+    $response->assertRedirect(route('admin.dashboard', absolute: false));
+    $this->assertAuthenticatedAs($administrator, 'admin');
+});
+
+test('customers cannot authenticate in the admin environment', function () {
+    $customer = Customer::factory()->create();
+
+    $this->post(route('admin.auth.login.store'), [
+        'email' => $customer->email,
+        'password' => 'password',
+    ])->assertSessionHasErrors('email');
+
+    $this->assertGuest('admin');
+});
+
+test('administrators cannot authenticate with an invalid password', function () {
+    $administrator = Administrator::factory()->create();
+
+    $this->post(route('admin.auth.login.store'), [
+        'email' => $administrator->email,
+        'password' => 'wrong-password',
+    ])->assertSessionHasErrors('email');
+
+    $this->assertGuest('admin');
+});
+
+test('administrators can logout from the admin guard', function () {
+    $administrator = Administrator::factory()->create();
+    $customer = Customer::factory()->create();
+
+    $response = $this->actingAs($customer, 'store')
+        ->actingAs($administrator, 'admin')
+        ->post(route('admin.auth.logout'));
+
+    $response->assertRedirect(route('admin.auth.login'));
+    $this->assertGuest('admin');
+    $this->assertAuthenticatedAs($customer, 'store');
+});
+
+test('administrator login is rate limited', function () {
+    $administrator = Administrator::factory()->create();
+
+    foreach (range(1, 5) as $attempt) {
+        $this->post(route('admin.auth.login.store'), [
+            'email' => $administrator->email,
+            'password' => 'wrong-password',
+        ]);
+    }
+
+    $this->post(route('admin.auth.login.store'), [
+        'email' => $administrator->email,
+        'password' => 'wrong-password',
+    ])->assertTooManyRequests();
 });

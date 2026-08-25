@@ -18,7 +18,7 @@ class PasswordUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => $this->currentPasswordRules(),
+            'current_password' => ['required', 'string', 'current_password:admin'],
             'password' => $this->passwordRules(),
         ];
     }

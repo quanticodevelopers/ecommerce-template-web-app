@@ -5,7 +5,7 @@ import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSep
 import { UserInfo } from '@/components/user-info'
 import { useLogoutCleanup } from '@/hooks/use-logout-cleanup'
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
-import { logout } from '@/routes'
+import { logout } from '@/routes/admin/auth'
 import { edit } from '@/routes/admin/profile'
 import type { User } from '@/types'
 

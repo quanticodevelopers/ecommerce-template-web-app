@@ -7,6 +7,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -28,9 +29,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->redirectUsersTo(function (Request $request): string {
             if ($request->is('admin') || $request->is('admin/*')) {
-                return $request->user()?->can('access-admin')
+                return Auth::guard('admin')->check()
                     ? route('admin.dashboard')
-                    : route('store.home');
+                    : route('admin.auth.login');
             }
 
             return route('store.home');

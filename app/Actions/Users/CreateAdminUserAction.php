@@ -2,21 +2,21 @@
 
 namespace App\Actions\Users;
 
-use App\Enums\UserRole;
-use App\Models\User;
+use App\Enums\AdministratorRole;
+use App\Models\Administrator;
 use Illuminate\Support\Str;
 
 class CreateAdminUserAction
 {
     /**
      * @param  array<string, mixed>  $validated
-     * @return array{user: User, password: string}
+     * @return array{administrator: Administrator, password: string}
      */
     public function handle(array $validated): array
     {
         $generatedPassword = Str::random(18);
 
-        $user = User::query()->create([
+        $administrator = Administrator::query()->create([
             'document_type' => $validated['document_type'],
             'document_number' => $validated['document_number'],
             'name' => $validated['name'],
@@ -24,15 +24,11 @@ class CreateAdminUserAction
             'email' => $validated['email'],
             'phone' => $validated['phone'],
             'password' => $generatedPassword,
-            'role' => UserRole::ADMIN,
+            'role' => AdministratorRole::ADMIN,
         ]);
 
-        $user->forceFill([
-            'email_verified_at' => now(),
-        ])->save();
-
         return [
-            'user' => $user,
+            'administrator' => $administrator,
             'password' => $generatedPassword,
         ];
     }

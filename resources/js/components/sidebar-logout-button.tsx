@@ -3,7 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { useLogoutCleanup } from '@/hooks/use-logout-cleanup'
-import { logout } from '@/routes'
+import { logout } from '@/routes/admin/auth'
 
 interface SidebarLogoutButtonProps {
   className?: string

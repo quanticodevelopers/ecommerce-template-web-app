@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Settings\PasswordUpdateRequest;
-use App\Http\Requests\Admin\Settings\TwoFactorAuthenticationRequest;
+use App\Models\Administrator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -15,7 +15,7 @@ class SecurityController extends Controller
     /**
      * Show the user's security settings page.
      */
-    public function edit(TwoFactorAuthenticationRequest $request): Response
+    public function edit(): Response
     {
         $props = [
             'passwordRules' => Password::defaults()->toPasswordRulesString(),
@@ -29,7 +29,11 @@ class SecurityController extends Controller
      */
     public function update(PasswordUpdateRequest $request): RedirectResponse
     {
-        $request->user()->update([
+        $administrator = $request->user('admin');
+
+        abort_unless($administrator instanceof Administrator, 403);
+
+        $administrator->update([
             'password' => $request->password,
         ]);
 

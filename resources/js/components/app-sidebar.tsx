@@ -7,13 +7,13 @@ import { NavUser } from '@/components/nav-user'
 import SidebarLogoutButton from '@/components/sidebar-logout-button'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { dashboard } from '@/routes/admin'
+import { index as adminAdministrators } from '@/routes/admin/admins'
 import { index as adminBrands } from '@/routes/admin/brands'
 import { index as adminCategories } from '@/routes/admin/categories'
 import { index as adminCustomers } from '@/routes/admin/customers'
 import { edit as editInformation } from '@/routes/admin/information'
 import { index as adminIndexProducts } from '@/routes/admin/products'
 import { create as adminCreateProducts } from '@/routes/admin/products'
-import { index as adminUsers } from '@/routes/admin/users'
 import type { NavGroup } from '@/types'
 
 const mainNavItems: NavGroup[] = [
@@ -71,8 +71,8 @@ const mainNavItems: NavGroup[] = [
     title: 'Administración',
     items: [
       {
-        title: 'Usuarios',
-        href: adminUsers(),
+        title: 'Administradores',
+        href: adminAdministrators(),
         icon: UserMultiple02Icon,
       },
       {

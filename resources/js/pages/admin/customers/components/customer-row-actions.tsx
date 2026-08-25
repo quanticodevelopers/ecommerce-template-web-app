@@ -3,10 +3,10 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import CustomerDetailModal from '@/pages/admin/customers/components/customer-detail-modal'
-import type { UserListItem } from '@/types'
+import type { Customer } from '@/types'
 
 type CustomerRowActionsProps = {
-  customer: UserListItem
+  customer: Customer
 }
 
 export default function CustomerRowActions({ customer }: CustomerRowActionsProps) {

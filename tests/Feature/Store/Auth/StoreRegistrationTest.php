@@ -1,8 +1,7 @@
 <?php
 
 use App\Enums\UserDocumentType;
-use App\Enums\UserRole;
-use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 
 test('registration screen can be rendered', function () {
@@ -23,16 +22,15 @@ test('new customer users can register', function () {
         'password_confirmation' => 'password',
     ];
 
-    $response = $this->post(route('register.store'), $payload);
+    $response = $this->post(route('store.auth.register.store'), $payload);
 
-    $this->assertAuthenticated();
+    $this->assertAuthenticated('store');
     $response->assertRedirect(route('store.home', absolute: false));
 
-    $user = User::query()->where('email', $payload['email'])->firstOrFail();
+    $user = Customer::query()->where('email', $payload['email'])->firstOrFail();
 
     expect($user->document_type)->toBe(UserDocumentType::DNI)
         ->and($user->document_number)->toBe($payload['document_number'])
-        ->and($user->role)->toBe(UserRole::CUSTOMER)
         ->and($user->email_verified_at)->toBeNull()
         ->and(Hash::check($payload['password'], $user->password))->toBeTrue();
 });
@@ -49,11 +47,11 @@ test('customer registration enforces profile restrictions', function (array $inv
         'password_confirmation' => 'password',
     ];
 
-    $this->post(route('register.store'), [...$payload, ...$invalidData])
+    $this->post(route('store.auth.register.store'), [...$payload, ...$invalidData])
         ->assertSessionHasErrors($field);
 
-    $this->assertGuest();
-    expect(User::query()->count())->toBe(0);
+    $this->assertGuest('store');
+    expect(Customer::query()->count())->toBe(0);
 })->with([
     'document type must be supported' => [['document_type' => 'ruc'], 'document_type'],
     'DNI must contain eight digits' => [['document_number' => '1234567'], 'document_number'],
@@ -66,13 +64,13 @@ test('customer registration enforces profile restrictions', function (array $inv
 ]);
 
 test('customer registration rejects an email and document already in use', function () {
-    User::factory()->create([
+    Customer::factory()->create([
         'document_type' => UserDocumentType::DNI,
         'document_number' => '87654321',
         'email' => 'existing@example.com',
     ]);
 
-    $this->post(route('register.store'), [
+    $this->post(route('store.auth.register.store'), [
         'document_type' => UserDocumentType::DNI->value,
         'document_number' => '87654321',
         'name' => 'Rodrigo',
@@ -83,12 +81,12 @@ test('customer registration rejects an email and document already in use', funct
         'password_confirmation' => 'password',
     ])->assertSessionHasErrors(['document_number', 'email']);
 
-    $this->assertGuest();
-    expect(User::query()->count())->toBe(1);
+    $this->assertGuest('store');
+    expect(Customer::query()->count())->toBe(1);
 });
 
 test('customer registration enforces password restrictions', function (array $invalidData) {
-    $this->post(route('register.store'), [
+    $this->post(route('store.auth.register.store'), [
         'document_type' => 'dni',
         'document_number' => '87654321',
         'name' => 'Rodrigo',
@@ -100,8 +98,8 @@ test('customer registration enforces password restrictions', function (array $in
         ...$invalidData,
     ])->assertSessionHasErrors('password');
 
-    $this->assertGuest();
-    expect(User::query()->count())->toBe(0);
+    $this->assertGuest('store');
+    expect(Customer::query()->count())->toBe(0);
 })->with([
     'minimum length' => [[
         'password' => 'short',
