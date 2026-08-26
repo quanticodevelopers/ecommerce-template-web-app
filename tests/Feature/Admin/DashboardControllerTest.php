@@ -22,8 +22,8 @@ test('admins can visit the dashboard', function () {
             ->where('auth.user.id', $user->id)
             ->where('auth.user.name', $user->name)
             ->where('auth.user.last_name', $user->last_name)
-            ->where('auth.user.document_type.value', $user->document_type->value)
-            ->where('auth.user.document_type.label', $user->document_type->label())
+            ->missing('auth.user.document_type')
+            ->missing('auth.user.document_number')
             ->where('auth.user.role.value', $user->role->value)
             ->where('auth.user.role.label', $user->role->label())
         );

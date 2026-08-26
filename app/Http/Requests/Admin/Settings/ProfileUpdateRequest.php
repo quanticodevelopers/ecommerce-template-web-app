@@ -18,6 +18,6 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return $this->profileRules(Administrator::class, $this->user('admin')->id);
+        return $this->identityRules(Administrator::class, $this->user('admin')->id);
     }
 }

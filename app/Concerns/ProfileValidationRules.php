@@ -21,6 +21,19 @@ trait ProfileValidationRules
         return [
             'document_type' => $this->documentTypeRules(),
             'document_number' => $this->documentNumberRules($model, $input, $userId),
+            ...$this->identityRules($model, $userId),
+        ];
+    }
+
+    /**
+     * Get validation rules for identity fields shared by customers and administrators.
+     *
+     * @param  class-string<Model>  $model
+     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
+     */
+    protected function identityRules(string $model, ?string $userId = null): array
+    {
+        return [
             'name' => $this->nameRules(),
             'last_name' => $this->lastNameRules(),
             'email' => $this->emailRules($model, $userId),

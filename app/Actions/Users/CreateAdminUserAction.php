@@ -17,8 +17,6 @@ class CreateAdminUserAction
         $generatedPassword = Str::random(18);
 
         $administrator = Administrator::query()->create([
-            'document_type' => $validated['document_type'],
-            'document_number' => $validated['document_number'],
             'name' => $validated['name'],
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],

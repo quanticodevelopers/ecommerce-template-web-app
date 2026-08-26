@@ -8,17 +8,14 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/lib/utils'
-import type { SelectOption } from '@/types'
 
 type CreateAdminModalProps = {
-  documentTypeOptions: SelectOption[]
   triggerClassName?: string
 }
 
-export default function CreateAdminModal({ documentTypeOptions, triggerClassName }: CreateAdminModalProps) {
+export default function CreateAdminModal({ triggerClassName }: CreateAdminModalProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -76,44 +73,6 @@ export default function CreateAdminModal({ documentTypeOptions, triggerClassName
                     placeholder="Apellidos"
                   />
                   <InputError message={errors.last_name} />
-                </div>
-
-                <div className="grid gap-2">
-                  <Label htmlFor="document_type">Tipo de documento</Label>
-                  <Select
-                    name="document_type"
-                    defaultValue={documentTypeOptions[0]?.value}
-                  >
-                    <SelectTrigger
-                      id="document_type"
-                      className="w-full"
-                    >
-                      <SelectValue placeholder="Selecciona un tipo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {documentTypeOptions.map((documentType) => (
-                        <SelectItem
-                          key={documentType.value}
-                          value={documentType.value}
-                        >
-                          {documentType.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <InputError message={errors.document_type} />
-                </div>
-
-                <div className="grid gap-2">
-                  <Label htmlFor="document_number">Número de documento</Label>
-                  <Input
-                    id="document_number"
-                    name="document_number"
-                    maxLength={12}
-                    required
-                    placeholder="Documento"
-                  />
-                  <InputError message={errors.document_number} />
                 </div>
 
                 <div className="grid gap-2">

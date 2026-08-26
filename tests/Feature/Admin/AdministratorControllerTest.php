@@ -4,11 +4,17 @@ use App\Enums\AdministratorRole;
 use App\Models\Administrator;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the admin login page when accessing administrators index', function () {
     $this->get(route('admin.admins.index'))
         ->assertRedirect(route('admin.auth.login'));
+});
+
+test('administrator schema does not contain customer document fields', function () {
+    expect(Schema::hasColumn('administrators', 'document_type'))->toBeFalse()
+        ->and(Schema::hasColumn('administrators', 'document_number'))->toBeFalse();
 });
 
 test('administrators can see only administrator identities', function () {
@@ -30,8 +36,6 @@ test('administrators can see only administrator identities', function () {
 test('administrators can create administrator identities with generated credentials', function () {
     $administrator = Administrator::factory()->create();
     $payload = [
-        'document_type' => 'dni',
-        'document_number' => '12345678',
         'name' => 'Daniel',
         'last_name' => 'Perez',
         'email' => 'daniel.admin@example.com',
@@ -56,24 +60,20 @@ test('administrators can create administrator identities with generated credenti
         ->and(Hash::check($credentials['password'], $createdAdministrator->password))->toBeTrue();
 });
 
-test('administrator creation enforces uniqueness inside the administrator domain', function () {
+test('administrator creation enforces email uniqueness inside the administrator domain', function () {
     $administrator = Administrator::factory()->create();
     $existingAdministrator = Administrator::factory()->create([
-        'document_type' => 'dni',
-        'document_number' => '12345678',
         'email' => 'existing@example.com',
     ]);
 
     $this->actingAs($administrator, 'admin')
         ->post(route('admin.admins.store'), [
-            'document_type' => 'dni',
-            'document_number' => $existingAdministrator->document_number,
             'name' => 'Daniel',
             'last_name' => 'Perez',
             'email' => $existingAdministrator->email,
             'phone' => '987654321',
         ])
-        ->assertSessionHasErrors(['document_number', 'email']);
+        ->assertSessionHasErrors('email');
 
     expect(Administrator::query()->count())->toBe(2);
 });

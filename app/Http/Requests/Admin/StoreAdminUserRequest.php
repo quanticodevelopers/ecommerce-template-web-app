@@ -26,7 +26,7 @@ class StoreAdminUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return $this->profileRules(Administrator::class, input: $this->all());
+        return $this->identityRules(Administrator::class);
     }
 
     /**
@@ -37,8 +37,6 @@ class StoreAdminUserRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'document_type' => 'Tipo de documento',
-            'document_number' => 'Número de documento',
             'name' => 'Nombres',
             'last_name' => 'Apellidos',
             'email' => 'Correo electrónico',

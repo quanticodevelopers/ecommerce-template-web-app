@@ -5,13 +5,11 @@ import InputError from '@/components/input-error'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
 import { useAuthenticatedUser } from '@/hooks/use-authenticated-user'
 import { edit } from '@/routes/admin/profile'
-import type { SelectOption } from '@/types'
 
-const Profile = ({ document_type_options }: { document_type_options: SelectOption[] }) => {
+const Profile = () => {
   const user = useAuthenticatedUser()
 
   return (
@@ -22,7 +20,7 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
         <Heading
           variant="small"
           title="Configuración de tu perfil"
-          description="Actualiza tu documento, nombre completo, celular y correo electrónico."
+          description="Actualiza tu nombre completo, celular y correo electrónico."
         />
 
         <Form
@@ -69,57 +67,6 @@ const Profile = ({ document_type_options }: { document_type_options: SelectOptio
                   <InputError
                     className="mt-2"
                     message={errors.last_name}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-                <div className="grid gap-2">
-                  <Label htmlFor="document_type">Tipo de documento</Label>
-
-                  <Select
-                    defaultValue={user.document_type.value}
-                    name="document_type"
-                  >
-                    <SelectTrigger
-                      id="document_type"
-                      className="mt-1 w-full"
-                    >
-                      <SelectValue placeholder="Selecciona un tipo" />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                      {document_type_options.map((documentType) => (
-                        <SelectItem
-                          value={documentType.value}
-                          key={documentType.value}
-                        >
-                          {documentType.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  <InputError
-                    className="mt-2"
-                    message={errors.document_type}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="document_number">Número de documento</Label>
-
-                  <Input
-                    id="document_number"
-                    className="mt-1 block w-full"
-                    defaultValue={user.document_number}
-                    name="document_number"
-                    required
-                    placeholder="Número de documento"
-                  />
-
-                  <InputError
-                    className="mt-2"
-                    message={errors.document_number}
                   />
                 </div>
               </div>

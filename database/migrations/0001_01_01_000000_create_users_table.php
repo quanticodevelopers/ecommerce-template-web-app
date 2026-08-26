@@ -32,8 +32,6 @@ return new class extends Migration
 
         Schema::create('administrators', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('document_type', 9);
-            $table->string('document_number', 12);
             $table->string('name', 64);
             $table->string('last_name', 64);
             $table->string('email')->unique();
@@ -43,7 +41,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unique(['document_type', 'document_number'], 'administrators_document_unique');
             $table->index('name');
             $table->index('last_name');
             $table->index('phone');
@@ -96,7 +93,6 @@ return new class extends Migration
             ->implode(',');
 
         DB::statement("ALTER TABLE customers ADD CONSTRAINT chk_customers_document_type CHECK (document_type IN ({$documentTypes}))");
-        DB::statement("ALTER TABLE administrators ADD CONSTRAINT chk_administrators_document_type CHECK (document_type IN ({$documentTypes}))");
         DB::statement("ALTER TABLE administrators ADD CONSTRAINT chk_administrators_role CHECK (role IN ({$administratorRoles}))");
     }
 };

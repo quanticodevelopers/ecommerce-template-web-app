@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\AdministratorRole;
-use App\Enums\UserDocumentType;
 use Database\Factories\AdministratorFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -15,8 +14,6 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property string $id
- * @property UserDocumentType $document_type
- * @property string $document_number
  * @property string $name
  * @property string $last_name
  * @property string $email
@@ -25,7 +22,7 @@ use Illuminate\Support\Carbon;
  * @property AdministratorRole $role
  * @property Carbon|null $created_at
  */
-#[Fillable(['document_type', 'document_number', 'name', 'last_name', 'email', 'phone', 'password', 'role'])]
+#[Fillable(['name', 'last_name', 'email', 'phone', 'password', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class Administrator extends Authenticatable
 {
@@ -36,7 +33,6 @@ class Administrator extends Authenticatable
     protected function casts(): array
     {
         return [
-            'document_type' => UserDocumentType::class,
             'password' => 'hashed',
             'role' => AdministratorRole::class,
         ];

@@ -13,8 +13,6 @@ class AdministratorResource extends JsonResource
      * @return array{
      *     id: string,
      *     kind: string,
-     *     document_type: array{label: string, value: string},
-     *     document_number: string,
      *     name: string,
      *     last_name: string,
      *     email: string,
@@ -30,11 +28,6 @@ class AdministratorResource extends JsonResource
         return [
             'id' => $administrator->id,
             'kind' => 'administrator',
-            'document_type' => [
-                'label' => $administrator->document_type->label(),
-                'value' => $administrator->document_type->value,
-            ],
-            'document_number' => $administrator->document_number,
             'name' => $administrator->name,
             'last_name' => $administrator->last_name,
             'email' => $administrator->email,

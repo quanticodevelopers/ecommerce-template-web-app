@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserDocumentType;
 use App\Models\Administrator;
 
 test('profile page is displayed', function () {
@@ -21,8 +20,6 @@ test('profile information can be updated', function () {
     $response = $this
         ->actingAs($user, 'admin')
         ->patch(route('admin.profile.update'), [
-            'document_type' => 'dni',
-            'document_number' => '87654321',
             'name' => 'Rodrigo',
             'last_name' => 'Quispe',
             'email' => 'rodrigo.admin@example.com',
@@ -35,9 +32,7 @@ test('profile information can be updated', function () {
 
     $user->refresh();
 
-    expect($user->document_type)->toBe(UserDocumentType::DNI)
-        ->and($user->document_number)->toBe('87654321')
-        ->and($user->name)->toBe('Rodrigo')
+    expect($user->name)->toBe('Rodrigo')
         ->and($user->last_name)->toBe('Quispe')
         ->and($user->email)->toBe('rodrigo.admin@example.com')
         ->and($user->phone)->toBe('963852741');
@@ -50,8 +45,6 @@ test('administrator email remains unchanged when the same address is submitted',
     $response = $this
         ->actingAs($user, 'admin')
         ->patch(route('admin.profile.update'), [
-            'document_type' => 'dni',
-            'document_number' => '87654321',
             'name' => 'Rodrigo',
             'last_name' => 'Quispe',
             'email' => $user->email,

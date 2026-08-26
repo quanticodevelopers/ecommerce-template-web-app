@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Users\CreateAdminUserAction;
 use App\Actions\Users\ResetAdminUserPasswordAction;
 use App\Enums\AdministratorRole;
-use App\Enums\UserDocumentType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ConfirmAdminPasswordRequest;
 use App\Http\Requests\Admin\StoreAdminUserRequest;
@@ -23,14 +22,13 @@ class AdministratorController extends Controller
     public function index(): Response
     {
         $administrators = Administrator::query()
-            ->select(['id', 'name', 'last_name', 'email', 'phone', 'document_type', 'document_number', 'created_at', 'role'])
+            ->select(['id', 'name', 'last_name', 'email', 'phone', 'created_at', 'role'])
             ->where('role', AdministratorRole::ADMIN->value)
             ->latest('created_at')
             ->get();
 
         return Inertia::render('admin/admins/index', [
             'admins' => AdministratorResource::collection($administrators)->resolve(),
-            'document_type_options' => UserDocumentType::options(),
             'created_administrator_credentials' => session('created_administrator_credentials'),
         ]);
     }

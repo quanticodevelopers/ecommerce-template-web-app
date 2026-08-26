@@ -10,11 +10,10 @@ import AdminRowActions from '@/pages/admin/admins/components/admin-row-actions'
 import CreateAdminModal from '@/pages/admin/admins/components/create-admin-modal'
 import CreatedAdministratorCredentialsModal from '@/pages/admin/admins/components/created-administrator-credentials-modal'
 import { index as adminsIndex } from '@/routes/admin/admins'
-import type { AdministratorListItem, CreatedAdministratorCredentials, SelectOption } from '@/types'
+import type { AdministratorListItem, CreatedAdministratorCredentials } from '@/types'
 
 type AdminsIndexProps = {
   admins: AdministratorListItem[]
-  document_type_options: SelectOption[]
   created_administrator_credentials: CreatedAdministratorCredentials | null
 }
 
@@ -30,15 +29,11 @@ function formatFullName(administrator: AdministratorListItem): string {
   return `${administrator.name} ${administrator.last_name}`.trim()
 }
 
-function formatDocument(administrator: AdministratorListItem): string {
-  return `${administrator.document_type.label} ${administrator.document_number}`
-}
-
 function formatPhone(phone: string): string {
   return phone
 }
 
-export default function AdminsIndex({ admins, document_type_options, created_administrator_credentials }: AdminsIndexProps) {
+export default function AdminsIndex({ admins, created_administrator_credentials }: AdminsIndexProps) {
   const createdCredentialsModalKey =
     created_administrator_credentials === null
       ? 'created-administrator-credentials-empty'
@@ -59,10 +54,7 @@ export default function AdminsIndex({ admins, document_type_options, created_adm
           />
 
           <div className="flex w-full flex-wrap items-center justify-start gap-3 md:w-auto md:justify-end">
-            <CreateAdminModal
-              documentTypeOptions={document_type_options}
-              triggerClassName="w-full md:w-auto"
-            />
+            <CreateAdminModal triggerClassName="w-full md:w-auto" />
           </div>
         </div>
 
@@ -71,7 +63,6 @@ export default function AdminsIndex({ admins, document_type_options, created_adm
             <div className="overflow-x-auto">
               <table className="min-w-full table-fixed divide-y divide-border text-sm">
                 <colgroup>
-                  <col />
                   <col />
                   <col />
                   <col className="w-35" />
@@ -83,7 +74,6 @@ export default function AdminsIndex({ admins, document_type_options, created_adm
                   <tr>
                     <th className="px-6 py-3.5 text-left font-medium">Administrador</th>
                     <th className="px-6 py-3.5 text-left font-medium">Correo electrónico</th>
-                    <th className="px-6 py-3.5 text-center font-medium">Doc. de Id.</th>
                     <th className="px-6 py-3.5 text-center font-medium">Celular</th>
                     <th className="px-6 py-3.5 text-center font-medium">Rol</th>
                     <th className="px-6 py-3.5 text-center font-medium">Registro</th>
@@ -95,7 +85,7 @@ export default function AdminsIndex({ admins, document_type_options, created_adm
                     <tr>
                       <td
                         className="px-6 py-10 text-center text-muted-foreground"
-                        colSpan={7}
+                        colSpan={6}
                       >
                         No hay usuarios administradores registrados.
                       </td>
@@ -115,7 +105,6 @@ export default function AdminsIndex({ admins, document_type_options, created_adm
                           </div>
                         </td>
                         <td className="px-6 py-4 text-foreground">{administrator.email}</td>
-                        <td className="px-6 py-4 text-center text-muted-foreground">{formatDocument(administrator)}</td>
                         <td className="px-6 py-4 text-center text-muted-foreground">{formatPhone(administrator.phone)}</td>
                         <td className="px-6 py-4 text-center">
                           <Badge variant="outline">{administrator.role.label}</Badge>
