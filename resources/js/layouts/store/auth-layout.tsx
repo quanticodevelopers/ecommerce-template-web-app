@@ -11,7 +11,7 @@ const AuthLayout = ({ title = '', description = '', children }: AuthLayoutProps)
       <div className="store-auth-container grid gap-6">
         <div className="space-y-2 text-center">
           <h1 className="text-xl font-medium">{title}</h1>
-          <p className="text-center text-sm text-muted-foreground">{description}</p>
+          <p className="text-muted-foreground text-center text-sm">{description}</p>
         </div>
 
         {children}

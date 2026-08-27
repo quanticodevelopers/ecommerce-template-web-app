@@ -1,9 +1,9 @@
 import { BarcodeIcon, Calendar03Icon, Clock01Icon, Folder01Icon, Link01Icon, Money03Icon, Package01Icon, Tag01Icon } from '@hugeicons/core-free-icons'
 import type { IconSvgElement } from '@hugeicons/react'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import { Badge } from '@/components/admin/ui/badge'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/admin/ui/card'
+import { Separator } from '@/components/admin/ui/separator'
 import type { ProductDetail } from '@/types'
 
 type ProductDetailOverviewProps = {
@@ -40,7 +40,7 @@ function formatDateTime(date: string): string {
 function DetailRow({ icon, label, value, monospaced = false }: DetailRowProps) {
   return (
     <div className="flex items-start gap-3">
-      <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+      <span className="bg-muted text-muted-foreground mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg">
         <HugeiconsIcon
           icon={icon}
           className="size-4"
@@ -48,8 +48,8 @@ function DetailRow({ icon, label, value, monospaced = false }: DetailRowProps) {
         />
       </span>
       <div className="min-w-0 space-y-0.5">
-        <p className="text-xs text-muted-foreground">{label}</p>
-        <p className={monospaced ? 'font-mono text-xs font-medium break-all' : 'font-medium break-words'}>{value}</p>
+        <p className="text-muted-foreground text-xs">{label}</p>
+        <p className={monospaced ? 'break-all font-mono text-xs font-medium' : 'break-words font-medium'}>{value}</p>
       </div>
     </div>
   )

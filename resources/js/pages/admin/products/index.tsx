@@ -1,7 +1,7 @@
 import { Package01Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
-import Heading from '@/components/heading'
-import { Card, CardContent } from '@/components/ui/card'
+import Heading from '@/components/admin/heading'
+import { Card, CardContent } from '@/components/admin/ui/card'
 import ProductPagination from '@/pages/admin/products/components/product-pagination'
 import ProductTable from '@/pages/admin/products/components/product-table'
 import ProductToolbar from '@/pages/admin/products/components/product-toolbar'
@@ -30,7 +30,7 @@ export default function ProductsIndex({ products, filters }: ProductsIndexProps)
 
         <ProductToolbar initialSearch={filters.search} />
 
-        <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
+        <Card className="border-sidebar-border/70 dark:border-sidebar-border gap-0 p-0 shadow-none">
           <CardContent className="px-0">
             <ProductTable
               hasSearch={filters.search !== ''}

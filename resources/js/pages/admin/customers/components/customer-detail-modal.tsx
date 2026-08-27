@@ -1,7 +1,7 @@
 import { Call02Icon, Mail01Icon, UserIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Button } from '@/components/admin/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
 import type { Customer } from '@/types'
 
@@ -45,48 +45,48 @@ export default function CustomerDetailModal({ customer, isOpen, onClose }: Custo
         {customer !== null && (
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-muted text-xl font-semibold text-muted-foreground">
+              <div className="bg-muted text-muted-foreground flex size-14 shrink-0 items-center justify-center rounded-full text-xl font-semibold">
                 {customer.name.charAt(0).toUpperCase()}
                 {customer.last_name.charAt(0).toUpperCase()}
               </div>
               <div>
-                <p className="text-base font-semibold text-foreground">{formatFullName(customer)}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-foreground text-base font-semibold">{formatFullName(customer)}</p>
+                <p className="text-muted-foreground text-sm">
                   {customer.document_type.label} {customer.document_number}
                 </p>
               </div>
             </div>
 
-            <div className="space-y-3 rounded-lg border bg-muted/30 p-4 text-sm">
+            <div className="bg-muted/30 space-y-3 rounded-lg border p-4 text-sm">
               <div className="flex items-center gap-3">
                 <HugeiconsIcon
                   icon={Mail01Icon}
-                  className="size-4 shrink-0 text-muted-foreground"
+                  className="text-muted-foreground size-4 shrink-0"
                   strokeWidth={1.5}
                 />
                 <div>
-                  <p className="text-xs text-muted-foreground">Correo electrónico</p>
-                  <p className="font-medium text-foreground">{customer.email}</p>
+                  <p className="text-muted-foreground text-xs">Correo electrónico</p>
+                  <p className="text-foreground font-medium">{customer.email}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <HugeiconsIcon
                   icon={Call02Icon}
-                  className="size-4 shrink-0 text-muted-foreground"
+                  className="text-muted-foreground size-4 shrink-0"
                   strokeWidth={1.5}
                 />
                 <div>
-                  <p className="text-xs text-muted-foreground">Teléfono</p>
-                  <p className="font-medium text-foreground">{customer.phone || '—'}</p>
+                  <p className="text-muted-foreground text-xs">Teléfono</p>
+                  <p className="text-foreground font-medium">{customer.phone || '—'}</p>
                 </div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-3 text-sm">
-              <div className="rounded-lg border bg-muted/30 p-3">
-                <p className="text-xs text-muted-foreground">F. de registro</p>
-                <p className="mt-1 font-medium text-foreground">{formatDate(customer.created_at)}</p>
+              <div className="bg-muted/30 rounded-lg border p-3">
+                <p className="text-muted-foreground text-xs">F. de registro</p>
+                <p className="text-foreground mt-1 font-medium">{formatDate(customer.created_at)}</p>
               </div>
             </div>
           </div>

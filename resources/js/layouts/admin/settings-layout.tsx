@@ -2,8 +2,8 @@ import { Book02Icon, LockKeyIcon, Settings01Icon, Sun01Icon, UserEdit01Icon } fr
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import type { PropsWithChildren } from 'react'
-import Heading from '@/components/heading'
-import { Button } from '@/components/ui/button'
+import Heading from '@/components/admin/heading'
+import { Button } from '@/components/admin/ui/button'
 import { useCurrentUrl } from '@/hooks/use-current-url'
 import { cn, toUrl } from '@/lib/utils'
 import { edit as editAppearance } from '@/routes/admin/appearance'
@@ -47,10 +47,10 @@ const SettingsLayout = ({ children }: PropsWithChildren) => {
         badgeLabel="Administración"
       />
 
-      <div className="flex flex-col items-start space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
+      <div className="flex flex-col items-start space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
         <aside className="w-full max-w-xl rounded-xl border p-2 lg:w-80">
           <nav
-            className="flex flex-col space-y-1 space-x-0"
+            className="flex flex-col space-x-0 space-y-1"
             aria-label="Configuración"
           >
             {sidebarNavItems.map((item, index) => (

@@ -1,8 +1,8 @@
 import { Tag01Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
-import Heading from '@/components/heading'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
+import Heading from '@/components/admin/heading'
+import { Badge } from '@/components/admin/ui/badge'
+import { Card, CardContent } from '@/components/admin/ui/card'
 import BrandRowActions from '@/pages/admin/brands/components/brand-row-actions'
 import CreateBrandModal from '@/pages/admin/brands/components/create-brand-modal'
 import { index as brandsIndex } from '@/routes/admin/brands'
@@ -35,10 +35,10 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
           </div>
         </div>
 
-        <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
+        <Card className="border-sidebar-border/70 dark:border-sidebar-border gap-0 p-0 shadow-none">
           <CardContent className="px-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full table-auto divide-y divide-border text-sm">
+              <table className="divide-border min-w-full table-auto divide-y text-sm">
                 <colgroup>
                   <col className="w-30" />
                   <col className="w-[9ch]" />
@@ -55,11 +55,11 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
                     <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border bg-background">
+                <tbody className="divide-border bg-background divide-y">
                   {brands.length === 0 ? (
                     <tr>
                       <td
-                        className="px-6 py-10 text-center text-muted-foreground"
+                        className="text-muted-foreground px-6 py-10 text-center"
                         colSpan={6}
                       >
                         No hay marcas registradas.
@@ -72,23 +72,23 @@ export default function BrandsIndex({ brands }: BrandsIndexProps) {
                       return (
                         <tr
                           key={brand.id}
-                          className="align-middle transition-colors hover:bg-muted/30"
+                          className="hover:bg-muted/30 align-middle transition-colors"
                         >
                           <td className="w-30 min-w-30 px-6 py-4">
                             {brand.logo_url === null ? (
-                              <div className="flex h-11 w-20 items-center justify-center rounded-md border border-dashed border-border/70 bg-muted/30 text-[11px] text-muted-foreground">
+                              <div className="border-border/70 bg-muted/30 text-muted-foreground flex h-11 w-20 items-center justify-center rounded-md border border-dashed text-[11px]">
                                 Sin logo
                               </div>
                             ) : (
                               <img
                                 alt={brand.name}
-                                className="h-12 w-18 max-w-none object-contain p-0.5"
+                                className="w-18 h-12 max-w-none object-contain p-0.5"
                                 src={brand.logo_url}
                               />
                             )}
                           </td>
-                          <td className="px-6 py-4 font-mono whitespace-nowrap text-foreground">{brand.code}</td>
-                          <td className="px-6 py-4 font-medium text-foreground">{brand.name}</td>
+                          <td className="text-foreground whitespace-nowrap px-6 py-4 font-mono">{brand.code}</td>
+                          <td className="text-foreground px-6 py-4 font-medium">{brand.name}</td>
                           <td className="px-6 py-4 text-center">
                             <Badge variant={status.variant}>{status.label}</Badge>
                           </td>

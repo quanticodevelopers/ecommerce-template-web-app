@@ -4,14 +4,14 @@ import { Form } from '@inertiajs/react'
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { update as brandsUpdate } from '@/actions/App/Http/Controllers/Admin/BrandController'
-import InputError from '@/components/input-error'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Spinner } from '@/components/ui/spinner'
-import { Textarea } from '@/components/ui/textarea'
+import InputError from '@/components/admin/input-error'
+import { Button } from '@/components/admin/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/admin/ui/dialog'
+import { Input } from '@/components/admin/ui/input'
+import { Label } from '@/components/admin/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/admin/ui/select'
+import { Spinner } from '@/components/admin/ui/spinner'
+import { Textarea } from '@/components/admin/ui/textarea'
 import { cn } from '@/lib/utils'
 import type { BrandListItem } from '@/types'
 
@@ -133,8 +133,8 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                 <div className="grid gap-2">
                   <Label>Logo</Label>
 
-                  <div className="flex flex-col gap-4 rounded-lg border bg-background/60 p-4 sm:flex-row sm:items-center">
-                    <div className="flex aspect-3/2 h-32 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-muted/40 md:h-24">
+                  <div className="bg-background/60 flex flex-col gap-4 rounded-lg border p-4 sm:flex-row sm:items-center">
+                    <div className="aspect-3/2 bg-muted/40 flex h-32 shrink-0 items-center justify-center overflow-hidden rounded-md border md:h-24">
                       {logoPreview ? (
                         <img
                           alt={`Logo actual de ${brand.name}`}
@@ -144,7 +144,7 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
                       ) : (
                         <HugeiconsIcon
                           icon={Image01Icon}
-                          className="size-8 text-muted-foreground"
+                          className="text-muted-foreground size-8"
                           strokeWidth={1.5}
                         />
                       )}
@@ -152,8 +152,8 @@ export default function EditBrandModal({ brand, triggerClassName }: EditBrandMod
 
                     <div className="min-w-0 flex-1 space-y-3">
                       <div className="grid gap-1">
-                        <p className="text-sm font-medium text-foreground">Vista previa</p>
-                        <p className="text-sm text-muted-foreground">Recomendado 600 x 400 px. JPG, JPEG, PNG, WebP o AVIF.</p>
+                        <p className="text-foreground text-sm font-medium">Vista previa</p>
+                        <p className="text-muted-foreground text-sm">Recomendado 600 x 400 px. JPG, JPEG, PNG, WebP o AVIF.</p>
                       </div>
 
                       <div className="flex flex-wrap gap-2">

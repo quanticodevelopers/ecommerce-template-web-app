@@ -1,8 +1,8 @@
 import { Copy01Icon, Key01Icon, Tick01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useMemo, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Button } from '@/components/admin/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
 import type { CreatedAdministratorCredentials } from '@/types'
 
 type CreatedAdministratorCredentialsModalProps = {
@@ -52,15 +52,15 @@ export default function CreatedAdministratorCredentialsModal({ createdAdministra
         </DialogHeader>
 
         {createdAdministratorCredentials !== null && (
-          <div className="space-y-3 rounded-lg border bg-muted/30 p-4 text-sm">
+          <div className="bg-muted/30 space-y-3 rounded-lg border p-4 text-sm">
             <p>
-              <span className="font-medium text-foreground">Nombre:</span> {createdAdministratorCredentials.name}
+              <span className="text-foreground font-medium">Nombre:</span> {createdAdministratorCredentials.name}
             </p>
             <p>
-              <span className="font-medium text-foreground">Usuario:</span> {createdAdministratorCredentials.email}
+              <span className="text-foreground font-medium">Usuario:</span> {createdAdministratorCredentials.email}
             </p>
             <p>
-              <span className="font-medium text-foreground">Contraseña:</span> {createdAdministratorCredentials.password}
+              <span className="text-foreground font-medium">Contraseña:</span> {createdAdministratorCredentials.password}
             </p>
           </div>
         )}

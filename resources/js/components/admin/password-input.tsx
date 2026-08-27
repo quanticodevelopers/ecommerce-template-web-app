@@ -1,0 +1,34 @@
+import { ViewIcon, ViewOffIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import type { ComponentProps, Ref } from 'react'
+import { useState } from 'react'
+import { Input } from '@/components/admin/ui/input'
+import { cn } from '@/lib/utils'
+
+export default function PasswordInput({ className, ref, ...props }: Omit<ComponentProps<'input'>, 'type'> & { ref?: Ref<HTMLInputElement> }) {
+  const [showPassword, setShowPassword] = useState(false)
+
+  return (
+    <div className="relative">
+      <Input
+        type={showPassword ? 'text' : 'password'}
+        className={cn('pr-10', className)}
+        ref={ref}
+        {...props}
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword((prev) => !prev)}
+        className="text-muted-foreground hover:text-foreground focus-visible:ring-ring absolute inset-y-0 right-0 flex items-center rounded-r-md px-3 focus-visible:outline-none focus-visible:ring-[3px]"
+        aria-label={showPassword ? 'Hide password' : 'Show password'}
+        tabIndex={-1}
+      >
+        <HugeiconsIcon
+          icon={showPassword ? ViewOffIcon : ViewIcon}
+          className="size-4"
+          strokeWidth={1.5}
+        />
+      </button>
+    </div>
+  )
+}

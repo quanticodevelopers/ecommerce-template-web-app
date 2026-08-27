@@ -2,7 +2,7 @@ import { ArrowLeft01Icon, ArrowRight01Icon, Cancel01Icon, Image01Icon, Upload04I
 import { HugeiconsIcon } from '@hugeicons/react'
 import type { ChangeEvent, DragEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/admin/ui/button'
 import { cn } from '@/lib/utils'
 import type { ProductFormImage, ProductImageSlot } from '@/types'
 
@@ -147,7 +147,7 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
           <p className="font-medium">
             Imágenes <span className="text-destructive">*</span>
           </p>
-          <p className="text-sm text-muted-foreground">Entre 1 y 5 imágenes. Las nuevas se recortarán al centro en proporción 1:1 y se guardarán en AVIF.</p>
+          <p className="text-muted-foreground text-sm">Entre 1 y 5 imágenes. Las nuevas se recortarán al centro en proporción 1:1 y se guardarán en AVIF.</p>
         </div>
 
         <Button
@@ -175,19 +175,19 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
       {previews.length === 0 ? (
         <button
           type="button"
-          className="flex min-h-48 flex-col items-center justify-center gap-3 rounded-xl border border-dashed bg-muted/20 px-6 text-center transition-colors hover:bg-muted/40"
+          className="bg-muted/20 hover:bg-muted/40 flex min-h-48 flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-6 text-center transition-colors"
           onClick={() => inputRef.current?.click()}
         >
-          <span className="grid size-12 place-items-center rounded-full bg-background shadow-sm ring-1 ring-border">
+          <span className="bg-background ring-border grid size-12 place-items-center rounded-full shadow-sm ring-1">
             <HugeiconsIcon
               icon={Image01Icon}
-              className="size-6 text-muted-foreground"
+              className="text-muted-foreground size-6"
               strokeWidth={1.5}
             />
           </span>
           <span>
             <span className="block font-medium">Selecciona las imágenes del producto</span>
-            <span className="mt-1 block text-sm text-muted-foreground">JPG, JPEG, PNG, WebP o AVIF · máximo 2 MB cada una</span>
+            <span className="text-muted-foreground mt-1 block text-sm">JPG, JPEG, PNG, WebP o AVIF · máximo 2 MB cada una</span>
           </span>
         </button>
       ) : (
@@ -195,7 +195,7 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
           {previews.map((preview, index) => (
             <div
               key={preview.id}
-              className={cn('group relative overflow-hidden rounded-xl border bg-muted/30', draggedIndex === index && 'opacity-50')}
+              className={cn('bg-muted/30 group relative overflow-hidden rounded-xl border', draggedIndex === index && 'opacity-50')}
               draggable
               onDragEnd={() => setDraggedIndex(null)}
               onDragOver={(event) => event.preventDefault()}
@@ -207,12 +207,12 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
                 className="aspect-square w-full object-cover"
                 src={preview.url}
               />
-              <div className="absolute inset-x-0 top-0 flex items-center justify-between bg-linear-to-b from-black/60 to-transparent p-2">
-                <span className="rounded-full bg-background/90 px-2 py-0.5 text-[11px] font-medium text-foreground">{index === 0 ? 'Principal' : `Imagen ${index + 1}`}</span>
+              <div className="bg-linear-to-b absolute inset-x-0 top-0 flex items-center justify-between from-black/60 to-transparent p-2">
+                <span className="bg-background/90 text-foreground rounded-full px-2 py-0.5 text-[11px] font-medium">{index === 0 ? 'Principal' : `Imagen ${index + 1}`}</span>
                 <Button
                   type="button"
                   aria-label={`Quitar imagen ${index + 1}`}
-                  className="size-7 bg-background/90"
+                  className="bg-background/90 size-7"
                   onClick={() => removeImage(index)}
                   size="icon-sm"
                   variant="ghost"
@@ -223,11 +223,11 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
                   />
                 </Button>
               </div>
-              <div className="absolute inset-x-0 bottom-0 flex justify-center gap-1 bg-linear-to-t from-black/60 to-transparent p-2">
+              <div className="bg-linear-to-t absolute inset-x-0 bottom-0 flex justify-center gap-1 from-black/60 to-transparent p-2">
                 <Button
                   type="button"
                   aria-label={`Mover imagen ${index + 1} a la izquierda`}
-                  className="size-7 bg-background/90"
+                  className="bg-background/90 size-7"
                   disabled={index === 0}
                   onClick={() => moveImage(index, index - 1)}
                   size="icon-sm"
@@ -241,7 +241,7 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
                 <Button
                   type="button"
                   aria-label={`Mover imagen ${index + 1} a la derecha`}
-                  className="size-7 bg-background/90"
+                  className="bg-background/90 size-7"
                   disabled={index === previews.length - 1}
                   onClick={() => moveImage(index, index + 1)}
                   size="icon-sm"
@@ -264,7 +264,7 @@ export default function ProductImageUploader({ error, initialImages = [], onChan
           {previews.length}/{maximumImages}
         </span>
       </div>
-      {(localError ?? error) && <p className="text-sm text-destructive">{localError ?? error}</p>}
+      {(localError ?? error) && <p className="text-destructive text-sm">{localError ?? error}</p>}
     </div>
   )
 }

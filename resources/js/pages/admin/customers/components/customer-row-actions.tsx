@@ -1,7 +1,7 @@
 import { ViewIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/admin/ui/button'
 import CustomerDetailModal from '@/pages/admin/customers/components/customer-detail-modal'
 import type { Customer } from '@/types'
 

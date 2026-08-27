@@ -1,7 +1,7 @@
 import { Edit02Icon, ExternalLinkIcon, ViewIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/admin/ui/button'
 import { edit as productsEdit, show as productsShow } from '@/routes/admin/products'
 import type { ProductListItem } from '@/types'
 

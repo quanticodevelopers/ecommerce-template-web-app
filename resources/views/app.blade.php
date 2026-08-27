@@ -19,7 +19,7 @@
             })();
         </script>
 
-        {{-- Inline style to set the HTML background color based on our theme in app.css --}}
+        {{-- Inline style to set the HTML background color before the environment stylesheet loads. --}}
         <style>
             html {
                 background-color: oklch(1 0 0);
@@ -36,8 +36,14 @@
 
         @fonts
 
+        @php
+            $stylesheet = str_starts_with($page['component'], 'admin/')
+                ? 'resources/css/admin.css'
+                : 'resources/css/store.css';
+        @endphp
+
         @viteReactRefresh
-        @vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
+        @vite([$stylesheet, 'resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         <x-inertia::head>
             <title>{{ config('app.name', 'Laravel') }}</title>
         </x-inertia::head>

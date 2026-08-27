@@ -1,13 +1,13 @@
 import { CheckmarkCircle02Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Form, Head } from '@inertiajs/react'
-import InputError from '@/components/input-error'
-import TextLink from '@/components/text-link'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Spinner } from '@/components/ui/spinner'
+import InputError from '@/components/store/input-error'
+import TextLink from '@/components/store/text-link'
+import { Alert, AlertDescription } from '@/components/store/ui/alert'
+import { Button } from '@/components/store/ui/button'
+import { Input } from '@/components/store/ui/input'
+import { Label } from '@/components/store/ui/label'
+import { Spinner } from '@/components/store/ui/spinner'
 import { login } from '@/routes/store/auth'
 import { email } from '@/routes/store/auth/password'
 
@@ -58,7 +58,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
           )}
         </Form>
 
-        <div className="space-x-1 text-center text-sm text-muted-foreground">
+        <div className="text-muted-foreground space-x-1 text-center text-sm">
           <span>O volver a</span>
           <TextLink href={login()}>iniciar sesión</TextLink>
         </div>

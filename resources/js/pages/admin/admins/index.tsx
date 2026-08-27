@@ -1,9 +1,9 @@
 import { UserMultiple02Icon } from '@hugeicons/core-free-icons'
 import { Head } from '@inertiajs/react'
-import Heading from '@/components/heading'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
+import Heading from '@/components/admin/heading'
+import { Avatar, AvatarFallback } from '@/components/admin/ui/avatar'
+import { Badge } from '@/components/admin/ui/badge'
+import { Card, CardContent } from '@/components/admin/ui/card'
 import { useInitials } from '@/hooks/use-initials'
 import { dateFormatter } from '@/lib/utils'
 import AdminRowActions from '@/pages/admin/admins/components/admin-row-actions'
@@ -58,10 +58,10 @@ export default function AdminsIndex({ admins, created_administrator_credentials 
           </div>
         </div>
 
-        <Card className="gap-0 border-sidebar-border/70 p-0 shadow-none dark:border-sidebar-border">
+        <Card className="border-sidebar-border/70 dark:border-sidebar-border gap-0 p-0 shadow-none">
           <CardContent className="px-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full table-fixed divide-y divide-border text-sm">
+              <table className="divide-border min-w-full table-fixed divide-y text-sm">
                 <colgroup>
                   <col />
                   <col />
@@ -80,11 +80,11 @@ export default function AdminsIndex({ admins, created_administrator_credentials 
                     <th className="px-6 py-3.5 text-right font-medium">Acciones</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border bg-background">
+                <tbody className="divide-border bg-background divide-y">
                   {admins.length === 0 ? (
                     <tr>
                       <td
-                        className="px-6 py-10 text-center text-muted-foreground"
+                        className="text-muted-foreground px-6 py-10 text-center"
                         colSpan={6}
                       >
                         No hay usuarios administradores registrados.
@@ -94,22 +94,22 @@ export default function AdminsIndex({ admins, created_administrator_credentials 
                     admins.map((administrator) => (
                       <tr
                         key={administrator.id}
-                        className="align-middle transition-colors hover:bg-muted/30"
+                        className="hover:bg-muted/30 align-middle transition-colors"
                       >
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <Avatar>
                               <AvatarFallback>{getInitials(administrator.name, administrator.last_name)}</AvatarFallback>
                             </Avatar>
-                            <p className="font-medium text-nowrap text-foreground">{formatFullName(administrator)}</p>
+                            <p className="text-foreground text-nowrap font-medium">{formatFullName(administrator)}</p>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-foreground">{administrator.email}</td>
-                        <td className="px-6 py-4 text-center text-muted-foreground">{formatPhone(administrator.phone)}</td>
+                        <td className="text-foreground px-6 py-4">{administrator.email}</td>
+                        <td className="text-muted-foreground px-6 py-4 text-center">{formatPhone(administrator.phone)}</td>
                         <td className="px-6 py-4 text-center">
                           <Badge variant="outline">{administrator.role.label}</Badge>
                         </td>
-                        <td className="px-6 py-4 text-center text-muted-foreground">{formatDate(administrator.created_at)}</td>
+                        <td className="text-muted-foreground px-6 py-4 text-center">{formatDate(administrator.created_at)}</td>
                         <td className="px-6 py-4 text-right">
                           <AdminRowActions administrator={administrator} />
                         </td>

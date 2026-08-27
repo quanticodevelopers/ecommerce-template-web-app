@@ -1,8 +1,8 @@
 import { FilterHorizontalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Head } from '@inertiajs/react'
-import { Button } from '@/components/ui/button'
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
+import { Button } from '@/components/admin/ui/button'
+import { PlaceholderPattern } from '@/components/admin/ui/placeholder-pattern'
 import { useAuthenticatedUser } from '@/hooks/use-authenticated-user'
 import { formatPeruDashboardDate, getPeruDashboardGreeting } from '@/lib/utils'
 import { dashboard } from '@/routes/admin'
@@ -21,7 +21,7 @@ export default function DashboardIndex() {
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div className="space-y-3">
             <time
-              className="inline-block w-fit text-sm font-medium text-muted-foreground"
+              className="text-muted-foreground inline-block w-fit text-sm font-medium"
               dateTime={currentDate.toISOString()}
             >
               {formattedDate}
@@ -33,7 +33,7 @@ export default function DashboardIndex() {
                   {greeting}, <span className="text-primary">{userName}</span>
                 </span>{' '}
               </h1>
-              <p className="max-w-2xl text-sm text-muted-foreground">Resumen de la información de tu tienda.</p>
+              <p className="text-muted-foreground max-w-2xl text-sm">Resumen de la información de tu tienda.</p>
             </div>
           </div>
 
@@ -52,21 +52,21 @@ export default function DashboardIndex() {
             </div>
           </div>
         </div>
-        <div className="grid auto-rows-min gap-4 xs:grid-cols-2 md:grid-cols-4">
-          <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+        <div className="xs:grid-cols-2 grid auto-rows-min gap-4 md:grid-cols-4">
+          <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
             <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
           </div>
-          <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+          <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
             <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
           </div>
-          <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+          <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
             <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
           </div>
-          <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+          <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
             <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
           </div>
         </div>
-        <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+        <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
           <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
         </div>
       </div>

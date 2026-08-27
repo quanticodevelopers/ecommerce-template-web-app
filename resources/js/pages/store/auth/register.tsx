@@ -1,12 +1,12 @@
 import { Form, Head } from '@inertiajs/react'
-import InputError from '@/components/input-error'
-import PasswordInput from '@/components/password-input'
-import TextLink from '@/components/text-link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Spinner } from '@/components/ui/spinner'
+import InputError from '@/components/store/input-error'
+import PasswordInput from '@/components/store/password-input'
+import TextLink from '@/components/store/text-link'
+import { Button } from '@/components/store/ui/button'
+import { Input } from '@/components/store/ui/input'
+import { Label } from '@/components/store/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/store/ui/select'
+import { Spinner } from '@/components/store/ui/spinner'
 import { login } from '@/routes/store/auth'
 import { store } from '@/routes/store/auth/register'
 import type { SelectOption } from '@/types'
@@ -196,7 +196,7 @@ export default function Register({ document_type_options, passwordRules }: Regis
               </Button>
             </div>
 
-            <div className="text-center text-sm text-muted-foreground">
+            <div className="text-muted-foreground text-center text-sm">
               ¿Ya tienes una cuenta?{' '}
               <TextLink
                 href={login()}

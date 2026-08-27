@@ -4,8 +4,8 @@ import { useId, useState } from 'react'
 import type { Swiper as SwiperInstance } from 'swiper'
 import { A11y, Keyboard, Navigation, Thumbs } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { Button } from '@/components/admin/ui/button'
+import { Card } from '@/components/admin/ui/card'
 import { cn } from '@/lib/utils'
 import type { ProductDetailImage } from '@/types'
 
@@ -31,7 +31,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
   if (images.length === 0) {
     return (
       <Card className="p-4 shadow-none lg:p-5">
-        <div className="mx-auto flex aspect-square w-full max-w-2xl flex-col items-center justify-center gap-3 rounded-xl bg-muted/50 text-muted-foreground ring-1 ring-foreground/10">
+        <div className="bg-muted/50 text-muted-foreground ring-foreground/10 mx-auto flex aspect-square w-full max-w-2xl flex-col items-center justify-center gap-3 rounded-xl ring-1">
           <HugeiconsIcon
             icon={Image01Icon}
             className="size-10"
@@ -46,7 +46,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
   return (
     <Card className="gap-4 p-4 shadow-none lg:p-5">
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-3">
-        <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-muted/50 ring-1 ring-foreground/10">
+        <div className="bg-muted/50 ring-foreground/10 relative aspect-square w-full overflow-hidden rounded-xl ring-1">
           {hasMultipleImages && (
             <>
               <Button
@@ -55,7 +55,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                 size="icon"
                 className={cn(
                   previousButtonClass,
-                  'absolute top-1/2 left-3 z-10 -translate-y-1/2 rounded-full bg-background/90 shadow-md backdrop-blur-sm [&.swiper-button-disabled]:pointer-events-none [&.swiper-button-disabled]:opacity-30',
+                  'bg-background/90 absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full shadow-md backdrop-blur-sm [&.swiper-button-disabled]:pointer-events-none [&.swiper-button-disabled]:opacity-30',
                 )}
                 aria-label="Ver imagen anterior"
               >
@@ -70,7 +70,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                 size="icon"
                 className={cn(
                   nextButtonClass,
-                  'absolute top-1/2 right-3 z-10 -translate-y-1/2 rounded-full bg-background/90 shadow-md backdrop-blur-sm [&.swiper-button-disabled]:pointer-events-none [&.swiper-button-disabled]:opacity-30',
+                  'bg-background/90 absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full shadow-md backdrop-blur-sm [&.swiper-button-disabled]:pointer-events-none [&.swiper-button-disabled]:opacity-30',
                 )}
                 aria-label="Ver imagen siguiente"
               >
@@ -120,7 +120,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
           </Swiper>
 
           {hasMultipleImages && (
-            <span className="absolute right-3 bottom-3 z-10 rounded-full bg-background/90 px-2.5 py-1 text-xs font-medium shadow-sm backdrop-blur-sm">
+            <span className="bg-background/90 absolute bottom-3 right-3 z-10 rounded-full px-2.5 py-1 text-xs font-medium shadow-sm backdrop-blur-sm">
               {activeIndex + 1} / {images.length}
             </span>
           )}
@@ -144,8 +144,8 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                   <button
                     type="button"
                     className={cn(
-                      'box-border block size-full overflow-hidden rounded-lg border-2 bg-muted/50 transition focus-visible:border-ring focus-visible:outline-none',
-                      activeIndex === index ? 'border-primary opacity-100' : 'border-foreground/10 opacity-60 hover:border-foreground/30 hover:opacity-100',
+                      'bg-muted/50 focus-visible:border-ring box-border block size-full overflow-hidden rounded-lg border-2 transition focus-visible:outline-none',
+                      activeIndex === index ? 'border-primary opacity-100' : 'border-foreground/10 hover:border-foreground/30 opacity-60 hover:opacity-100',
                     )}
                     aria-label={`Ver imagen ${index + 1} de ${productName}`}
                     aria-pressed={activeIndex === index}

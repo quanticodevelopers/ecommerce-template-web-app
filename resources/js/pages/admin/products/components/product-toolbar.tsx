@@ -3,8 +3,8 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Link, router } from '@inertiajs/react'
 import { useState } from 'react'
 import type { SubmitEvent } from 'react'
-import { Button } from '@/components/ui/button'
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
+import { Button } from '@/components/admin/ui/button'
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/admin/ui/input-group'
 import { create as productsCreate, index as productsIndex } from '@/routes/admin/products'
 
 type ProductToolbarProps = {

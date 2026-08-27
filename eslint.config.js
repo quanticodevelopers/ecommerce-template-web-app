@@ -90,6 +90,54 @@ export default [
     },
   },
   {
+    files: ['resources/js/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/components/ui/**'],
+              message: 'Import from the Admin or Store component tree instead of the removed global UI tree.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['resources/js/components/admin/**/*.{ts,tsx}', 'resources/js/layouts/admin/**/*.{ts,tsx}', 'resources/js/pages/admin/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/components/ui/**', '@/components/store/**'],
+              message: 'Admin code may only use components from the Admin design system.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['resources/js/components/store/**/*.{ts,tsx}', 'resources/js/layouts/store/**/*.{ts,tsx}', 'resources/js/pages/store/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/components/ui/**', '@/components/admin/**'],
+              message: 'Store code may only use components from the Store design system.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     plugins: {
       '@stylistic': stylistic,
     },
@@ -107,7 +155,8 @@ export default [
       'tailwind.config.js',
       'vite.config.ts',
       'resources/js/actions/**',
-      'resources/js/components/ui/*',
+      'resources/js/components/admin/ui/*',
+      'resources/js/components/store/ui/*',
       'resources/js/routes/**',
       'resources/js/wayfinder/**',
     ],

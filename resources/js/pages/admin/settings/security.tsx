@@ -1,12 +1,12 @@
 import { Form, Head } from '@inertiajs/react'
 import { useRef } from 'react'
 import SecurityController from '@/actions/App/Http/Controllers/Admin/Settings/SecurityController'
-import Heading from '@/components/heading'
-import InputError from '@/components/input-error'
-import PasswordInput from '@/components/password-input'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Spinner } from '@/components/ui/spinner'
+import Heading from '@/components/admin/heading'
+import InputError from '@/components/admin/input-error'
+import PasswordInput from '@/components/admin/password-input'
+import { Button } from '@/components/admin/ui/button'
+import { Label } from '@/components/admin/ui/label'
+import { Spinner } from '@/components/admin/ui/spinner'
 import { edit } from '@/routes/admin/security'
 
 type Props = {

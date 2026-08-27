@@ -3,16 +3,16 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Head, Link, useForm } from '@inertiajs/react'
 import type { SubmitEvent } from 'react'
 import { store as productsStore, update as productsUpdate } from '@/actions/App/Http/Controllers/Admin/ProductController'
-import Heading from '@/components/heading'
-import InputError from '@/components/input-error'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Spinner } from '@/components/ui/spinner'
-import { Textarea } from '@/components/ui/textarea'
+import Heading from '@/components/admin/heading'
+import InputError from '@/components/admin/input-error'
+import { Button } from '@/components/admin/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/admin/ui/card'
+import { Checkbox } from '@/components/admin/ui/checkbox'
+import { Input } from '@/components/admin/ui/input'
+import { Label } from '@/components/admin/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/admin/ui/select'
+import { Spinner } from '@/components/admin/ui/spinner'
+import { Textarea } from '@/components/admin/ui/textarea'
 import { cn } from '@/lib/utils'
 import ProductImageUploader from '@/pages/admin/products/components/product-image-uploader'
 import ProductRichTextEditor from '@/pages/admin/products/components/product-rich-text-editor'
@@ -298,13 +298,13 @@ export default function ProductFormPage({ brands, categories, product }: Product
                   <label
                     key={flag.value}
                     className={cn(
-                      'flex cursor-pointer gap-3 rounded-lg border p-4 transition-colors hover:bg-muted/40',
+                      'hover:bg-muted/40 flex cursor-pointer gap-3 rounded-lg border p-4 transition-colors',
                       data.flag === flag.value && 'border-foreground bg-muted/40',
                     )}
                   >
                     <input
                       checked={data.flag === flag.value}
-                      className="mt-1 accent-foreground"
+                      className="accent-foreground mt-1"
                       name="flag"
                       onChange={() => setData('flag', flag.value)}
                       type="radio"
@@ -312,7 +312,7 @@ export default function ProductFormPage({ brands, categories, product }: Product
                     />
                     <span>
                       <span className="block font-medium">{flag.label}</span>
-                      <span className="mt-1 block text-xs text-muted-foreground">{flag.description}</span>
+                      <span className="text-muted-foreground mt-1 block text-xs">{flag.description}</span>
                     </span>
                   </label>
                 ))}
@@ -333,20 +333,20 @@ export default function ProductFormPage({ brands, categories, product }: Product
                   />
                   <span>
                     <span className="block font-medium">Guardar como borrador</span>
-                    <span className="mt-1 block text-sm text-muted-foreground">El producto no será visible en la tienda.</span>
+                    <span className="text-muted-foreground mt-1 block text-sm">El producto no será visible en la tienda.</span>
                   </span>
                 </label>
                 <InputError message={errors.is_draft} />
 
                 {progress && (
                   <div className="grid gap-2">
-                    <div className="flex justify-between text-xs text-muted-foreground">
+                    <div className="text-muted-foreground flex justify-between text-xs">
                       <span>Subiendo imágenes</span>
                       <span>{progress.percentage}%</span>
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                    <div className="bg-muted h-1.5 overflow-hidden rounded-full">
                       <div
-                        className="h-full bg-primary transition-all"
+                        className="bg-primary h-full transition-all"
                         style={{ width: `${progress.percentage}%` }}
                       />
                     </div>

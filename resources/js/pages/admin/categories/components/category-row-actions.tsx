@@ -1,9 +1,9 @@
 import { ExternalLinkIcon, ViewIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Badge } from '@/components/admin/ui/badge'
+import { Button } from '@/components/admin/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
 import EditCategoryModal from '@/pages/admin/categories/components/edit-category-modal'
 import type { CategoryListItem, SelectOption } from '@/types'
@@ -80,44 +80,44 @@ export default function CategoryRowActions({ category, parentCategoryOptions }: 
           </DialogHeader>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-              <p className="text-xs text-muted-foreground">Nombre</p>
-              <p className="font-medium text-foreground">{category.name}</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+              <p className="text-muted-foreground text-xs">Nombre</p>
+              <p className="text-foreground font-medium">{category.name}</p>
             </div>
 
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-              <p className="text-xs text-muted-foreground">Código</p>
-              <p className="font-mono font-medium tracking-wide text-foreground">{category.code}</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+              <p className="text-muted-foreground text-xs">Código</p>
+              <p className="text-foreground font-mono font-medium tracking-wide">{category.code}</p>
             </div>
 
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-              <p className="text-xs text-muted-foreground">Slug</p>
-              <p className="font-medium text-foreground">{category.slug}</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+              <p className="text-muted-foreground text-xs">Slug</p>
+              <p className="text-foreground font-medium">{category.slug}</p>
             </div>
 
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-              <p className="text-xs text-muted-foreground">Estado</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+              <p className="text-muted-foreground text-xs">Estado</p>
               <Badge variant={status.variant}>{status.label}</Badge>
             </div>
 
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-              <p className="text-xs text-muted-foreground">Categoría padre</p>
-              <p className="font-medium text-foreground">{formatParentName(category)}</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+              <p className="text-muted-foreground text-xs">Categoría padre</p>
+              <p className="text-foreground font-medium">{formatParentName(category)}</p>
             </div>
 
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-              <p className="text-xs text-muted-foreground">Subcategorías</p>
-              <p className="font-medium text-foreground">{category.children_count}</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+              <p className="text-muted-foreground text-xs">Subcategorías</p>
+              <p className="text-foreground font-medium">{category.children_count}</p>
             </div>
 
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3 sm:col-span-2">
-              <p className="text-xs text-muted-foreground">Descripción breve</p>
-              <p className="font-medium text-foreground">{formatDescription(category.short_description)}</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3 sm:col-span-2">
+              <p className="text-muted-foreground text-xs">Descripción breve</p>
+              <p className="text-foreground font-medium">{formatDescription(category.short_description)}</p>
             </div>
 
-            <div className="space-y-1 rounded-lg border bg-muted/30 p-3 sm:col-span-2">
-              <p className="text-xs text-muted-foreground">Registro</p>
-              <p className="font-medium text-foreground">{formatDate(category.created_at)}</p>
+            <div className="bg-muted/30 space-y-1 rounded-lg border p-3 sm:col-span-2">
+              <p className="text-muted-foreground text-xs">Registro</p>
+              <p className="text-foreground font-medium">{formatDate(category.created_at)}</p>
             </div>
           </div>
 

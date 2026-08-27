@@ -1,9 +1,9 @@
 import { ExternalLinkIcon, ViewIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Badge } from '@/components/admin/ui/badge'
+import { Button } from '@/components/admin/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
 import { dateFormatter } from '@/lib/utils'
 import EditBrandModal from '@/pages/admin/brands/components/edit-brand-modal'
 import type { BrandListItem } from '@/types'
@@ -72,10 +72,10 @@ export default function BrandRowActions({ brand }: BrandRowActionsProps) {
           </DialogHeader>
 
           <div className="space-y-4">
-            <div className="flex items-center gap-4 rounded-lg border bg-muted/30 p-4">
-              <div className="flex h-24 shrink-0 items-center justify-center rounded-md border bg-background p-1">
+            <div className="bg-muted/30 flex items-center gap-4 rounded-lg border p-4">
+              <div className="bg-background flex h-24 shrink-0 items-center justify-center rounded-md border p-1">
                 {brand.logo_url === null ? (
-                  <span className="text-[11px] text-muted-foreground">Sin logo</span>
+                  <span className="text-muted-foreground text-[11px]">Sin logo</span>
                 ) : (
                   <img
                     alt={brand.name}
@@ -86,41 +86,41 @@ export default function BrandRowActions({ brand }: BrandRowActionsProps) {
               </div>
 
               <div className="min-w-0 space-y-1">
-                <p className="text-base font-semibold text-foreground">{brand.name}</p>
-                <p className="font-mono text-sm tracking-wide text-muted-foreground">{brand.code}</p>
+                <p className="text-foreground text-base font-semibold">{brand.name}</p>
+                <p className="text-muted-foreground font-mono text-sm tracking-wide">{brand.code}</p>
                 <Badge variant={status.variant}>{status.label}</Badge>
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-                <p className="text-xs text-muted-foreground">Nombre</p>
-                <p className="font-medium text-foreground">{brand.name}</p>
+              <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+                <p className="text-muted-foreground text-xs">Nombre</p>
+                <p className="text-foreground font-medium">{brand.name}</p>
               </div>
 
-              <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-                <p className="text-xs text-muted-foreground">Código</p>
-                <p className="font-mono font-medium tracking-wide text-foreground">{brand.code}</p>
+              <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+                <p className="text-muted-foreground text-xs">Código</p>
+                <p className="text-foreground font-mono font-medium tracking-wide">{brand.code}</p>
               </div>
 
-              <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-                <p className="text-xs text-muted-foreground">Slug</p>
-                <p className="font-medium text-foreground">{brand.slug}</p>
+              <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+                <p className="text-muted-foreground text-xs">Slug</p>
+                <p className="text-foreground font-medium">{brand.slug}</p>
               </div>
 
-              <div className="space-y-1 rounded-lg border bg-muted/30 p-3">
-                <p className="text-xs text-muted-foreground">Estado</p>
+              <div className="bg-muted/30 space-y-1 rounded-lg border p-3">
+                <p className="text-muted-foreground text-xs">Estado</p>
                 <Badge variant={status.variant}>{status.label}</Badge>
               </div>
 
-              <div className="space-y-1 rounded-lg border bg-muted/30 p-3 sm:col-span-2">
-                <p className="text-xs text-muted-foreground">Descripción breve</p>
-                <p className="font-medium text-foreground">{formatDescription(brand.short_description)}</p>
+              <div className="bg-muted/30 space-y-1 rounded-lg border p-3 sm:col-span-2">
+                <p className="text-muted-foreground text-xs">Descripción breve</p>
+                <p className="text-foreground font-medium">{formatDescription(brand.short_description)}</p>
               </div>
 
-              <div className="space-y-1 rounded-lg border bg-muted/30 p-3 sm:col-span-2">
-                <p className="text-xs text-muted-foreground">Registro</p>
-                <p className="font-medium text-foreground">{formatDate(brand.created_at)}</p>
+              <div className="bg-muted/30 space-y-1 rounded-lg border p-3 sm:col-span-2">
+                <p className="text-muted-foreground text-xs">Registro</p>
+                <p className="text-foreground font-medium">{formatDate(brand.created_at)}</p>
               </div>
             </div>
           </div>
