@@ -9,6 +9,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Models/User.php,app/Http/Controllers/Admin/CustomerController.php,tests/Feature/Admin/CustomerControllerTest.php | .ai/rules/admin.md |
 | resources/js/pages/admin/products/components/*rich-text-editor*.tsx | .ai/rules/components.md |
 | resources/js/{components,layouts,pages}/** | .ai/rules/componentslayoutspages.md |
+| **/* | .ai/rules/general.md |
 | {app/Http/Resources/Admin/ProductResource.php,app/Http/Controllers/Admin/ProductController.php,resources/js/types/admin/product*.ts,resources/js/pages/admin/products/**} | .ai/rules/js-pages-admin-products.md |
 | resources/js/** | .ai/rules/js.md |
 | app/Actions/Products/**,app/Http/Requests/Admin/*ProductRequest.php,resources/js/pages/admin/products/** | .ai/rules/pages-admin-products.md |

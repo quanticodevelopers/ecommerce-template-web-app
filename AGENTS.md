@@ -119,7 +119,9 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 # Test Enforcement
 
-- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Create tests only to cover functionality and observable behavior, not merely to validate code edits, refactoring, renaming, formatting, internal structure, or documentation changes.
+- When a modification changes a feature's behavior, update its existing test. Create a functional test only if that behavior has no coverage.
+- For code changes that preserve behavior, run the relevant existing tests without creating or modifying tests solely because the implementation changed. Documentation-only changes do not require tests.
 - Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
 
 === inertia-laravel/core rules ===
