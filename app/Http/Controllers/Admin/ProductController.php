@@ -8,7 +8,6 @@ use App\Exceptions\ProductImageProcessingException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
-use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductFormResource;
 use App\Http\Resources\Admin\ProductResource;
 use App\Models\Brand;
@@ -76,7 +75,7 @@ class ProductController extends Controller
         ]);
 
         return Inertia::render('admin/products/show', [
-            'product' => ProductDetailResource::make($product)->resolve(),
+            'product' => ProductResource::make($product)->resolve(),
         ]);
     }
 
@@ -140,21 +139,10 @@ class ProductController extends Controller
         $search = $request->string('search')->trim()->substr(0, 128)->toString();
 
         $products = Product::query()
-            ->select([
-                'id', 'brand_id', 'category_id', 'sku', 'barcode', 'name',
-                'base_price', 'sale_price', 'flag', 'published_at', 'created_at',
-            ])
             ->with([
                 'brand:id,name',
                 'category:id,name',
-                'primaryImage' => fn ($query) => $query->select([
-                    'product_images.id',
-                    'product_images.product_id',
-                    'product_images.path',
-                    'product_images.variants',
-                    'product_images.alt',
-                    'product_images.position',
-                ]),
+                'images:id,product_id,path,variants,alt,position',
             ])
             ->when($search !== '', function ($query) use ($search): void {
                 $query->whereAny(['sku', 'name', 'barcode'], 'like', "%{$search}%");

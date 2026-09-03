@@ -14,7 +14,7 @@ import { index as adminCustomers } from '@/routes/admin/customers'
 import { edit as editInformation } from '@/routes/admin/information'
 import { index as adminIndexProducts } from '@/routes/admin/products'
 import { create as adminCreateProducts } from '@/routes/admin/products'
-import type { NavGroup } from '@/types'
+import type { NavGroup } from '@/types/admin'
 
 const mainNavItems: NavGroup[] = [
   {

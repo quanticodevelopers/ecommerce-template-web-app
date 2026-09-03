@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { Badge } from '@/components/admin/ui/badge'
 import { Button } from '@/components/admin/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
-import { dateFormatter } from '@/lib/utils'
+import { dateFormatter } from '@/lib/admin/date'
 import EditBrandModal from '@/pages/admin/brands/components/edit-brand-modal'
-import type { BrandListItem } from '@/types'
+import type { Brand } from '@/types/entities'
 
 type BrandRowActionsProps = {
-  brand: BrandListItem
+  brand: Brand
 }
 
 function formatDate(value: string | null): string {

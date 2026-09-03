@@ -4,12 +4,13 @@ import { useState } from 'react'
 import { Badge } from '@/components/admin/ui/badge'
 import { Button } from '@/components/admin/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
-import { dateFormatter } from '@/lib/utils'
+import { dateFormatter } from '@/lib/admin/date'
 import EditCategoryModal from '@/pages/admin/categories/components/edit-category-modal'
-import type { CategoryListItem, SelectOption } from '@/types'
+import type { SelectOption } from '@/types'
+import type { Category } from '@/types/entities'
 
 type CategoryRowActionsProps = {
-  category: CategoryListItem
+  category: Category
   parentCategoryOptions: SelectOption[]
 }
 
@@ -25,7 +26,7 @@ function formatStatus(isActive: boolean): { label: string; variant: 'default' | 
   return isActive ? { label: 'Activa', variant: 'default' } : { label: 'Inactiva', variant: 'secondary' }
 }
 
-function formatParentName(category: CategoryListItem): string {
+function formatParentName(category: Category): string {
   return category.parent?.name ?? '—'
 }
 

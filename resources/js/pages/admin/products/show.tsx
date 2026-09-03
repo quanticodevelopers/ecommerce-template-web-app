@@ -7,10 +7,10 @@ import ProductDescription from '@/pages/admin/products/components/product-descri
 import ProductDetailOverview from '@/pages/admin/products/components/product-detail-overview'
 import ProductImageGallery from '@/pages/admin/products/components/product-image-gallery'
 import { edit as productsEdit, index as productsIndex, show as productsShow } from '@/routes/admin/products'
-import type { ProductDetail } from '@/types'
+import type { Product } from '@/types/entities'
 
 type ProductsShowProps = {
-  product: ProductDetail
+  product: Product
 }
 
 export default function ProductsShow({ product }: ProductsShowProps) {

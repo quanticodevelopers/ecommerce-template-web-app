@@ -551,7 +551,7 @@ test('admins can search products by sku name or barcode', function (string $sear
     'barcode' => '7751234567890',
 ]);
 
-test('the product listing includes classification pricing publication and its primary thumbnail', function () {
+test('the product listing uses the complete product resource contract', function () {
     Storage::fake('public');
 
     $admin = Administrator::factory()->create();
@@ -560,12 +560,14 @@ test('the product listing includes classification pricing publication and its pr
     $product = Product::factory()->published()->for($brand)->for($category)->create([
         'name' => 'Gorra Técnica',
         'sku' => 'GORRA-001',
+        'short_description' => 'Ligera y transpirable.',
+        'description' => '<p>Protección para exteriores.</p>',
         'base_price' => '99.90',
         'sale_price' => '79.90',
         'flag' => ProductFlag::FEATURED,
     ]);
 
-    ProductImage::factory()->for($product)->create([
+    $image = ProductImage::factory()->for($product)->create([
         'path' => 'images/products/xl/gorra.webp',
         'variants' => [
             'md' => 'images/products/md/gorra.webp',
@@ -580,13 +582,24 @@ test('the product listing includes classification pricing publication and its pr
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->where('products.data.0.name', 'Gorra Técnica')
+            ->where('products.data.0.slug', $product->slug)
+            ->where('products.data.0.short_description', 'Ligera y transpirable.')
+            ->where('products.data.0.description', '<p>Protección para exteriores.</p>')
             ->where('products.data.0.brand.name', 'Andes')
             ->where('products.data.0.category.name', 'Accesorios')
             ->where('products.data.0.base_price', '99.90')
             ->where('products.data.0.sale_price', '79.90')
-            ->where('products.data.0.flag', ProductFlag::FEATURED->value)
+            ->where('products.data.0.flag.value', ProductFlag::FEATURED->value)
+            ->where('products.data.0.flag.label', ProductFlag::FEATURED->label())
+            ->where('products.data.0.published_at', $product->published_at?->toIso8601String())
+            ->where('products.data.0.created_at', $product->created_at->toIso8601String())
+            ->where('products.data.0.updated_at', $product->updated_at->toIso8601String())
             ->where('products.data.0.thumbnail.alt', 'Gorra técnica azul')
-            ->where('products.data.0.thumbnail.url', Storage::disk('public')->url('images/products/sm/gorra.webp')),
+            ->where('products.data.0.thumbnail.url', Storage::disk('public')->url('images/products/sm/gorra.webp'))
+            ->has('products.data.0.images', 1)
+            ->where('products.data.0.images.0.id', $image->id)
+            ->where('products.data.0.images.0.url', Storage::disk('public')->url($image->path))
+            ->where('products.data.0.images.0.thumbnail_url', Storage::disk('public')->url('images/products/sm/gorra.webp')),
         );
 });
 

@@ -4,7 +4,7 @@ import MessagesDropdown from '@/components/admin/messages-dropdown'
 import NotificationsDropdown from '@/components/admin/notifications-dropdown'
 import { Separator } from '@/components/admin/ui/separator'
 import { SidebarTrigger } from '@/components/admin/ui/sidebar'
-import type { BreadcrumbItem as BreadcrumbItemType } from '@/types'
+import type { BreadcrumbItem as BreadcrumbItemType } from '@/types/admin'
 
 export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItemType[] }) {
   return (

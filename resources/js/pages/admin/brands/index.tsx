@@ -6,10 +6,10 @@ import { Card, CardContent } from '@/components/admin/ui/card'
 import BrandRowActions from '@/pages/admin/brands/components/brand-row-actions'
 import CreateBrandModal from '@/pages/admin/brands/components/create-brand-modal'
 import { index as brandsIndex } from '@/routes/admin/brands'
-import type { BrandListItem } from '@/types'
+import type { Brand } from '@/types/entities'
 
 type BrandsIndexProps = {
-  brands: BrandListItem[]
+  brands: Brand[]
 }
 
 function formatStatus(isActive: boolean): { label: string; variant: 'default' | 'secondary' } {

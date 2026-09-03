@@ -1,9 +1,9 @@
 import { Avatar, AvatarFallback } from '@/components/admin/ui/avatar'
 import { useInitials } from '@/hooks/use-initials'
-import type { User } from '@/types'
+import type { Administrator } from '@/types/entities'
 
 interface UserInfoProps {
-  user: User
+  user: Administrator
   showEmail?: boolean
   showRole?: boolean
 }
@@ -19,7 +19,7 @@ export function UserInfo({ user, showEmail = false, showRole = false }: UserInfo
       <div className="grid flex-1 text-left text-sm leading-tight">
         <span className="truncate font-medium">{`${user.name} ${user.last_name}`}</span>
         {showEmail && <span className="text-muted-foreground truncate text-xs">{user.email}</span>}
-        {showRole && user.kind === 'administrator' && <span className="text-muted-foreground truncate text-xs">{user.role.label}</span>}
+        {showRole && <span className="text-muted-foreground truncate text-xs">{user.role.label}</span>}
       </div>
     </>
   )

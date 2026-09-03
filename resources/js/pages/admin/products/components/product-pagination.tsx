@@ -2,7 +2,7 @@ import { ArrowLeft01Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import { Button } from '@/components/admin/ui/button'
-import type { PaginatedProducts } from '@/types'
+import type { PaginatedProducts } from '@/types/admin'
 
 type ProductPaginationProps = {
   pagination: PaginatedProducts

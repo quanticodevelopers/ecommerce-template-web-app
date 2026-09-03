@@ -3,12 +3,12 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Head } from '@inertiajs/react'
 import { Button } from '@/components/admin/ui/button'
 import { PlaceholderPattern } from '@/components/admin/ui/placeholder-pattern'
-import { useAuthenticatedUser } from '@/hooks/use-authenticated-user'
-import { formatPeruDashboardDate, getPeruDashboardGreeting } from '@/lib/utils'
+import { useAuthenticatedAdministrator } from '@/hooks/admin/use-authenticated-administrator'
+import { formatPeruDashboardDate, getPeruDashboardGreeting } from '@/lib/admin/date'
 import { dashboard } from '@/routes/admin'
 
 export default function DashboardIndex() {
-  const user = useAuthenticatedUser()
+  const user = useAuthenticatedAdministrator()
   const currentDate = new Date()
   const greeting = getPeruDashboardGreeting(currentDate)
   const formattedDate = formatPeruDashboardDate(currentDate)

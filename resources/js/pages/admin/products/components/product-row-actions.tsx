@@ -3,10 +3,10 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Link } from '@inertiajs/react'
 import { Button } from '@/components/admin/ui/button'
 import { edit as productsEdit, show as productsShow } from '@/routes/admin/products'
-import type { ProductListItem } from '@/types'
+import type { Product } from '@/types/entities'
 
 type ProductRowActionsProps = {
-  product: ProductListItem
+  product: Product
 }
 
 export default function ProductRowActions({ product }: ProductRowActionsProps) {

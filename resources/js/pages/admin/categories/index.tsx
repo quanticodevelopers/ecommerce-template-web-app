@@ -6,10 +6,11 @@ import { Card, CardContent } from '@/components/admin/ui/card'
 import CategoryRowActions from '@/pages/admin/categories/components/category-row-actions'
 import CreateCategoryModal from '@/pages/admin/categories/components/create-category-modal'
 import { index as categoriesIndex, subcategories } from '@/routes/admin/categories'
-import type { CategoryListItem, CategoryParent, SelectOption } from '@/types'
+import type { SelectOption } from '@/types'
+import type { Category, CategoryParent } from '@/types/entities'
 
 type CategoriesIndexProps = {
-  categories: CategoryListItem[]
+  categories: Category[]
   parent_category: CategoryParent | null
   category_parent_options: SelectOption[]
 }

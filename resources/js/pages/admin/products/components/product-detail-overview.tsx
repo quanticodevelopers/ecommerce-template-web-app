@@ -4,10 +4,10 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Badge } from '@/components/admin/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/admin/ui/card'
 import { Separator } from '@/components/admin/ui/separator'
-import type { ProductDetail } from '@/types'
+import type { Product } from '@/types/entities'
 
 type ProductDetailOverviewProps = {
-  product: ProductDetail
+  product: Product
 }
 
 type DetailRowProps = {

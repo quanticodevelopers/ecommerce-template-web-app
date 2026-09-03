@@ -10,10 +10,10 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/admin/ui/dropdown-menu'
 import { Label } from '@/components/admin/ui/label'
 import { Spinner } from '@/components/admin/ui/spinner'
-import type { AdministratorListItem } from '@/types'
+import type { Administrator } from '@/types/entities'
 
 type AdminRowActionsProps = {
-  administrator: AdministratorListItem
+  administrator: Administrator
 }
 
 export default function AdminRowActions({ administrator }: AdminRowActionsProps) {

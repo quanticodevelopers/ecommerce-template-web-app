@@ -3,7 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useMemo, useState } from 'react'
 import { Button } from '@/components/admin/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
-import type { CreatedAdministratorCredentials } from '@/types'
+import type { CreatedAdministratorCredentials } from '@/types/admin'
 
 type CreatedAdministratorCredentialsModalProps = {
   createdAdministratorCredentials: CreatedAdministratorCredentials | null

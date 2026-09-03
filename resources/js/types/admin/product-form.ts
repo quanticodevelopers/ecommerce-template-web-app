@@ -1,4 +1,4 @@
-import type { ProductFlag } from '@/types/product-list-item'
+import type { ProductFlagValue } from '@/types/entities'
 
 export type ProductCatalogOption = {
   id: string
@@ -27,7 +27,7 @@ export type EditableProduct = {
   description: string | null
   base_price: string | null
   sale_price: string
-  flag: ProductFlag | null
+  flag: ProductFlagValue | null
   is_draft: boolean
   images: ProductFormImage[]
 }

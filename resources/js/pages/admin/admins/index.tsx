@@ -5,15 +5,16 @@ import { Avatar, AvatarFallback } from '@/components/admin/ui/avatar'
 import { Badge } from '@/components/admin/ui/badge'
 import { Card, CardContent } from '@/components/admin/ui/card'
 import { useInitials } from '@/hooks/use-initials'
-import { dateFormatter } from '@/lib/utils'
+import { dateFormatter } from '@/lib/admin/date'
 import AdminRowActions from '@/pages/admin/admins/components/admin-row-actions'
 import CreateAdminModal from '@/pages/admin/admins/components/create-admin-modal'
 import CreatedAdministratorCredentialsModal from '@/pages/admin/admins/components/created-administrator-credentials-modal'
 import { index as adminsIndex } from '@/routes/admin/admins'
-import type { AdministratorListItem, CreatedAdministratorCredentials } from '@/types'
+import type { CreatedAdministratorCredentials } from '@/types/admin'
+import type { Administrator } from '@/types/entities'
 
 type AdminsIndexProps = {
-  admins: AdministratorListItem[]
+  admins: Administrator[]
   created_administrator_credentials: CreatedAdministratorCredentials | null
 }
 
@@ -25,7 +26,7 @@ function formatDate(value: string | null): string {
   return dateFormatter.format(new Date(value))
 }
 
-function formatFullName(administrator: AdministratorListItem): string {
+function formatFullName(administrator: Administrator): string {
   return `${administrator.name} ${administrator.last_name}`.trim()
 }
 

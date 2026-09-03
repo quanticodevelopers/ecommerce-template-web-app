@@ -1,10 +1,10 @@
 import { UnfoldMoreIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { usePage } from '@inertiajs/react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/admin/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/admin/ui/sidebar'
 import { UserInfo } from '@/components/admin/user-info'
 import { UserMenuContent } from '@/components/admin/user-menu-content'
+import { useAuthenticatedAdministrator } from '@/hooks/admin/use-authenticated-administrator'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 interface NavUserProps {
@@ -12,13 +12,9 @@ interface NavUserProps {
 }
 
 export function NavUser({ className = '' }: NavUserProps) {
-  const { auth } = usePage().props
+  const user = useAuthenticatedAdministrator()
   const { state } = useSidebar()
   const isMobile = useIsMobile()
-
-  if (!auth.user) {
-    return null
-  }
 
   return (
     <SidebarMenu className={className}>
@@ -31,7 +27,7 @@ export function NavUser({ className = '' }: NavUserProps) {
               data-test="sidebar-menu-button"
             >
               <UserInfo
-                user={auth.user}
+                user={user}
                 showRole
               />
               <HugeiconsIcon
@@ -46,7 +42,7 @@ export function NavUser({ className = '' }: NavUserProps) {
             align="end"
             side={isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom'}
           >
-            <UserMenuContent user={auth.user} />
+            <UserMenuContent user={user} />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

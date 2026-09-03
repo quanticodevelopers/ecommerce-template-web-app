@@ -1,8 +1,8 @@
 import ProductRow from '@/pages/admin/products/components/product-row'
-import type { ProductListItem } from '@/types'
+import type { Product } from '@/types/entities'
 
 type ProductTableProps = {
-  products: ProductListItem[]
+  products: Product[]
   hasSearch: boolean
 }
 

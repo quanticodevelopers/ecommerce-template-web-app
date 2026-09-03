@@ -3,7 +3,7 @@ export type CategoryParent = {
   name: string
 }
 
-export type CategoryListItem = {
+export type Category = {
   id: string
   name: string
   slug: string

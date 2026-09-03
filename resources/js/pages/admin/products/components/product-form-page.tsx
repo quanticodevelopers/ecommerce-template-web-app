@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils'
 import ProductImageUploader from '@/pages/admin/products/components/product-image-uploader'
 import ProductRichTextEditor from '@/pages/admin/products/components/product-rich-text-editor'
 import { index as productsIndex } from '@/routes/admin/products'
-import type { EditableProduct, ProductCatalogOption, ProductImageSlot } from '@/types'
+import type { EditableProduct, ProductCatalogOption, ProductImageSlot } from '@/types/admin'
 
 export type ProductFormPageProps = {
   brands: ProductCatalogOption[]

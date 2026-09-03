@@ -4,7 +4,7 @@ import { AppShell } from '@/components/admin/app-shell'
 import { AppSidebar } from '@/components/admin/app-sidebar'
 import { AppSidebarHeader } from '@/components/admin/app-sidebar-header'
 import AdminProviders from '@/components/admin/providers'
-import type { BreadcrumbItem } from '@/types'
+import type { BreadcrumbItem } from '@/types/admin'
 
 interface LayoutProps extends PropsWithChildren {
   breadcrumbs?: BreadcrumbItem[]

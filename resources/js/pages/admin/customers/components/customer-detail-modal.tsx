@@ -2,8 +2,8 @@ import { Call02Icon, Mail01Icon, UserIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Button } from '@/components/admin/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/admin/ui/dialog'
-import { dateFormatter } from '@/lib/utils'
-import type { Customer } from '@/types'
+import { dateFormatter } from '@/lib/admin/date'
+import type { Customer } from '@/types/entities'
 
 type CustomerDetailModalProps = {
   customer: Customer | null

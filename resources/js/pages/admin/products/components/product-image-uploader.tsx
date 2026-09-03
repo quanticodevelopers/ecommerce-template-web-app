@@ -4,7 +4,7 @@ import type { ChangeEvent, DragEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/admin/ui/button'
 import { cn } from '@/lib/utils'
-import type { ProductFormImage, ProductImageSlot } from '@/types'
+import type { ProductFormImage, ProductImageSlot } from '@/types/admin'
 
 type ProductImageUploaderProps = {
   error?: string

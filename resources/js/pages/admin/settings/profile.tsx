@@ -6,11 +6,11 @@ import { Button } from '@/components/admin/ui/button'
 import { Input } from '@/components/admin/ui/input'
 import { Label } from '@/components/admin/ui/label'
 import { Spinner } from '@/components/admin/ui/spinner'
-import { useAuthenticatedUser } from '@/hooks/use-authenticated-user'
+import { useAuthenticatedAdministrator } from '@/hooks/admin/use-authenticated-administrator'
 import { edit } from '@/routes/admin/profile'
 
 const Profile = () => {
-  const user = useAuthenticatedUser()
+  const user = useAuthenticatedAdministrator()
 
   return (
     <>

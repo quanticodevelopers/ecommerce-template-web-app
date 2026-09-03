@@ -2,26 +2,14 @@ import { BarCode01Icon, Package01Icon, Tag01Icon } from '@hugeicons/core-free-ic
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Badge } from '@/components/admin/ui/badge'
 import ProductRowActions from '@/pages/admin/products/components/product-row-actions'
-import type { ProductFlag, ProductListItem } from '@/types'
+import type { Product } from '@/types/entities'
 
 type ProductRowProps = {
-  product: ProductListItem
+  product: Product
 }
 
 function formatPrice(price: string): string {
   return `S/ ${new Intl.NumberFormat('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(price))}`
-}
-
-function formatFlag(flag: ProductFlag | null): string | null {
-  if (flag === 'featured') {
-    return 'Destacado'
-  }
-
-  if (flag === 'new') {
-    return 'Nuevo'
-  }
-
-  return null
 }
 
 function getPublicationStatus(publishedAt: string | null): { label: string; variant: 'default' | 'outline' | 'secondary' } {
@@ -37,7 +25,6 @@ function getPublicationStatus(publishedAt: string | null): { label: string; vari
 }
 
 export default function ProductRow({ product }: ProductRowProps) {
-  const flagLabel = formatFlag(product.flag)
   const publicationStatus = getPublicationStatus(product.published_at)
 
   return (
@@ -95,7 +82,7 @@ export default function ProductRow({ product }: ProductRowProps) {
       <td className="px-6 py-4">
         <div className="flex flex-col items-center gap-2">
           <Badge variant={publicationStatus.variant}>{publicationStatus.label}</Badge>
-          {flagLabel !== null && <span className="text-muted-foreground text-xs">{flagLabel}</span>}
+          {product.flag !== null && <span className="text-muted-foreground text-xs">{product.flag.label}</span>}
         </div>
       </td>
       <td className="px-6 py-4 text-right">

@@ -12,12 +12,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Spinner } from '@/components/admin/ui/spinner'
 import { Textarea } from '@/components/admin/ui/textarea'
 import { cn } from '@/lib/utils'
-import type { CategoryListItem, SelectOption } from '@/types'
+import type { SelectOption } from '@/types'
+import type { Category } from '@/types/entities'
 
 const ROOT_PARENT_VALUE = '__root__'
 
 type EditCategoryModalProps = {
-  category: CategoryListItem
+  category: Category
   parentCategoryOptions: SelectOption[]
   triggerClassName?: string
 }

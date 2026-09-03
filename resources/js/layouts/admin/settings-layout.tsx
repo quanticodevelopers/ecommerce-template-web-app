@@ -10,7 +10,7 @@ import { edit as editAppearance } from '@/routes/admin/appearance'
 import { edit as editInformation } from '@/routes/admin/information'
 import { edit as editProfile } from '@/routes/admin/profile'
 import { edit as editSecurity } from '@/routes/admin/security'
-import type { NavItem } from '@/types'
+import type { NavItem } from '@/types/admin'
 
 const sidebarNavItems: NavItem[] = [
   {

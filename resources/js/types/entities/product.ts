@@ -1,4 +1,11 @@
-export type ProductDetailImage = {
+export type ProductFlagValue = 'featured' | 'new'
+
+export type ProductFlag = {
+  value: ProductFlagValue
+  label: string
+}
+
+export type ProductImage = {
   id: string
   url: string
   thumbnail_url: string
@@ -6,7 +13,7 @@ export type ProductDetailImage = {
   position: number
 }
 
-export type ProductDetail = {
+export type Product = {
   id: string
   sku: string
   barcode: string
@@ -16,10 +23,7 @@ export type ProductDetail = {
   description: string | null
   base_price: string | null
   sale_price: string
-  flag: {
-    value: 'featured' | 'new'
-    label: string
-  } | null
+  flag: ProductFlag | null
   brand: {
     id: string
     name: string
@@ -31,5 +35,9 @@ export type ProductDetail = {
   published_at: string | null
   created_at: string
   updated_at: string
-  images: ProductDetailImage[]
+  thumbnail: {
+    url: string
+    alt: string
+  } | null
+  images: ProductImage[]
 }

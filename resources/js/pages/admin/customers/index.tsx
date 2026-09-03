@@ -4,10 +4,10 @@ import Heading from '@/components/admin/heading'
 import { Avatar, AvatarFallback } from '@/components/admin/ui/avatar'
 import { Card, CardContent } from '@/components/admin/ui/card'
 import { useInitials } from '@/hooks/use-initials'
-import { dateFormatter } from '@/lib/utils'
+import { dateFormatter } from '@/lib/admin/date'
 import CustomerRowActions from '@/pages/admin/customers/components/customer-row-actions'
 import { index as customersIndex } from '@/routes/admin/customers'
-import type { Customer } from '@/types'
+import type { Customer } from '@/types/entities'
 
 type CustomersIndexProps = {
   customers: Customer[]

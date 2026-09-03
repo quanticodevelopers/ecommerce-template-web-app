@@ -6,7 +6,7 @@ import ProductPagination from '@/pages/admin/products/components/product-paginat
 import ProductTable from '@/pages/admin/products/components/product-table'
 import ProductToolbar from '@/pages/admin/products/components/product-toolbar'
 import { index as productsIndex } from '@/routes/admin/products'
-import type { PaginatedProducts } from '@/types'
+import type { PaginatedProducts } from '@/types/admin'
 
 type ProductsIndexProps = {
   products: PaginatedProducts

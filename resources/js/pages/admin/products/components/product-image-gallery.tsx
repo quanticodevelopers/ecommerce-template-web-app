@@ -7,10 +7,10 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Button } from '@/components/admin/ui/button'
 import { Card } from '@/components/admin/ui/card'
 import { cn } from '@/lib/utils'
-import type { ProductDetailImage } from '@/types'
+import type { ProductImage } from '@/types/entities'
 
 type ProductImageGalleryProps = {
-  images: ProductDetailImage[]
+  images: ProductImage[]
   productName: string
 }
 

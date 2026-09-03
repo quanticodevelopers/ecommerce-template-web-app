@@ -13,10 +13,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Spinner } from '@/components/admin/ui/spinner'
 import { Textarea } from '@/components/admin/ui/textarea'
 import { cn } from '@/lib/utils'
-import type { BrandListItem } from '@/types'
+import type { Brand } from '@/types/entities'
 
 type EditBrandModalProps = {
-  brand: BrandListItem
+  brand: Brand
   triggerClassName?: string
 }
 

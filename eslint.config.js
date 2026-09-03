@@ -106,15 +106,15 @@ export default [
     },
   },
   {
-    files: ['resources/js/components/admin/**/*.{ts,tsx}', 'resources/js/layouts/admin/**/*.{ts,tsx}', 'resources/js/pages/admin/**/*.{ts,tsx}'],
+    files: ['resources/js/{components,hooks,layouts,lib,pages,types}/admin/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
         {
           patterns: [
             {
-              group: ['@/components/ui/**', '@/components/store/**'],
-              message: 'Admin code may only use components from the Admin design system.',
+              group: ['@/components/ui/**', '@/components/store/**', '@/hooks/store/**', '@/lib/store/**', '@/types/store/**'],
+              message: 'Admin code may not import Store-owned frontend modules.',
             },
           ],
         },
@@ -122,15 +122,15 @@ export default [
     },
   },
   {
-    files: ['resources/js/components/store/**/*.{ts,tsx}', 'resources/js/layouts/store/**/*.{ts,tsx}', 'resources/js/pages/store/**/*.{ts,tsx}'],
+    files: ['resources/js/{components,hooks,layouts,lib,pages,types}/store/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
         {
           patterns: [
             {
-              group: ['@/components/ui/**', '@/components/admin/**'],
-              message: 'Store code may only use components from the Store design system.',
+              group: ['@/components/ui/**', '@/components/admin/**', '@/hooks/admin/**', '@/lib/admin/**', '@/types/admin/**'],
+              message: 'Store code may not import Admin-owned frontend modules.',
             },
           ],
         },

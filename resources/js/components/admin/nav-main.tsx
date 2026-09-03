@@ -14,7 +14,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/admin/ui/sidebar'
 import { useCurrentUrl } from '@/hooks/use-current-url'
-import type { NavGroup } from '@/types'
+import type { NavGroup } from '@/types/admin'
 
 export function NavMain({ group = [] }: { group: NavGroup[] }) {
   const { isCurrentUrl } = useCurrentUrl()

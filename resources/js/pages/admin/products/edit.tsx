@@ -1,7 +1,7 @@
 import ProductFormPage from '@/pages/admin/products/components/product-form-page'
 import type { ProductFormPageProps } from '@/pages/admin/products/components/product-form-page'
 import { index as productsIndex } from '@/routes/admin/products'
-import type { EditableProduct } from '@/types'
+import type { EditableProduct } from '@/types/admin'
 
 type ProductsEditProps = ProductFormPageProps & {
   product: EditableProduct

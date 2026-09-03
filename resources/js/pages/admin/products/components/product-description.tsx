@@ -1,8 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/admin/ui/card'
-import type { ProductDetail } from '@/types'
+import type { Product } from '@/types/entities'
 
 type ProductDescriptionProps = {
-  product: ProductDetail
+  product: Product
 }
 
 export default function ProductDescription({ product }: ProductDescriptionProps) {
