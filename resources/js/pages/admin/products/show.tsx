@@ -58,7 +58,7 @@ export default function ProductsShow({ product }: ProductsShowProps) {
         <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)]">
           <div className="flex min-w-0 flex-col gap-5">
             <ProductImageGallery
-              images={product.images}
+              images={product.images ?? []}
               productName={product.name}
             />
             <ProductDescription product={product} />

@@ -8,7 +8,8 @@ export type ProductFlag = {
 export type ProductImage = {
   id: string
   url: string
-  thumbnail_url: string
+  variants: Record<string, string>
+  listing_variant: string
   alt: string
   position: number
 }
@@ -35,9 +36,6 @@ export type Product = {
   published_at: string | null
   created_at: string
   updated_at: string
-  thumbnail: {
-    url: string
-    alt: string
-  } | null
-  images: ProductImage[]
+  primary_image?: ProductImage | null
+  images?: ProductImage[]
 }

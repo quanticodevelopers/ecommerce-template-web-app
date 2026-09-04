@@ -31,7 +31,7 @@ export default function ProductRow({ product }: ProductRowProps) {
     <tr className="hover:bg-muted/30 align-middle transition-colors">
       <td className="px-6 py-4">
         <div className="flex items-center gap-4">
-          {product.thumbnail === null ? (
+          {product.primary_image == null ? (
             <div className="bg-muted/30 text-muted-foreground flex size-14 shrink-0 items-center justify-center rounded-lg border border-dashed">
               <HugeiconsIcon
                 icon={Package01Icon}
@@ -41,9 +41,9 @@ export default function ProductRow({ product }: ProductRowProps) {
             </div>
           ) : (
             <img
-              alt={product.thumbnail.alt}
+              alt={product.primary_image.alt}
               className="size-14 shrink-0 rounded-lg border object-cover"
-              src={product.thumbnail.url}
+              src={product.primary_image.variants[product.primary_image.listing_variant] ?? product.primary_image.url}
             />
           )}
           <div className="min-w-0">

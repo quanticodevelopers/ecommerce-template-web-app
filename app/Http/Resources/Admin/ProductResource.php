@@ -4,11 +4,8 @@ namespace App\Http\Resources\Admin;
 
 use App\Enums\ProductFlag;
 use App\Models\Product;
-use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Storage;
 
 /** @mixin Product */
 class ProductResource extends JsonResource
@@ -21,7 +18,6 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         $flag = $this->getAttribute('flag');
-        $primaryImage = $this->images->first();
 
         return [
             'id' => $this->id,
@@ -48,21 +44,8 @@ class ProductResource extends JsonResource
             'published_at' => $this->publishedAtIso8601(),
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
-            'thumbnail' => $primaryImage === null ? null : [
-                'url' => Storage::disk('public')->url(
-                    $primaryImage->pathForVariant(Config::string('product-images.listing_variant')),
-                ),
-                'alt' => $primaryImage->alt,
-            ],
-            'images' => $this->images->map(fn (ProductImage $image): array => [
-                'id' => $image->id,
-                'url' => Storage::disk('public')->url($image->path),
-                'thumbnail_url' => Storage::disk('public')->url(
-                    $image->pathForVariant(Config::string('product-images.listing_variant')),
-                ),
-                'alt' => $image->alt,
-                'position' => $image->position,
-            ])->values(),
+            'primary_image' => $this->whenLoaded('primaryImage', fn (): array => ProductImageResource::make($this->primaryImage)->resolve($request)),
+            'images' => $this->whenLoaded('images', fn (): array => ProductImageResource::collection($this->images)->resolve($request)),
         ];
     }
 }

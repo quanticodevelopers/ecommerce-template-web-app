@@ -152,7 +152,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                     onClick={() => selectImage(index)}
                   >
                     <img
-                      src={image.thumbnail_url}
+                      src={image.variants[image.listing_variant] ?? image.url}
                       alt=""
                       className="size-full object-cover"
                     />

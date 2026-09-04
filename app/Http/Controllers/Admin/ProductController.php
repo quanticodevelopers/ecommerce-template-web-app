@@ -22,6 +22,34 @@ use Inertia\Response;
 class ProductController extends Controller
 {
     /**
+     * Display a paginated listing of products.
+     */
+    public function index(Request $request): Response
+    {
+        $search = $request->string('search')->trim()->substr(0, 128)->toString();
+
+        $products = Product::query()
+            ->with([
+                'brand:id,name',
+                'category:id,name',
+                'primaryImage:product_images.id,product_images.product_id,path,variants,alt,position',
+            ])
+            ->when($search !== '', function ($query) use ($search): void {
+                $query->whereAny(['sku', 'name', 'barcode'], 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(50)
+            ->withQueryString();
+
+        return Inertia::render('admin/products/index', [
+            'products' => ProductResource::collection($products),
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
+    }
+
+    /**
      * Show the form for creating a product.
      */
     public function create(): Response
@@ -129,33 +157,5 @@ class ProductController extends Controller
         ]);
 
         return to_route('admin.products.index');
-    }
-
-    /**
-     * Display a paginated listing of products.
-     */
-    public function index(Request $request): Response
-    {
-        $search = $request->string('search')->trim()->substr(0, 128)->toString();
-
-        $products = Product::query()
-            ->with([
-                'brand:id,name',
-                'category:id,name',
-                'images:id,product_id,path,variants,alt,position',
-            ])
-            ->when($search !== '', function ($query) use ($search): void {
-                $query->whereAny(['sku', 'name', 'barcode'], 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate(50)
-            ->withQueryString();
-
-        return Inertia::render('admin/products/index', [
-            'products' => ProductResource::collection($products),
-            'filters' => [
-                'search' => $search,
-            ],
-        ]);
     }
 }

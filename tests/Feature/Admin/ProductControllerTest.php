@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\ProductFlag;
+use App\Http\Resources\Admin\ProductResource;
 use App\Models\Administrator;
 use App\Models\Brand;
 use App\Models\Category;
@@ -307,10 +308,12 @@ test('admins can see every product detail with ordered images and timestamps', f
             ->where('product.created_at', $product->created_at->toIso8601String())
             ->where('product.updated_at', $product->updated_at->toIso8601String())
             ->has('product.images', 2)
+            ->missing('product.primary_image')
             ->where('product.images.0.id', $firstImage->id)
             ->where('product.images.0.position', 0)
             ->where('product.images.0.url', Storage::disk('public')->url($firstImage->path))
-            ->where('product.images.0.thumbnail_url', Storage::disk('public')->url($firstImage->variants['sm']))
+            ->where('product.images.0.variants.sm', Storage::disk('public')->url($firstImage->variants['sm']))
+            ->where('product.images.0.variants.xl', Storage::disk('public')->url($firstImage->path))
             ->where('product.images.1.id', $secondImage->id)
             ->where('product.images.1.position', 1),
         );
@@ -551,7 +554,7 @@ test('admins can search products by sku name or barcode', function (string $sear
     'barcode' => '7751234567890',
 ]);
 
-test('the product listing uses the complete product resource contract', function () {
+test('the product listing only loads the primary image with all its variants', function () {
     Storage::fake('public');
 
     $admin = Administrator::factory()->create();
@@ -566,6 +569,8 @@ test('the product listing uses the complete product resource contract', function
         'sale_price' => '79.90',
         'flag' => ProductFlag::FEATURED,
     ]);
+
+    ProductImage::factory()->for($product)->create(['position' => 1]);
 
     $image = ProductImage::factory()->for($product)->create([
         'path' => 'images/products/xl/gorra.webp',
@@ -594,12 +599,47 @@ test('the product listing uses the complete product resource contract', function
             ->where('products.data.0.published_at', $product->published_at?->toIso8601String())
             ->where('products.data.0.created_at', $product->created_at->toIso8601String())
             ->where('products.data.0.updated_at', $product->updated_at->toIso8601String())
-            ->where('products.data.0.thumbnail.alt', 'Gorra técnica azul')
-            ->where('products.data.0.thumbnail.url', Storage::disk('public')->url('images/products/sm/gorra.webp'))
-            ->has('products.data.0.images', 1)
-            ->where('products.data.0.images.0.id', $image->id)
-            ->where('products.data.0.images.0.url', Storage::disk('public')->url($image->path))
-            ->where('products.data.0.images.0.thumbnail_url', Storage::disk('public')->url('images/products/sm/gorra.webp')),
+            ->where('products.data.0.primary_image.alt', 'Gorra técnica azul')
+            ->where('products.data.0.primary_image.id', $image->id)
+            ->where('products.data.0.primary_image.url', Storage::disk('public')->url($image->path))
+            ->where('products.data.0.primary_image.variants', [
+                'md' => Storage::disk('public')->url($image->variants['md']),
+                'sm' => Storage::disk('public')->url($image->variants['sm']),
+                'xl' => Storage::disk('public')->url($image->path),
+            ])
+            ->missing('products.data.0.images')
+            ->missing('products.data.0.thumbnail'),
+        );
+});
+
+test('product resources omit unloaded image relationships without querying them', function () {
+    $product = Product::factory()->create()->load(['brand', 'category']);
+    ProductImage::factory()->for($product)->create();
+
+    $this->expectsDatabaseQueryCount(0);
+
+    $resource = ProductResource::make($product)->resolve();
+
+    expect($resource)->not->toHaveKey('primary_image')->not->toHaveKey('images');
+});
+
+test('products without images have a null primary image and an empty detail gallery', function () {
+    $admin = Administrator::factory()->create();
+    $product = Product::factory()->create();
+
+    $this->actingAs($admin, 'admin')
+        ->get(route('admin.products.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('products.data.0.primary_image', null)
+            ->missing('products.data.0.images'),
+        );
+
+    $this->get(route('admin.products.show', $product))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('product.images', 0)
+            ->missing('product.primary_image'),
         );
 });
 
